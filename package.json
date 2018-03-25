@@ -4,21 +4,35 @@
   "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.3",
     "jest": "^22.4.3",
     "jest-react-native": "^18.0.0",
+    "jsdom": "11.6.2",
+    "jsdom-global": "3.0.2",
     "react-test-renderer": "16.2.0"
   },
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "node node_modules/jest/bin/jest.js --coverage"
+    "test": "node node_modules/jest/bin/jest.js",
+    "test:coverage": "node node_modules/jest/bin/jest.js --coverage",
+    "test:watch": "node node_modules/jest/bin/jest.js --watch"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": ["./test/jestsetup.js"],
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|expo|react-navigation|native-base-shoutem-theme|@shoutem/theme|@shoutem/animation|@shoutem/ui|tcomb-form-native|native-base)"
+    ]
   },
   "dependencies": {
+    "native-base": "^2.3.10",
     "react": "16.2.0",
+    "react-dom": "^16.2.0",
     "react-native": "0.52.0"
   }
 }
