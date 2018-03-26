@@ -1,7 +1,7 @@
 import React from 'react';
-import App from '../../src/App';
+import Landing from '../../../src/screens/Landing';
 
-describe('App', () => {
+describe('Landing', () => {
     //Start introduce hack to remove warnings as a result of issues with React native and enzyme mount
     const origConsole = console.error;
     beforeEach(() => {
@@ -14,7 +14,7 @@ describe('App', () => {
     //End
 
     it('renders without crashing', () => {
-        const wrapper = mount(<App/>);
+        const wrapper = mount(<Landing/>);
 
         expect(wrapper).toBeTruthy();
         expect(wrapper.find('Button')).toHaveLength(2);
@@ -22,7 +22,7 @@ describe('App', () => {
     });
 
     it('has sign up button with correct behaviour', () => {
-        const wrapper = mount(<App/>);
+        const wrapper = mount(<Landing/>);
         const signUpButton = wrapper.find('#signUpButton').first();
 
         expect(signUpButton.prop('id')).toBe('signUpButton');
@@ -33,7 +33,7 @@ describe('App', () => {
     });
 
     it('has log in button with correct behaviour', () => {
-        const wrapper = mount(<App/>);
+        const wrapper = mount(<Landing/>);
         const logInButton = wrapper.find('#logInButton').first();
 
         expect(logInButton.prop('id')).toBe('logInButton');
