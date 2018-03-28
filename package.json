@@ -11,7 +11,8 @@
     "jest-react-native": "^18.0.0",
     "jsdom": "11.6.2",
     "jsdom-global": "3.0.2",
-    "react-test-renderer": "16.2.0"
+    "react-test-renderer": "16.2.0",
+    "redux-mock-store": "^1.5.1"
   },
   "scripts": {
     "start": "react-native start",
@@ -23,16 +24,28 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFiles": ["./test/jestsetup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "setupFiles": [
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|expo|react-navigation|native-base-shoutem-theme|@shoutem/theme|@shoutem/animation|@shoutem/ui|tcomb-form-native|native-base)"
     ]
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^2.0.2",
     "native-base": "^2.3.10",
     "react": "16.2.0",
     "react-dom": "^16.2.0",
-    "react-native": "0.52.0"
+    "react-native": "0.52.0",
+    "react-native-navigation": "^1.1.422",
+    "react-native-vector-icons": "^4.5.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.2.0"
   }
 }
