@@ -20,7 +20,6 @@ export default class App extends Component {
         let {root} = store.getState().app;
         if (this.currentRoot !== root) {
             this.currentRoot = root;
-
             this.startApp(root);
         }
     }
@@ -30,6 +29,7 @@ export default class App extends Component {
         Navigation.startSingleScreenApp({
             screen: {
                 label: 'Landing',
+                icon: iconsMap['ios-desktop'],
                 screen: 'Landing'
             }
         });
