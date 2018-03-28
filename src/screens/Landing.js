@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {StyleSheet} from 'react-native';
 import {Container, Content, View, Grid, Col, Row, Text, Button} from 'native-base';
 

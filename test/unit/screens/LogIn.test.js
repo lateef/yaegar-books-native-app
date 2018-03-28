@@ -4,7 +4,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
-import SignUp from '../../../src/screens/SignUp';
+import LogIn from '../../../src/screens/LogIn';
 require('bezier');
 
 const mockStore = configureStore([promise(), thunk, logger]);
@@ -16,7 +16,7 @@ const defaultProps = {
     }
 };
 
-describe('SignUp', () => {
+describe('LogIn', () => {
     //Start introduce hack to remove warnings as a result of issues with React native and enzyme mount
     const origConsole = console.error;
     beforeEach(() => {
@@ -29,7 +29,7 @@ describe('SignUp', () => {
     //End
 
     it('renders without crashing', () => {
-        const wrapper = mount(<Provider store={store}><SignUp {...defaultProps}/></Provider>);
+        const wrapper = mount(<Provider store={store}><LogIn {...defaultProps}/></Provider>);
 
         expect(wrapper).toBeTruthy();
         expect(wrapper).toMatchSnapshot();

@@ -18,7 +18,7 @@ import {
     Input
 } from 'native-base';
 
-export class SignUp extends Component {
+export class LogIn extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -36,7 +36,7 @@ export class SignUp extends Component {
                                     <Row size={1}>
                                     </Row>
                                     <Row size={2}>
-                                        <Text style={{fontSize: 30}}>Sign Up</Text>
+                                        <Text style={{fontSize: 30}}>Log In</Text>
                                     </Row>
                                     <Row size={1}>
                                     </Row>
@@ -55,7 +55,7 @@ export class SignUp extends Component {
                                     </Row>
                                     <Row size={1}>
                                         <Button block>
-                                            <Text>Sign Up</Text>
+                                            <Text>Log In</Text>
                                             <Icon name='arrow-forward'/>
                                         </Button>
                                     </Row>
@@ -71,7 +71,7 @@ export class SignUp extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
 
 function mapStateToProps(state, ownProps) {
     return {};
