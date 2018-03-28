@@ -15,7 +15,9 @@ export class Landing extends Component {
     }
 
     handlePress = (screen) => {
-       alert(screen);
+        this.props.navigator.push({
+            screen: screen
+        });
     };
 
     render() {

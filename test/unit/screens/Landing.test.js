@@ -45,7 +45,7 @@ describe('Landing', () => {
         expect(signUpButton.text()).toBe('Sign Up');
 
         signUpButton.props().onPress();
-        // expect(defaultProps.navigator.push).toHaveBeenCalledWith({screen: 'SignUp'});
+        expect(defaultProps.navigator.push).toHaveBeenCalledWith({screen: 'SignUp'});
     });
 
     it('has log in button with correct behaviour', () => {
@@ -57,6 +57,6 @@ describe('Landing', () => {
         expect(logInButton.text()).toBe('Log In');
 
         logInButton.props().onPress();
-        // expect(defaultProps.navigator.push).toHaveBeenCalledWith({screen: 'LogIn'});
+        expect(defaultProps.navigator.push).toHaveBeenCalledWith({screen: 'LogIn'});
     });
 });
