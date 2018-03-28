@@ -29,7 +29,6 @@ export default class App extends Component {
         Navigation.startSingleScreenApp({
             screen: {
                 label: 'Landing',
-                icon: iconsMap['ios-desktop'],
                 screen: 'Landing'
             }
         });

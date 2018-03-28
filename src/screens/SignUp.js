@@ -28,41 +28,34 @@ export class SignUp extends Component {
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
+                <Content>
                     <Grid>
-                        <Row>
-                            <View style={styles.container}>
-                                <Form style={styles.container}>
-                                    <Row size={1}>
-                                    </Row>
-                                    <Row size={2}>
-                                        <Text style={{fontSize: 30}}>Sign Up</Text>
-                                    </Row>
-                                    <Row size={1}>
-                                    </Row>
-                                    <Row size={1}>
-                                        <Text>Enter your email address</Text>
-                                    </Row>
-                                    <Row size={1}>
-                                        <Col>
-                                            <Item floatingLabel>
-                                                <Label>Email</Label>
-                                                <Input keyboardType={'email-address'} autoCapitalize="none"/>
-                                            </Item>
-                                        </Col>
-                                    </Row>
-                                    <Row size={2}>
-                                    </Row>
-                                    <Row size={1}>
-                                        <Button block>
-                                            <Text>Sign Up</Text>
-                                            <Icon name='arrow-forward'/>
-                                        </Button>
-                                    </Row>
-                                    <Row size={8}>
-                                    </Row>
-                                </Form>
-                            </View>
+                        <Row style={{height: 500}}>
+                            <Form style={styles.container}>
+                                <Row size={1}/>
+                                <Row size={2}>
+                                    <Text style={{fontSize: 30}}>Sign Up</Text>
+                                </Row>
+                                <Row size={1}>
+                                    <Text>Enter your email address</Text>
+                                </Row>
+                                <Row size={2}>
+                                    <Col>
+                                        <Item floatingLabel>
+                                            <Label>Email</Label>
+                                            <Input keyboardType={'email-address'} autoCapitalize="none"/>
+                                        </Item>
+                                    </Col>
+                                </Row>
+                                <Row size={1}>
+                                    <Button block>
+                                        <Text>Sign Up</Text>
+                                        <Icon name='arrow-forward'/>
+                                    </Button>
+                                </Row>
+                                <Row size={3}>
+                                </Row>
+                            </Form>
                         </Row>
                     </Grid>
                 </Content>
