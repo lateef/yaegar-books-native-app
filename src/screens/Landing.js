@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {StyleSheet} from 'react-native';
 import {Container, Content, View, Grid, Col, Row, Text, Button} from 'native-base';
 
-export default class Landing extends React.Component {
+export class Landing extends Component {
+    static navigatorStyle = {
+        topBarElevationShadowEnabled: false,
+        navBarTransparent: true,
+        screenBackgroundColor: 'white'
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
     handlePress = (screen) => {
-       alert(screen);
+        this.props.navigator.push({
+            screen: screen
+        });
     };
 
     render() {
@@ -17,7 +31,7 @@ export default class Landing extends React.Component {
                         <Row size={1}>
                         </Row>
                         <Row size={1}>
-                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <View style={styles.container}>
                                 <Text style={{fontSize: 50}}>
                                     Yaegar Books
                                 </Text>
@@ -38,7 +52,7 @@ export default class Landing extends React.Component {
                             <Col size={1}>
                             </Col>
                             <Col size={4}>
-                                <Button  id="logInButton" block onPress={() => {
+                                <Button id="logInButton" block onPress={() => {
                                     this.handlePress('LogIn')
                                 }}>
                                     <Text>Log In</Text>
@@ -52,6 +66,17 @@ export default class Landing extends React.Component {
             </Container>
         );
     }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing)
+
+function mapStateToProps(state, ownProps) {
+    return {
+    };
+}
+function mapDispatchToProps(dispatch) {
+    return {
+    };
 }
 
 const styles = StyleSheet.create({
