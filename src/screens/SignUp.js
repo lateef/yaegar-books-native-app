@@ -21,7 +21,6 @@ export default class SignUp extends Component {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
         screenBackgroundColor: 'white'
-
     };
 
     render() {
