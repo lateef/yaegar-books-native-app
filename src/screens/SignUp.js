@@ -1,28 +1,37 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet} from 'react-native';
+import {bindActionCreators} from 'redux';
 
 import {
     Container,
     Content,
     Text,
-    View,
     Grid,
     Col,
     Row,
     Button,
-    Icon,
     Form,
     Item,
     Label,
     Input
 } from 'native-base';
 
+import * as userAction from '../actions/userActions';
+
 export class SignUp extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
         screenBackgroundColor: 'white'
+    };
+
+    handleChangeText = (email) => {
+        this.props.userActions.updateEmail(email);
+    };
+
+    handlePress = () => {
+        this.props.userActions.validateEmail(this.props.user.email);
     };
 
     render() {
@@ -40,20 +49,21 @@ export class SignUp extends Component {
                                     <Text>Enter your email address</Text>
                                 </Row>
                                 <Row size={2}>
-                                    <Col>
+                                    <Col style={{padding: 10}}>
                                         <Item floatingLabel>
                                             <Label>Email</Label>
-                                            <Input keyboardType={'email-address'} autoCapitalize="none"/>
+                                            <Input id="emailInput" onChangeText={(email) => {
+                                                this.handleChangeText(email)
+                                            }} keyboardType={'email-address'} autoCapitalize="none"/>
                                         </Item>
                                     </Col>
                                 </Row>
                                 <Row size={1}>
-                                    <Button block>
-                                        <Text>Sign Up</Text>
-                                        <Icon name='arrow-forward'/>
-                                    </Button>
+                                    {this.props.user.email.length > 0 ? <Button id="continueButton" rounded onPress={this.handlePress}>
+                                        <Text>Continue</Text>
+                                    </Button> : <Text/>}
                                 </Row>
-                                <Row size={3}>
+                                <Row size={4}>
                                 </Row>
                             </Form>
                         </Row>
@@ -67,11 +77,15 @@ export class SignUp extends Component {
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        user: state.userReducer.user
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        userActions: bindActionCreators(userAction, dispatch)
+    };
 }
 
 const styles = StyleSheet.create({

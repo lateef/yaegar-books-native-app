@@ -41,7 +41,6 @@ describe('Landing', () => {
 
         expect(signUpButton.prop('id')).toBe('signUpButton');
         expect(signUpButton.prop('block')).toBeTruthy();
-        expect(signUpButton.props().block).toBeTruthy();
         expect(signUpButton.text()).toBe('Sign Up');
 
         signUpButton.props().onPress();
