@@ -17,7 +17,7 @@ export default class App extends Component {
     }
 
     onStoreUpdate() {
-        let {root} = store.getState().app;
+        let {root} = store.getState().appReducer;
         if (this.currentRoot !== root) {
             this.currentRoot = root;
             this.startApp(root);
