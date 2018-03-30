@@ -18,25 +18,6 @@ const store = mockStore({
     }
 });
 
-function setup() {
-    const props = {
-        navigator: {
-            push: jest.fn()
-        },
-        user: {
-            email: ''
-        },
-        userActions: {
-            updateEmail: jest.fn(),
-            validateEmail: jest.fn()
-        }
-    };
-
-    return {
-        props
-    }
-}
-
 beforeEach(() => {
     jest.resetAllMocks();
 });
@@ -62,11 +43,18 @@ describe('SignUp', () => {
 
         expect(wrapper).toBeTruthy();
         expect(wrapper.find('Button')).toHaveLength(0);
-        expect(wrapper.find('#signUpButton').length).toBe(0);
+        expect(wrapper.find('#continueUpButton').length).toBe(0);
         expect(wrapper).toMatchSnapshot();
     });
 
-    it('should call update email user action when email has text', () => {
+    it('should call correct user actions when rendered', () => {
+        const {props} = setup();
+        shallow(<SignUp {...props}/>);
+
+        expect(props.userActions.init).toHaveBeenCalledWith();
+    });
+
+    it('should call correct user actions when text is entered in email field', () => {
         const {props} = setup();
         const wrapper = shallow(<SignUp {...props}/>);
         const emailInput = wrapper.find('#emailInput').first();
@@ -76,7 +64,17 @@ describe('SignUp', () => {
         expect(props.userActions.updateEmail).toHaveBeenCalledWith('a');
     });
 
-    it('should call validate email user action when continue button is clicked', () => {
+    it('should call correct user actions when  text with whitespaces is entered in email field', () => {
+        const {props} = setup();
+        const wrapper = shallow(<SignUp {...props}/>);
+        const emailInput = wrapper.find('#emailInput').first();
+
+        emailInput.props().onChangeText(' a ');
+
+        expect(props.userActions.updateEmail).toHaveBeenCalledWith('a');
+    });
+
+    it('should call correct user actions when continue button is clicked', () => {
         const {props} = setup();
         props.user.email = 'a';
         const wrapper = shallow(<SignUp {...props}/>);

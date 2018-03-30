@@ -9,12 +9,6 @@ import {Landing} from '../../../src/screens/Landing';
 const mockStore = configureStore([promise(), thunk, logger]);
 const store = mockStore();
 
-const defaultProps = {
-    navigator: {
-        push: jest.fn()
-    }
-};
-
 describe('Landing', () => {
     //Start introduce hack to remove warnings as a result of issues with React native and enzyme mount
     const origConsole = console.error;
@@ -28,7 +22,8 @@ describe('Landing', () => {
     //End
 
     it('renders without crashing', () => {
-        const wrapper = mount(<Provider store={store}><Landing {...defaultProps}/></Provider>);
+        const {props} = setup();
+        const wrapper = mount(<Provider store={store}><Landing {...props}/></Provider>);
 
         expect(wrapper).toBeTruthy();
         expect(wrapper.find('Button')).toHaveLength(2);
@@ -36,7 +31,8 @@ describe('Landing', () => {
     });
 
     it('has sign up button with correct behaviour', () => {
-        const wrapper = mount(<Provider store={store}><Landing {...defaultProps}/></Provider>);
+        const {props} = setup();
+        const wrapper = mount(<Provider store={store}><Landing {...props}/></Provider>);
         const signUpButton = wrapper.find('#signUpButton').first();
 
         expect(signUpButton.prop('id')).toBe('signUpButton');
@@ -44,11 +40,12 @@ describe('Landing', () => {
         expect(signUpButton.text()).toBe('Sign Up');
 
         signUpButton.props().onPress();
-        expect(defaultProps.navigator.push).toHaveBeenCalledWith({screen: 'SignUp'});
+        expect(props.navigator.push).toHaveBeenCalledWith({screen: 'SignUp'});
     });
 
     it('has log in button with correct behaviour', () => {
-        const wrapper = mount(<Provider store={store}><Landing {...defaultProps}/></Provider>);
+        const {props} = setup();
+        const wrapper = mount(<Provider store={store}><Landing {...props}/></Provider>);
         const logInButton = wrapper.find('#logInButton').first();
 
         expect(logInButton.prop('id')).toBe('logInButton');
@@ -56,6 +53,6 @@ describe('Landing', () => {
         expect(logInButton.text()).toBe('Log In');
 
         logInButton.props().onPress();
-        expect(defaultProps.navigator.push).toHaveBeenCalledWith({screen: 'LogIn'});
+        expect(props.navigator.push).toHaveBeenCalledWith({screen: 'LogIn'});
     });
 });

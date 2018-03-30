@@ -26,11 +26,19 @@ export class SignUp extends Component {
         screenBackgroundColor: 'white'
     };
 
-    handleChangeText = (email) => {
-        this.props.userActions.updateEmail(email);
+    canNavigate = false;
+
+    constructor(props) {
+        super(props);
+        this.props.userActions.init();
+    }
+
+    handleEmailChangeText = (email) => {
+        this.props.userActions.updateEmail(email.trim());
     };
 
     handlePress = () => {
+        this.canNavigate = true;
         this.props.userActions.validateEmail(this.props.user.email);
     };
 
@@ -50,20 +58,34 @@ export class SignUp extends Component {
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
-                                        <Item floatingLabel>
+                                        <Item
+                                            floatingLabel
+                                            error={this.props.error !== null}>
                                             <Label>Email</Label>
                                             <Input id="emailInput" onChangeText={(email) => {
-                                                this.handleChangeText(email)
+                                                this.handleEmailChangeText(email)
                                             }} keyboardType={'email-address'} autoCapitalize="none"/>
                                         </Item>
                                     </Col>
                                 </Row>
-                                <Row size={1}>
-                                    {this.props.user.email.length > 0 ? <Button id="continueButton" rounded onPress={this.handlePress}>
-                                        <Text>Continue</Text>
-                                    </Button> : <Text/>}
+                                <Row size={2}>
+                                    <Col style={styles.container}>
+                                        <Row size={1}>
+                                            {this.props.error ?
+                                                <Label style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
+                                        </Row>
+                                        <Row size={1}>
+                                            {this.props.user.email.length > 0 ?
+                                                <Button id="continueButton"
+                                                        disabled={this.props.error !== null}
+                                                        rounded
+                                                        onPress={this.handlePress}>
+                                                    <Text>Continue</Text>
+                                                </Button> : <Text/>}
+                                        </Row>
+                                    </Col>
                                 </Row>
-                                <Row size={4}>
+                                <Row size={3}>
                                 </Row>
                             </Form>
                         </Row>
@@ -72,13 +94,23 @@ export class SignUp extends Component {
             </Container>
         )
     }
+
+    componentDidUpdate() {
+        if (this.canNavigate && !this.props.error) {
+            this.props.navigator.push({
+                screen: 'SignUpContinue'
+            });
+        }
+        this.canNavigate = false;
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
 
 function mapStateToProps(state, ownProps) {
     return {
-        user: state.userReducer.user
+        user: state.userReducer.user,
+        error: state.userReducer.error
     };
 }
 
