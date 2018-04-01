@@ -1,5 +1,5 @@
 export default function reducer(state = {
-    user: {email: '', password: '', passwordAgain: ''},
+    user: {email: '', password: '', passwordAgain: '', phoneNumber: ''},
     error: null
 }, action) {
     switch (action.type) {
@@ -31,12 +31,23 @@ export default function reducer(state = {
         case 'PASSWORD_MATCHED': {
             return {...state, user: {...state.user, passwordMatched: true}}
         }
+        case 'REGISTER_FAILED': {
+            return {...state, error: action.payload.invalidCredentialsMessage, user: {...state.user, passwordMatched: false}}
+        }
         default:
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    email: ''
+                    email: '',
+                    password: '',
+                    passwordAgain: '',
+                    phoneNumber: '',
+                    passwordMatched: false,
+                    isLoggedIn: false,
+                    hasSentForgottenPassword: false,
+                    resetCode: null,
+                    passwordReset: false
                 },
                 error: null
             }

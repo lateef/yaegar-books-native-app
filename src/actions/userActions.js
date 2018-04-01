@@ -1,4 +1,7 @@
 import validator from 'validator';
+import hash from 'hash.js';
+
+import Auth from '../aws-cognito/index';
 
 export function init() {
     return function (dispatch) {
@@ -62,4 +65,24 @@ function confirmPassword(password1, password2, dispatch) {
 function passesPasswordTest(password) {
     // at least one digit, one lowercase, one uppercase and minimum 6 characters
     return validator.matches(password, /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{6,})$/);
+}
+
+export function signUp(user) {
+    return async function (dispatch) {
+        try {
+             await new Promise((resolve, reject) => {
+                user.username = hash.sha256().update(user.email).digest('hex');
+                Auth.handleNewCustomerRegistration(user.username, user.password, user.email, user.phoneNumber, (err, result) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    dispatch({type: 'REGISTER_SUCCEEDED', payload: result});
+                    resolve();
+                });
+            });
+        } catch (e) {
+            dispatch({type: 'REGISTER_FAILED', payload: Auth.check(e.message)});
+        }
+    }
 }

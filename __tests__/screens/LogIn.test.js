@@ -4,7 +4,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
-import LogIn from '../../../src/screens/LogIn';
+import LogIn from '../../src/screens/LogIn';
 require('bezier');
 
 const mockStore = configureStore([promise(), thunk, logger]);

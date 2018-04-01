@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
 
-import ConnectedSignUp, {SignUp} from '../../../src/screens/SignUp';
+import ConnectedSignUp, {SignUp} from '../../src/screens/SignUp';
 
 require('bezier');
 

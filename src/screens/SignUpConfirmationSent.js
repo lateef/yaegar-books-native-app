@@ -33,7 +33,7 @@ export default class SignUpConfirmationSent extends Component {
                             <Col style={styles.container}>
                                 <Row size={1}/>
                                 <Row size={1}>
-                                    <Text style={{fontSize: 30}}>Sign Up Email Sent</Text>
+                                    <Text testID="signUpConfirmationSentTitle" style={{fontSize: 30}}>Sign Up Email Sent</Text>
                                 </Row>
                                 <Row size={1}>
                                     <Text>

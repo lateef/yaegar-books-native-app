@@ -1,4 +1,4 @@
-import reducer from '../../../src/reducers/appReducer';
+import reducer from '../../src/reducers/appReducer';
 
 describe('App reducer', () => {
     it('should return initial state', () => {

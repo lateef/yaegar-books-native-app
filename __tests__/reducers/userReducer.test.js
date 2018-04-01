@@ -1,8 +1,21 @@
-import reducer from '../../../src/reducers/userReducer';
+import reducer from '../../src/reducers/userReducer';
 
 describe('User reducer', () => {
     it('should return initial state', () => {
-        expect(reducer(undefined, {})).toEqual({error: null, user: {email: "", password: "", passwordAgain: ""}});
+        expect(reducer(undefined, {})).toEqual({
+            error: null,
+            user: {
+                email: "",
+                hasSentForgottenPassword: false,
+                isLoggedIn: false,
+                password: "",
+                passwordAgain: "",
+                passwordMatched: false,
+                passwordReset: false,
+                phoneNumber: "",
+                resetCode: null
+            }
+        });
     });
 
     it('should handle UPDATE_EMAIL', () => {
@@ -63,6 +76,13 @@ describe('User reducer', () => {
     it('should return ok if PASSWORD_MATCHED', () => {
         const action = {type: 'PASSWORD_MATCHED', payload: 'pass'};
         const expectedState = {user: {passwordMatched: true}};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if REGISTER_FAILED', () => {
+        const action = {type: 'REGISTER_FAILED', payload: {invalidCredentialsMessage:'missing email or password'}};
+        const expectedState = {error: 'missing email or password', user: {"passwordMatched": false}};
 
         expect(reducer([], action)).toEqual(expectedState);
     });
