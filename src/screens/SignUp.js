@@ -51,10 +51,10 @@ export class SignUp extends Component {
                             <Form style={styles.container}>
                                 <Row size={1}/>
                                 <Row size={2}>
-                                    <Text style={{fontSize: 30}}>Sign Up</Text>
+                                    <Text testID="signUpTitle" style={{fontSize: 30}}>Sign Up</Text>
                                 </Row>
                                 <Row size={1}>
-                                    <Text>Enter your email address</Text>
+                                    <Text testID="signUpHeading">Enter your email address</Text>
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
@@ -62,7 +62,7 @@ export class SignUp extends Component {
                                             floatingLabel
                                             error={this.props.error !== null}>
                                             <Label>Email</Label>
-                                            <Input id="emailInput" onChangeText={(email) => {
+                                            <Input testID="signUpEmailInput" id="emailInput" onChangeText={(email) => {
                                                 this.handleEmailChangeText(email)
                                             }} keyboardType={'email-address'} autoCapitalize="none"/>
                                         </Item>
@@ -72,11 +72,12 @@ export class SignUp extends Component {
                                     <Col style={styles.container}>
                                         <Row size={1}>
                                             {this.props.error ?
-                                                <Label style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
+                                                <Label testID="signUpErrorLabel" style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
                                         </Row>
                                         <Row size={1}>
                                             {this.props.user.email.length > 0 ?
                                                 <Button id="continueButton"
+                                                        testID="signUpContinueButton"
                                                         disabled={this.props.error !== null}
                                                         rounded
                                                         onPress={this.handlePress}>

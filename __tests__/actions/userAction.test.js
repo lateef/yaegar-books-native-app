@@ -2,10 +2,16 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
+import fetchMock from 'fetch-mock'
 
-import * as actions from '../../../src/actions/userActions';
+import * as actions from '../../src/actions/userActions';
 
 const mockStore = configureStore([promise(), thunk, logger]);
+
+afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+});
 
 describe('User action', () => {
     it('should return default action on init', () => {
@@ -122,5 +128,27 @@ describe('User action', () => {
         store.dispatch(action);
 
         expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it('should return register failed action when sign up failed', async () => {
+        const action = actions.signUp({email: 'email'});
+        const store = mockStore({}, action);
+
+        fetchMock.once('https://fail-on-purpose/', {throws: {message:'InvalidParameterException: Missing required parameter'}});
+
+        return store.dispatch(action).then(() => {
+            expect(store.getActions()[0].type).toBe('REGISTER_FAILED');
+        });
+    });
+
+    it('should return register success action when sign up failed', async () => {
+        const action = actions.signUp({email: 'email'});
+        const store = mockStore({}, action);
+
+        fetchMock.once('https://cognito-idp.eu-west-1.amazonaws.com/', {body: {}});
+
+        return store.dispatch(action).then(() => {
+            expect(store.getActions()[0].type).toBe('REGISTER_SUCCEEDED');
+        });
     });
 });

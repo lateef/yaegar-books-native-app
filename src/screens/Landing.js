@@ -31,7 +31,7 @@ export class Landing extends Component {
                         </Row>
                         <Row size={1}>
                             <View style={styles.container}>
-                                <Text style={{fontSize: 50}}>
+                                <Text testID="landingTitle" style={{fontSize: 50}}>
                                     Yaegar Books
                                 </Text>
                             </View>
@@ -42,7 +42,7 @@ export class Landing extends Component {
                             <Col size={1}>
                             </Col>
                             <Col size={4}>
-                                <Button id="signUpButton" block onPress={() => {
+                                <Button id="signUpButton" testID="landingSignUpButton" block onPress={() => {
                                     this.handlePress('SignUp')
                                 }}>
                                     <Text>Sign Up</Text>

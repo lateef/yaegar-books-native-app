@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
 
-import * as actions from '../../../src/actions/appActions';
+import * as actions from '../../src/actions/appActions';
 
 const mockStore = configureStore([promise(), thunk, logger]);
 

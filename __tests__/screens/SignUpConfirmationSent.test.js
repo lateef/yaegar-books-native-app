@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SignUpConfirmationSent from '../../../src/screens/SignUpConfirmationSent';
+import SignUpConfirmationSent from '../../src/screens/SignUpConfirmationSent';
 
 beforeEach(() => {
     jest.resetAllMocks();

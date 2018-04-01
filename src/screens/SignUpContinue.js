@@ -30,7 +30,6 @@ export class SignUpContinue extends Component {
 
     constructor(props) {
         super(props);
-        this.props.userActions.init();
     }
 
     handlePasswordChangeText = (password) => {
@@ -45,7 +44,7 @@ export class SignUpContinue extends Component {
 
     handlePress = () => {
         if (this.props.user.passwordMatched) {
-            //     this.props.userActions.signUp(this.props.user);
+            this.props.userActions.signUp(this.props.user);
             this.canNavigate = true;
         }
     };
@@ -59,10 +58,10 @@ export class SignUpContinue extends Component {
                             <Form style={styles.container}>
                                 <Row size={1}/>
                                 <Row size={2}>
-                                    <Text style={{fontSize: 30}}>Sign Up</Text>
+                                    <Text testID="signUpContinueTitle" style={{fontSize: 30}}>Sign Up</Text>
                                 </Row>
                                 <Row size={1}>
-                                    <Text>Enter your password</Text>
+                                    <Text testID="signUpContinueHeading">Enter your password</Text>
                                 </Row>
                                 <Row size={1}>
                                     <Col style={{flex: 1, alignItems: 'center'}}>
@@ -76,6 +75,7 @@ export class SignUpContinue extends Component {
                                         <Item floatingLabel>
                                             <Label>Password</Label>
                                             <Input id="passwordInput"
+                                                   testID="signUpContinuePasswordInput"
                                                    secureTextEntry={true}
                                                    onChangeText={(password) => {
                                                        this.handlePasswordChangeText(password)
@@ -88,6 +88,7 @@ export class SignUpContinue extends Component {
                                         <Item floatingLabel>
                                             <Label>Password Again</Label>
                                             <Input id="passwordAgainInput"
+                                                   testID="signUpContinuePasswordAgainInput"
                                                    secureTextEntry={true}
                                                    onChangeText={(passwordAgain) => this.handlePasswordAgainChangeText(passwordAgain)}/>
                                         </Item>
@@ -101,6 +102,7 @@ export class SignUpContinue extends Component {
                                         </Row>
                                         <Row size={1}>
                                             <Button id="signUpButton"
+                                                    testID="signUpContinueSignUpButton"
                                                     disabled={this.props.error !== null || !this.props.user.passwordMatched}
                                                     rounded
                                                     onPress={this.handlePress}>

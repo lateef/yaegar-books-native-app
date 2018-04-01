@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
 
-import ConnectedSignUpContinue, {SignUpContinue} from '../../../src/screens/SignUpContinue';
+import ConnectedSignUpContinue, {SignUpContinue} from '../../src/screens/SignUpContinue';
 
 require('bezier');
 
@@ -58,25 +58,27 @@ describe('SignUpContinue', () => {
         expect(props.userActions.validatePassword).toHaveBeenCalledWith('p', props.user.passwordAgain);
     });
 
-    it('should call correct user actions when  text is entered in password again field', () => {
+    it('should call correct user actions when text is entered in password again field', () => {
         const {props} = setup();
         const wrapper = shallow(<SignUpContinue {...props}/>);
         const passwordAgainInput = wrapper.find('#passwordAgainInput').first();
 
-        passwordAgainInput.props().onChangeText('pa');
+        const password = 'pa';
+        passwordAgainInput.props().onChangeText(password);
 
-        expect(props.userActions.setPasswordAgain).toHaveBeenCalledWith('pa');
-        expect(props.userActions.validatePassword).toHaveBeenCalledWith(props.user.password, 'pa');
+        expect(props.userActions.setPasswordAgain).toHaveBeenCalledWith(password);
+        expect(props.userActions.validatePassword).toHaveBeenCalledWith(props.user.password, password);
     });
 
-    // it('should call correct user actions when continue button is clicked', () => {
-    //     const {props} = setup();
-    //     props.user.email = 'a';
-    //     const wrapper = shallow(<SignUpContinue {...props}/>);
-    //     const continueButton = wrapper.find('#continueButton').first();
-    //
-    //     continueButton.props().onPress();
-    //
-    //     expect(props.userActions.validateEmail).toHaveBeenCalled();
-    // })
+    it('should call correct user actions when sign up button is clicked', () => {
+        const {props} = setup();
+        props.user.passwordMatched = true;
+
+        const wrapper = shallow(<SignUpContinue {...props}/>);
+        const signUpButton = wrapper.find('#signUpButton').first();
+
+        signUpButton.props().onPress();
+
+        expect(props.userActions.signUp).toHaveBeenCalledWith(props.user);
+    })
 });

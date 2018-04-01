@@ -1,8 +1,8 @@
-import { configure, mount, shallow, render } from 'enzyme';
+import {configure, mount, shallow, render} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jsdom-global/register';
 
-configure({ adapter: new Adapter() });
+configure({adapter: new Adapter()});
 
 global.mount = mount;
 global.shallow = shallow;
@@ -22,12 +22,13 @@ global.setup = function setup() {
             validateEmail: jest.fn(),
             setPassword: jest.fn(),
             setPasswordAgain: jest.fn(),
-            validatePassword: jest.fn()
+            validatePassword: jest.fn(),
+            signUp: jest.fn()
         }
     };
 
     return {
         props
     }
-}
+};
 

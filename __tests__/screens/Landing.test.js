@@ -4,7 +4,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import promise from 'redux-promise-middleware';
-import {Landing} from '../../../src/screens/Landing';
+import {Landing} from '../../src/screens/Landing';
 
 const mockStore = configureStore([promise(), thunk, logger]);
 const store = mockStore();
