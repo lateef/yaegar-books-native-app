@@ -40,14 +40,11 @@ describe('Dashboard', () => {
 
     it('has log out button with correct behaviour', () => {
         const {props} = setup();
-        const wrapper = mount(<Provider store={store}><ConnectedDashboard {...props}/></Provider>);
-        const dashboardSignOut = wrapper.find('#signOut').first();
+        const wrapper = shallow(<Dashboard {...props}/>);
+        const signOut = wrapper.find('#signOut').first();
 
-        expect(dashboardSignOut.prop('id')).toBe('signOut');
-        expect(dashboardSignOut.prop('block')).toBeTruthy();
-        expect(dashboardSignOut.text()).toBe('Sign Out');
-
-        dashboardSignOut.props().onPress();
+        signOut.props().onPress();
         expect(props.userActions.logout).toHaveBeenCalled();
+        expect(props.navigator.resetTo).toHaveBeenCalled();
     });
 });

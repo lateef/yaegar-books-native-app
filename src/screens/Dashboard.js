@@ -48,7 +48,9 @@ export class Dashboard extends Component {
                             <Col size={4}>
                                 <Button id="signOut"
                                         testID="dashboardSignOut"
-                                        block onPress={this.handleLogout}>
+                                        block onPress={() => {
+                                    this.handleLogout()
+                                }}>
                                     <Text>Sign Out</Text>
                                 </Button>
                             </Col>
