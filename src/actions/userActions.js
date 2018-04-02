@@ -117,3 +117,22 @@ export function logout() {
         dispatch({type: 'LOGGED_OUT'});
     }
 }
+
+export function unregister() {
+    return async function (dispatch) {
+        try {
+            await new Promise((resolve, reject) => {
+                Auth.handleUnregisterCustomer((err, result) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    dispatch({type: 'UNREGISTER_SUCCEEDED', payload: result});
+                    resolve();
+                });
+            });
+        } catch (e) {
+            dispatch({type: 'UNREGISTER_FAILED'});
+        }
+    }
+}
