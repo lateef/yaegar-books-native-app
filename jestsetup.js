@@ -11,7 +11,8 @@ global.render = render;
 global.setup = function setup() {
     const props = {
         navigator: {
-            push: jest.fn()
+            push: jest.fn(),
+            resetTo: jest.fn()
         },
         user: {
             email: '', password: '', passwordAgain: ''

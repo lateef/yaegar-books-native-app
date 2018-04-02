@@ -45,6 +45,11 @@ export class LogIn extends Component {
         await this.props.userActions.validatePassword(this.props.user.password, this.props.user.password);
         if (!this.props.error) {
             await this.props.userActions.logIn(this.props.user);
+            if (this.props.user.isLoggedIn) {
+                this.props.navigator.resetTo({
+                    screen: 'Dashboard'
+                });
+            }
         }
     };
 
@@ -91,7 +96,7 @@ export class LogIn extends Component {
                                             </Item>
                                         </Col>
                                     </Row>
-                                    <Row size={3}>
+                                    <Row size={2}>
                                         {this.props.error ?
                                             <Label testID="logInErrorLabel"
                                                    style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
@@ -113,7 +118,7 @@ export class LogIn extends Component {
                                             <Text>Forgot Password?</Text>
                                         </Button>
                                     </Row>
-                                    <Row size={5}>
+                                    <Row size={3}>
                                     </Row>
                                 </Form>
                             </View>

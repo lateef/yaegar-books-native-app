@@ -179,6 +179,14 @@ function check(error) {
         return {
             invalidCredentialsMessage: 'User already exists',
         }
+    }  else if (/Incorrect username or password.$/.test(err)) {
+        return {
+            invalidCredentialsMessage: 'Incorrect username or password',
+        }
+    }   else if (/Password attempts exceeded$/.test(err)) {
+        return {
+            invalidCredentialsMessage: 'Password attempts exceeded',
+        }
     } else if (/CodeMismatchException: Invalid code or auth state for the user.$/.test(err)) {
         return {
             invalidCredentialsMessage: 'Invalid Verification Code',

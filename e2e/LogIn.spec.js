@@ -32,6 +32,6 @@ describe('Yaegar Books Log In', () => {
         await element(by.id('logInPasswordInput')).typeText('Qq1111');
         await element(by.id('logInContinueButton')).tap();
 
-        // await expect(element(by.id('LogInConfirmationSentTitle'))).toHaveText('Sign Up Email Sent');
+        await expect(element(by.id('dashboardTitle'))).toHaveText('Yaegar Books Dashboard');
     });
 });

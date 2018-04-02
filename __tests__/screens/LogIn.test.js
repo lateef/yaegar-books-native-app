@@ -70,25 +70,42 @@ describe('LogIn', () => {
     it('should call correct user actions when text is entered in password field', () => {
         const {props} = setup();
         const wrapper = shallow(<LogIn {...props}/>);
-        const emailInput = wrapper.find('#passwordInput').first();
+        const passwordInput = wrapper.find('#passwordInput').first();
 
-        emailInput.props().onChangeText('pass');
+        passwordInput.props().onChangeText('pass');
 
         expect(props.userActions.setPassword).toHaveBeenCalledWith('pass');
     });
 
-    it('should call correct user actions when login button is clicked', async () => {
+    it('should call correct user actions when login button is clicked and unsuccessful', async () => {
         const {props} = setup();
         props.user.email = 'email';
         props.user.password = 'password';
         const wrapper = shallow(<LogIn {...props}/>);
-        const continueButton = wrapper.find('#logInButton').first();
+        const logInButton = wrapper.find('#logInButton').first();
 
-        continueButton.props().onPress();
+        logInButton.props().onPress();
 
         await expect(props.userActions.validateEmail).toHaveBeenCalledWith(props.user.email);
         await expect(props.userActions.validatePassword).toHaveBeenCalledWith(props.user.password, props.user.password);
         await expect(props.userActions.logIn).toHaveBeenCalledWith(props.user);
+        await expect(props.navigator.resetTo).not.toHaveBeenCalledWith({screen: 'Dashboard'});
+    });
+
+    it('should call correct user actions when login button is clicked and successful', async () => {
+        const {props} = setup();
+        props.user.email = 'email';
+        props.user.password = 'password';
+        props.user.isLoggedIn = true;
+        const wrapper = shallow(<LogIn {...props}/>);
+        const logInButton = wrapper.find('#logInButton').first();
+
+        logInButton.props().onPress();
+
+        await expect(props.userActions.validateEmail).toHaveBeenCalledWith(props.user.email);
+        await expect(props.userActions.validatePassword).toHaveBeenCalledWith(props.user.password, props.user.password);
+        await expect(props.userActions.logIn).toHaveBeenCalledWith(props.user);
+        await expect(props.navigator.resetTo).toHaveBeenCalledWith({screen: 'Dashboard'});
     });
 
     it('should call correct user actions when forgotten password button is clicked', async () => {
@@ -98,6 +115,6 @@ describe('LogIn', () => {
 
         forgotPasswordButton.props().onPress();
 
-        expect(props.navigator.push).toHaveBeenCalledWith({screen: 'ForgotPassword'});
+        await expect(props.navigator.push).toHaveBeenCalledWith({screen: 'ForgotPassword'});
     });
 });
