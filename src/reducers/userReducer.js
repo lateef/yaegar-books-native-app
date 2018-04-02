@@ -44,6 +44,7 @@ export default function reducer(state = {
         case 'LOGIN_FAILED': {
             return {...state, user: {...state.user, busy: false}, error: action.payload.invalidCredentialsMessage}
         }
+        // INIT REGISTER_SUCCEEDED LOGGED_OUT
         default:
             return {
                 ...state,
@@ -56,7 +57,6 @@ export default function reducer(state = {
                     passwordMatched: false,
                     isLoggedIn: false,
                     hasSentForgottenPassword: false,
-                    resetCode: null,
                     passwordReset: false
                 },
                 error: null

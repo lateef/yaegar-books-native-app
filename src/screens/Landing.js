@@ -70,12 +70,11 @@ export class Landing extends Component {
 export default connect(mapStateToProps, mapDispatchToProps)(Landing)
 
 function mapStateToProps(state, ownProps) {
-    return {
-    };
+    return {};
 }
+
 function mapDispatchToProps(dispatch) {
-    return {
-    };
+    return {};
 }
 
 const styles = StyleSheet.create({

@@ -110,3 +110,10 @@ export function logIn(user) {
         }
     }
 }
+
+export function logout() {
+    return async function (dispatch) {
+        Auth.handleSignOut();
+        dispatch({type: 'LOGGED_OUT'});
+    }
+}

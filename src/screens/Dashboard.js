@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet} from 'react-native';
+import {bindActionCreators} from 'redux';
 import {Container, Content, View, Grid, Col, Row, Text, Button} from 'native-base';
 
-export class Landing extends Component {
+import * as userAction from '../actions/userActions';
+
+export class Dashboard extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -14,9 +17,10 @@ export class Landing extends Component {
         super(props);
     }
 
-    handlePress = (screen) => {
-        this.props.navigator.push({
-            screen: screen
+    handleLogout = () => {
+        this.props.userActions.logout();
+        this.props.navigator.resetTo({
+            screen: 'Landing'
         });
     };
 
@@ -29,16 +33,26 @@ export class Landing extends Component {
                         </Row>
                         <Row size={1}>
                         </Row>
-                        <Row size={1}>
+                        <Row size={7}>
                             <View style={styles.container}>
                                 <Text testID="dashboardTitle" style={{fontSize: 30}}>
                                     Yaegar Books Dashboard
                                 </Text>
                             </View>
                         </Row>
-                        <Row size={3}>
-                        </Row>
                         <Row size={1}>
+                            <Col size={1}></Col>
+                            <Col size={4}>
+                            </Col>
+                            <Col size={1}></Col>
+                            <Col size={4}>
+                                <Button id="signOut"
+                                        testID="dashboardSignOut"
+                                        block onPress={this.handleLogout}>
+                                    <Text>Sign Out</Text>
+                                </Button>
+                            </Col>
+                            <Col size={1}></Col>
                         </Row>
                     </Grid>
                 </Content>
@@ -47,14 +61,18 @@ export class Landing extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Landing)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 
 function mapStateToProps(state, ownProps) {
     return {
+        user: state.userReducer.user,
+        error: state.userReducer.error
     };
 }
+
 function mapDispatchToProps(dispatch) {
     return {
+        userActions: bindActionCreators(userAction, dispatch)
     };
 }
 

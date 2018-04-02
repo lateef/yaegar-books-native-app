@@ -62,9 +62,9 @@ export class LogIn extends Component {
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
+                <Content>
                     <Grid>
-                        <Row>
+                        <Row style={{height: 750}}>
                             <View style={styles.container}>
                                 <Form style={styles.container}>
                                     <Row size={1}>
@@ -118,7 +118,7 @@ export class LogIn extends Component {
                                             <Text>Forgot Password?</Text>
                                         </Button>
                                     </Row>
-                                    <Row size={3}>
+                                    <Row size={5}>
                                     </Row>
                                 </Form>
                             </View>
