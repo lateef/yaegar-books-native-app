@@ -19,10 +19,19 @@ export class Dashboard extends Component {
 
     handleLogout = () => {
         this.props.userActions.logout();
+        this.navigateToLandingPage();
+    };
+
+    handleUnregister = async () => {
+        await this.props.userActions.unregister();
+        this.navigateToLandingPage();
+    };
+
+    navigateToLandingPage() {
         this.props.navigator.resetTo({
             screen: 'Landing'
         });
-    };
+    }
 
     render() {
         return (
@@ -43,6 +52,11 @@ export class Dashboard extends Component {
                         <Row size={1}>
                             <Col size={1}></Col>
                             <Col size={4}>
+                                <Button id="deleteAccount"
+                                        testID="dashboardDeleteAccount"
+                                        block onPress={() => {this.handleUnregister()}}>
+                                    <Text>Delete Account</Text>
+                                </Button>
                             </Col>
                             <Col size={1}></Col>
                             <Col size={4}>

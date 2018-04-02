@@ -85,4 +85,12 @@ describe('User reducer', () => {
 
         expect(reducer([], action)).toEqual(expectedState);
     });
+
+    it('should return error if UNREGISTER_SUCCEEDED', () => {
+        const action = {type: 'UNREGISTER_SUCCEEDED', payload: {}};
+        const expectedState = {user: {email: '', password: '', passwordAgain: '', phoneNumber: '', unregistered: true,
+            isLoggedIn: false, hasSentForgottenPassword: false, passwordReset: false}, error: null};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
 });

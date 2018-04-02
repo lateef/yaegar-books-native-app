@@ -47,4 +47,14 @@ describe('Dashboard', () => {
         expect(props.userActions.logout).toHaveBeenCalled();
         expect(props.navigator.resetTo).toHaveBeenCalled();
     });
+
+    it('has unregister button with correct behaviour', async () => {
+        const {props} = setup();
+        const wrapper = shallow(<Dashboard {...props}/>);
+        const deleteAccount = wrapper.find('#deleteAccount').first();
+
+        deleteAccount.props().onPress();
+        await expect(props.userActions.unregister).toHaveBeenCalled();
+        expect(props.navigator.resetTo).toHaveBeenCalled();
+    });
 });
