@@ -37,7 +37,7 @@ export default class SignUpConfirmationSent extends Component {
                                 </Row>
                                 <Row size={1}>
                                     <Text>
-                                        A sign up confirmation has been sent to you email,
+                                        A sign up confirmation has been sent to your email.
                                         Please click the link in the email to complete your registration.
                                     </Text>
                                 </Row>

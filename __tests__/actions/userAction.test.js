@@ -141,7 +141,7 @@ describe('User action', () => {
         });
     });
 
-    it('should return register success action when sign up failed', async () => {
+    it('should return register success action when sign up succeed', async () => {
         const action = actions.signUp({email: 'email'});
         const store = mockStore({}, action);
 
@@ -151,4 +151,26 @@ describe('User action', () => {
             expect(store.getActions()[0].type).toBe('REGISTER_SUCCEEDED');
         });
     });
+
+    it('should return login failed action when log in failed', async () => {
+        const action = actions.logIn({email: 'email', password: 'password'});
+        const store = mockStore({}, action);
+
+        fetchMock.once('https://fail-on-purpose/', {throws: {message:'InvalidParameterException: Missing required parameter'}});
+
+        return store.dispatch(action).then(() => {
+            expect(store.getActions()[0].type).toBe('LOGIN_FAILED');
+        });
+    });
+
+    // it('should return login success action when log in succeed', async () => {
+    //     const action = actions.logIn({email: 'email', password: 'password'});
+    //     const store = mockStore({}, action);
+    //
+    //     fetchMock.once('https://cognito-idp.eu-west-1.amazonaws.com/', {body: jest.fn()});
+    //
+    //     return store.dispatch(action).then(() => {
+    //         expect(store.getActions()[0].type).toBe('LOGIN_SUCCEEDED');
+    //     });
+    // });
 });

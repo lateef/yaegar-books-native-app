@@ -74,7 +74,8 @@ export function signUp(user) {
                 user.username = hash.sha256().update(user.email).digest('hex');
                 Auth.handleNewCustomerRegistration(user.username, user.password, user.email, user.phoneNumber, (err, result) => {
                     if (err) {
-                        reject(err);
+                        let displayError = Auth.check(err);
+                        reject(displayError);
                         return;
                     }
                     dispatch({type: 'REGISTER_SUCCEEDED', payload: result});
@@ -82,7 +83,30 @@ export function signUp(user) {
                 });
             });
         } catch (e) {
-            dispatch({type: 'REGISTER_FAILED', payload: Auth.check(e.message)});
+            dispatch({type: 'REGISTER_FAILED', payload: e.invalidCredentialsMessage});
+        }
+    }
+}
+
+export function logIn(user) {
+    return async function (dispatch) {
+        try {
+            await new Promise((resolve, reject) => {
+                Auth.handleSignIn(user.email, user.password, {
+                    onSuccess: async (result) => {
+                        dispatch({type: 'LOGIN_IN_PROGRESS'});
+                        await Auth.getCredentials(result);
+                        dispatch({type: 'LOGIN_SUCCEEDED', payload: result});
+                        resolve();
+                    },
+                    onFailure: (error) => {
+                        let displayError = Auth.check(error);
+                        reject(displayError);
+                    }
+                });
+            });
+        } catch (e) {
+            dispatch({type: 'LOGIN_FAILED', payload: e.invalidCredentialsMessage});
         }
     }
 }

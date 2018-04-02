@@ -51,7 +51,7 @@ export class Landing extends Component {
                             <Col size={1}>
                             </Col>
                             <Col size={4}>
-                                <Button id="logInButton" block onPress={() => {
+                                <Button id="logInButton" testID="landingLogInButton" block onPress={() => {
                                     this.handlePress('LogIn')
                                 }}>
                                     <Text>Log In</Text>
