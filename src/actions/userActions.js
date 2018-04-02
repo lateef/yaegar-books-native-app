@@ -74,7 +74,7 @@ export function signUp(user) {
                 user.username = hash.sha256().update(user.email).digest('hex');
                 Auth.handleNewCustomerRegistration(user.username, user.password, user.email, user.phoneNumber, (err, result) => {
                     if (err) {
-                        let displayError = Auth.check(err);
+                        let displayError = Auth.check(err.message);
                         reject(displayError);
                         return;
                     }
@@ -83,7 +83,7 @@ export function signUp(user) {
                 });
             });
         } catch (e) {
-            dispatch({type: 'REGISTER_FAILED', payload: e.invalidCredentialsMessage});
+            dispatch({type: 'REGISTER_FAILED', payload: e});
         }
     }
 }
@@ -100,13 +100,13 @@ export function logIn(user) {
                         resolve();
                     },
                     onFailure: (error) => {
-                        let displayError = Auth.check(error);
+                        let displayError = Auth.check(error.message);
                         reject(displayError);
                     }
                 });
             });
         } catch (e) {
-            dispatch({type: 'LOGIN_FAILED', payload: e.invalidCredentialsMessage});
+            dispatch({type: 'LOGIN_FAILED', payload: e});
         }
     }
 }

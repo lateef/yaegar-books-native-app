@@ -1,5 +1,5 @@
 export default function reducer(state = {
-    user: {email: '', password: '', passwordAgain: '', phoneNumber: ''},
+    user: {email: '', password: '', passwordAgain: '', phoneNumber: '', isLoggedIn: false},
     error: null
 }, action) {
     switch (action.type) {
@@ -33,6 +33,16 @@ export default function reducer(state = {
         }
         case 'REGISTER_FAILED': {
             return {...state, error: action.payload.invalidCredentialsMessage, user: {...state.user, passwordMatched: false}}
+        }
+        case 'LOGIN_SUCCEEDED': {
+            return {...state, user: {...state.user, password: '', passwordAgain: '', isLoggedIn: true, busy: false},
+                error: null}
+        }
+        case 'LOGIN_IN_PROGRESS': {
+            return {...state, user: {...state.user, busy: true}, error: null}
+        }
+        case 'LOGIN_FAILED': {
+            return {...state, user: {...state.user, busy: false}, error: action.payload.invalidCredentialsMessage}
         }
         default:
             return {
