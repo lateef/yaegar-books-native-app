@@ -12,8 +12,7 @@ describe('User reducer', () => {
                 passwordAgain: "",
                 passwordMatched: false,
                 passwordReset: false,
-                phoneNumber: "",
-                resetCode: null
+                phoneNumber: ""
             }
         });
     });

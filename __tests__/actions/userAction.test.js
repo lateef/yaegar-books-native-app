@@ -173,4 +173,15 @@ describe('User action', () => {
     //         expect(store.getActions()[0].type).toBe('LOGIN_SUCCEEDED');
     //     });
     // });
+
+    // it('should return log out action', () => {
+    //    const action = actions.logout();
+    //     const store = mockStore({}, action);
+    //
+    //     fetchMock.once('https://cognito-idp.eu-west-1.amazonaws.com/', {body: {}});
+    //
+    //     return store.dispatch(action).then(() => {
+    //         expect(store.getActions()[0].type).toBe('LOGGED_OUT');
+    //     });
+    // });
 });
