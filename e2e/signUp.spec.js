@@ -1,13 +1,11 @@
-import fetchMock from 'fetch-mock'
-
 describe('Yaegar Books Sign Up', () => {
     beforeEach(async () => {
         await device.reloadReactNative();
+        await device.launchApp();
+        await setTimeout('', 60000);
     });
 
     afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
     });
 
     it('should return error when invalid email is used', async () => {
@@ -44,17 +42,8 @@ describe('Yaegar Books Sign Up', () => {
         await element(by.id('signUpContinuePasswordAgainInput')).clearText();
         await element(by.id('signUpContinuePasswordInput')).typeText('Qq1111');
         await element(by.id('signUpContinuePasswordAgainInput')).typeText('Qq1111');
-
-        fetchMock.once('https://cognito-idp.eu-west-1.amazonaws.com/', {
-            body: {
-                code: "UsernameExistsException",
-                message: "User already exists",
-                name: "UsernameExistsException"
-            }
-        });
-
         await element(by.id('signUpContinueSignUpButton')).tap();
 
-        // await expect(element(by.id('signUpConfirmationSentTitle'))).toHaveText('Sign Up Email Sent');
+        await expect(element(by.id('signUpConfirmationSentTitle'))).toHaveText('Sign Up Email Sent');
     });
 });

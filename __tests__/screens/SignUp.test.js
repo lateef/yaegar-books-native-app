@@ -18,14 +18,8 @@ const store = mockStore({
     }
 });
 
-beforeEach(() => {
-    jest.resetAllMocks();
-});
-
-afterEach(() => {
-});
-
 describe('SignUp', () => {
+    jest.resetAllMocks();
     //Start introduce hack to remove warnings as a result of issues with React native and enzyme mount
     const origConsole = console.error;
     beforeEach(() => {
@@ -39,7 +33,7 @@ describe('SignUp', () => {
 
     it('renders without crashing', () => {
         const {props} = setup();
-        const wrapper = shallow(<Provider store={store}><ConnectedSignUp {...props}/></Provider>);
+        const wrapper = mount(<Provider store={store}><ConnectedSignUp {...props}/></Provider>);
 
         expect(wrapper).toBeTruthy();
         expect(wrapper.find('Button')).toHaveLength(0);
@@ -83,5 +77,5 @@ describe('SignUp', () => {
         continueButton.props().onPress();
 
         expect(props.userActions.validateEmail).toHaveBeenCalled();
-    })
+    });
 });

@@ -65,8 +65,8 @@ export class SignUpContinue extends Component {
                                 </Row>
                                 <Row size={1}>
                                     <Col style={{flex: 1, alignItems: 'center'}}>
-                                        <Text style={{color: 'grey', fontSize: 14}}>
-                                            Min 6 chars, must contain 1 lowercase, uppercase and number
+                                        <Text style={{color: 'grey', fontSize: 14, padding: 10, textAlign: 'center'}}>
+                                            Minimum 6 characters, and must contain at least 1 lowercase, 1 uppercase and 1 number
                                         </Text>
                                     </Col>
                                 </Row>

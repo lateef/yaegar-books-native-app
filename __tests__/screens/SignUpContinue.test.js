@@ -39,11 +39,9 @@ describe('SignUpContinue', () => {
 
     it('renders without crashing', () => {
         const {props} = setup();
-        const wrapper = shallow(<Provider store={store}><ConnectedSignUpContinue {...props}/></Provider>);
+        const wrapper = mount(<Provider store={store}><ConnectedSignUpContinue {...props}/></Provider>);
 
         expect(wrapper).toBeTruthy();
-        expect(wrapper.find('Button')).toHaveLength(0);
-        expect(wrapper.find('#signUpButton').length).toBe(0);
         expect(wrapper).toMatchSnapshot();
     });
 
