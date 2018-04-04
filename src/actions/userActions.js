@@ -136,3 +136,54 @@ export function unregister() {
         }
     }
 }
+
+export function forgotPassword(user) {
+    return async function (dispatch) {
+        try {
+            await new Promise((resolve, reject) => {
+                Auth.handleForgotPassword(user.email, {
+                    onSuccess: (result) => {
+                        dispatch({type: 'FORGOT_PASSWORD_SENT', payload: result});
+                        resolve();
+                    },
+                    onFailure: (error) => {
+                        let displayError = Auth.check(error);
+                        reject(displayError);
+                    }
+                });
+            });
+        } catch (e) {
+            dispatch({type: 'FORGOT_PASSWORD_SENT_FAILED', payload: 'Please enter a valid email'});
+        }
+    }
+}
+
+export function forgotPasswordReset(user) {
+    return async function (dispatch) {
+        try {
+            await new Promise((resolve, reject) => {
+                Auth.handleForgotPasswordReset(user.email, user.resetCode, user.password, {
+                    onSuccess: (result) => {
+                        dispatch({type: 'PASSWORD_RESET', payload: result});
+                        resolve();
+                    },
+                    onFailure: (error) => {
+                        let displayError = Auth.check(error);
+                        reject(displayError);
+                    }
+                });
+            });
+        } catch (e) {
+            dispatch({
+                type: 'PASSWORD_RESET_FAILED',
+                payload: 'Please check your email/verification code and try again'
+            });
+        }
+    }
+}
+
+export function setResetCode(resetCode) {
+    return function (dispatch) {
+        dispatch({type: 'SET_CODE', payload: resetCode});
+    }
+}
