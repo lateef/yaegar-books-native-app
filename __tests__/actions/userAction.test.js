@@ -195,4 +195,58 @@ describe('User action', () => {
     //         expect(store.getActions()[0].type).toBe('UNREGISTER_SUCCEEDED');
     //     });
     // });
+
+    it('should fail forgotPassword action', () => {
+        const action = actions.forgotPassword();
+        const store = mockStore({}, action);
+
+        fetchMock.once('https://fail/', {body: {}});
+
+        return store.dispatch(action).then(() => {
+            expect(store.getActions()[0].type).toBe('FORGOT_PASSWORD_SENT_FAILED');
+        });
+    });
+
+    // it('should return forgotPassword action', () => {
+    //     const action = actions.forgotPassword();
+    //     const store = mockStore({}, action);
+    //
+    //     fetchMock.once('https://cognito-idp.eu-west-1.amazonaws.com/', {body: {}});
+    //
+    //     return store.dispatch(action).then(() => {
+    //         expect(store.getActions()[0].type).toBe('FORGOT_PASSWORD_SENT');
+    //     });
+    // });
+
+    it('should fail forgotPasswordReset action', () => {
+        const action = actions.forgotPasswordReset();
+        const store = mockStore({}, action);
+
+        fetchMock.once('https://fail/', {body: {}});
+
+        return store.dispatch(action).then(() => {
+            expect(store.getActions()[0].type).toBe('PASSWORD_RESET_FAILED');
+        });
+    });
+
+    // it('should return forgotPasswordReset action', () => {
+    //     const action = actions.forgotPasswordReset();
+    //     const store = mockStore({}, action);
+    //
+    //     fetchMock.once('https://cognito-idp.eu-west-1.amazonaws.com/', {body: {}});
+    //
+    //     return store.dispatch(action).then(() => {
+    //         expect(store.getActions()[0].type).toBe('PASSWORD_RESET');
+    //     });
+    // });
+
+    it('should return reset code action', () => {
+        const expectedActions = [{type: 'SET_CODE', payload: '11111'}];
+        const action = actions.setResetCode('11111');
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
 });

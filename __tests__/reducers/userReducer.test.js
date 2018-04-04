@@ -12,6 +12,7 @@ describe('User reducer', () => {
                 passwordAgain: "",
                 passwordMatched: false,
                 passwordReset: false,
+                resetCode: null,
                 phoneNumber: ""
             }
         });
@@ -90,6 +91,41 @@ describe('User reducer', () => {
         const action = {type: 'UNREGISTER_SUCCEEDED', payload: {}};
         const expectedState = {user: {email: '', password: '', passwordAgain: '', phoneNumber: '', unregistered: true,
             isLoggedIn: false, hasSentForgottenPassword: false, passwordReset: false}, error: null};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if FORGOT_PASSWORD_SENT', () => {
+        const action = {type: 'FORGOT_PASSWORD_SENT', payload: {}};
+        const expectedState = {user: {hasSentForgottenPassword: true}, error: null};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if FORGOT_PASSWORD_SENT_FAILED', () => {
+        const action = {type: 'FORGOT_PASSWORD_SENT_FAILED', payload: 'failed'};
+        const expectedState = {error: 'failed'};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if PASSWORD_RESET', () => {
+        const action = {type: 'PASSWORD_RESET', payload: {}};
+        const expectedState = {user: {passwordReset: true}, error: null};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if PASSWORD_RESET_FAILED', () => {
+        const action = {type: 'PASSWORD_RESET_FAILED', payload: 'failed'};
+        const expectedState = {user: {passwordReset: false}, error: 'failed'};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if SET_CODE', () => {
+        const action = {type: 'SET_CODE', payload: '11111'};
+        const expectedState = {user: {resetCode: '11111'}, error: null};
 
         expect(reducer([], action)).toEqual(expectedState);
     });

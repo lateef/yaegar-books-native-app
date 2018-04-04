@@ -48,6 +48,21 @@ export default function reducer(state = {
             return {...state, user: {email: '', password: '', passwordAgain: '', phoneNumber: '', unregistered: true,
                 isLoggedIn: false, hasSentForgottenPassword: false, passwordReset: false}, error: null}
         }
+        case 'FORGOT_PASSWORD_SENT': {
+            return {...state, user: {...state.user, hasSentForgottenPassword: true}, error: null}
+        }
+        case 'FORGOT_PASSWORD_SENT_FAILED': {
+            return {...state, error: action.payload}
+        }
+        case 'PASSWORD_RESET': {
+            return {...state, user: {...state.user, passwordReset: true}, error: null}
+        }
+        case 'PASSWORD_RESET_FAILED': {
+            return {...state,  user: {...state.user, passwordReset: false}, error: action.payload}
+        }
+        case 'SET_CODE': {
+            return {...state, user: {...state.user, resetCode: action.payload}, error: null}
+        }
         // INIT REGISTER_SUCCEEDED LOGGED_OUT UNREGISTER_FAILED
         default:
             return {
@@ -61,6 +76,7 @@ export default function reducer(state = {
                     passwordMatched: false,
                     isLoggedIn: false,
                     hasSentForgottenPassword: false,
+                    resetCode: null,
                     passwordReset: false
                 },
                 error: null
