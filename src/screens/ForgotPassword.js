@@ -58,7 +58,7 @@ export class ForgotPassword extends Component {
                                 <Row size={2}>
                                     <Text testID="forgotPasswordTitle" style={{fontSize: 30}}>Forgot Password</Text>
                                 </Row>
-                                <Row size={1}>
+                                <Row size={2}>
                                     <Text testID="forgotPasswordHeading"
                                           style={{color: 'grey', fontSize: 14, padding: 10, textAlign: 'center'}}>
                                         Enter your email address and we'll send you a link to reset your password
