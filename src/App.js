@@ -17,24 +17,13 @@ export default class App extends Component {
         store.dispatch(appAction.onInit());
     }
 
-    onStoreUpdate() {
+    async onStoreUpdate() {
         let {root} = store.getState().appReducer;
         if (this.currentRoot !== root) {
             this.currentRoot = root;
 
-            iconsLoaded.then(() => {
-                Navigation.startSingleScreenApp({
-                    screen: {
-                        label: 'Landing',
-                        screen: 'Dashboard'
-                    },
-                    drawer: {
-                        left: {
-                            screen: 'Drawer'
-                        }
-                    }
-                });
-            });
+            await iconsLoaded.then(() => {});
+            this.startApp(root);
         }
     }
 
@@ -43,7 +32,7 @@ export default class App extends Component {
         Navigation.startSingleScreenApp({
             screen: {
                 label: 'Landing',
-                screen: 'Dashboard'
+                screen: 'Landing'
             },
             drawer: {
                 left: {
