@@ -6,12 +6,14 @@ import {Provider} from 'react-redux';
 import store from './store';
 import * as appAction from './actions/appActions';
 import {registerScreens} from './screens';
+import { iconsMap, iconsLoaded } from './util/app-icons';
 
 registerScreens(store, Provider);
 
 export default class App extends Component {
     constructor(props) {
         super(props);
+        iconsLoaded.then(() => {});
         store.subscribe(this.onStoreUpdate.bind(this));
         store.dispatch(appAction.onInit());
     }
