@@ -23,7 +23,6 @@ export default class App extends Component {
             this.currentRoot = root;
 
             this.startApp(root);
-            await iconsLoaded.then(() => {});
         }
     }
 
