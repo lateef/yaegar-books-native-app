@@ -22,8 +22,18 @@ export default class App extends Component {
         if (this.currentRoot !== root) {
             this.currentRoot = root;
 
-            iconsLoaded.then((root) => {
-                this.startApp(root);
+            iconsLoaded.then(() => {
+                Navigation.startSingleScreenApp({
+                    screen: {
+                        label: 'Landing',
+                        screen: 'Dashboard'
+                    },
+                    drawer: {
+                        left: {
+                            screen: 'Drawer'
+                        }
+                    }
+                });
             });
         }
     }
