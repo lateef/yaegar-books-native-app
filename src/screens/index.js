@@ -6,9 +6,10 @@ import SignUp from './SignUp';
 import SignUpContinue from './SignUpContinue';
 import SignUpConfirmationSent from './SignUpConfirmationSent';
 import LogIn from './LogIn';
-import Dashboard from './Dashboard';
 import ForgotPassword from './ForgotPassword';
 import ForgotPasswordSent from './ForgotPasswordSent';
+import Dashboard from './Dashboard';
+import Drawer from './Drawer';
 
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('Landing', () => Landing, store, Provider);
@@ -16,7 +17,8 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('SignUpContinue', () => SignUpContinue, store, Provider);
     Navigation.registerComponent('SignUpConfirmationSent', () => SignUpConfirmationSent, store, Provider);
     Navigation.registerComponent('LogIn', () => LogIn, store, Provider);
-    Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
     Navigation.registerComponent('ForgotPassword', () => ForgotPassword, store, Provider);
     Navigation.registerComponent('ForgotPasswordSent', () => ForgotPasswordSent, store, Provider);
+    Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
+    Navigation.registerComponent('Drawer', () => Drawer, store, Provider);
 }

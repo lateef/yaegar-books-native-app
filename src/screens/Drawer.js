@@ -4,10 +4,9 @@ import {StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {Container, Content, View, Grid, Col, Row, Text, Button} from 'native-base';
 
-import {iconsMap, iconsLoaded} from '../util/app-icons';
 import * as userAction from '../actions/userActions';
 
-export class Dashboard extends Component {
+export class Drawer extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -18,56 +17,27 @@ export class Dashboard extends Component {
         super(props);
     }
 
-    handleLogout = () => {
-        this.props.userActions.logout();
-        this.navigateToLandingPage();
-    };
-
-    handleUnregister = async () => {
-        await this.props.userActions.unregister();
-        this.navigateToLandingPage();
-    };
-
-    navigateToLandingPage = () => {
-        this.props.navigator.resetTo({
-            screen: 'Landing'
-        });
-    };
-
     render() {
         return (
             <Container>
                 <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
-                    <Grid>
+                    <Grid style={styles.container}>
                         <Row size={1}>
-                            {/*<Button title={'Toggle Drawer'} onPress={() => {*/}
-                                {/*this.toggleDrawer()*/}
-                            {/*}}>*/}
-                                {/*<Text>AAA</Text>*/}
-                            {/*</Button>*/}
+                            <View>
+                                <Text>Lateef</Text>
+                            </View>
                         </Row>
                         <Row size={1}>
-                            {/*<Button title={'Toggle Drawer'} onPress={() => {*/}
-                                {/*this.toggleDrawer()*/}
-                            {/*}}>*/}
-                                {/*<Text>AAA</Text>*/}
-                            {/*</Button>*/}
                         </Row>
                         <Row size={7}>
-                            <View style={styles.container}>
-                                <Text testID="dashboardTitle" style={{fontSize: 30}}>
-                                    Yaegar Books Dashboard
-                                </Text>
-                            </View>
+
                         </Row>
                         <Row size={1}>
                             <Col size={1}></Col>
                             <Col size={4}>
                                 <Button id="deleteAccount"
                                         testID="dashboardDeleteAccount"
-                                        block onPress={() => {
-                                    this.handleUnregister()
-                                }}>
+                                        block onPress={() => {this.handleUnregister()}}>
                                     <Text>Delete Account</Text>
                                 </Button>
                             </Col>
@@ -90,7 +60,7 @@ export class Dashboard extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Drawer)
 
 function mapStateToProps(state, ownProps) {
     return {
