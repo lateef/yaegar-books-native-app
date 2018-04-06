@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 import * as appAction from './actions/appActions';
 import {registerScreens} from './screens';
-import {iconsMap, iconsLoaded} from './util/app-icons';
+import { iconsMap, iconsLoaded } from './util/app-icons';
 
 registerScreens(store, Provider);
 
@@ -17,28 +17,28 @@ export default class App extends Component {
         store.dispatch(appAction.onInit());
     }
 
-    onStoreUpdate() {
+    async onStoreUpdate() {
         let {root} = store.getState().appReducer;
         if (this.currentRoot !== root) {
             this.currentRoot = root;
 
             this.startApp(root);
+            await iconsLoaded.then(() => {});
         }
     }
 
-    async startApp(navigation) {
-        await iconsLoaded.then(() => {
-            Navigation.startSingleScreenApp({
-                screen: {
-                    label: 'Landing',
-                    screen: 'Landing'
-                },
-                drawer: {
-                    left: {
-                        screen: 'Drawer'
-                    }
+    startApp(navigation) {
+
+        Navigation.startSingleScreenApp({
+            screen: {
+                label: 'Landing',
+                screen: 'Landing'
+            },
+            drawer: {
+                left: {
+                    screen: 'Drawer'
                 }
-            });
+            }
         });
     }
 }
