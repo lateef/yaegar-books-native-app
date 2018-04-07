@@ -46,7 +46,7 @@ export class Drawer extends Component {
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
+                <Content contentContainerStyle={{flex: 1}}>
                     <Grid style={styles.container}>
                         <Row size={1}>
                             <View>
