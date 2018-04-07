@@ -50,7 +50,7 @@ export class Drawer extends Component {
                     <Grid style={styles.container}>
                         <Row size={1}>
                             <View>
-                                <Text>Lateef</Text>
+                                <Text>{this.props.user.email}</Text>
                             </View>
                         </Row>
                         <Row size={1}>
