@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 import * as appAction from './actions/appActions';
 import {registerScreens} from './screens';
-import { iconsMap, iconsLoaded } from './util/app-icons';
+import {iconsMap, iconsLoaded} from './util/app-icons';
 
 registerScreens(store, Provider);
 
@@ -28,17 +28,31 @@ export default class App extends Component {
     }
 
     startApp(navigation) {
-
-        Navigation.startSingleScreenApp({
-            screen: {
-                label: 'Landing',
-                screen: 'Landing'
-            },
-            drawer: {
-                left: {
-                    screen: 'Drawer'
-                }
-            }
-        });
+        switch (navigation) {
+            case 'tabbed':
+                Navigation.startTabBasedApp({
+                    tabs: [
+                        {
+                            label: 'Dashboard',
+                            icon: iconsMap['ios-desktop'],
+                            screen: 'Dashboard'
+                        }
+                    ]
+                });
+                return;
+            default :
+                Navigation.startSingleScreenApp({
+                    screen: {
+                        label: 'Landing',
+                        screen: 'Landing'
+                    },
+                    drawer: {
+                        left: {
+                            screen: 'Drawer'
+                        },
+                        disableOpenGesture: true
+                    }
+                });
+        }
     }
 }

@@ -17,6 +17,32 @@ export class Drawer extends Component {
         super(props);
     }
 
+    toggleDrawer = () => {
+        this.props.navigator.toggleDrawer({
+            side: 'left',
+            animated: true,
+            to: 'close'
+        });
+    };
+
+    handleLogout = async () => {
+        await this.props.userActions.logout();
+        this.toggleDrawer();
+        this.navigateToLandingPage();
+    };
+
+    handleUnregister = async () => {
+        await this.props.userActions.unregister();
+        this.toggleDrawer();
+        this.navigateToLandingPage();
+    };
+
+    navigateToLandingPage = () => {
+        this.props.navigator.handleDeepLink({
+            link: 'Landing'
+        });
+    };
+
     render() {
         return (
             <Container>
