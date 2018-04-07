@@ -12,7 +12,10 @@ global.setup = function setup() {
     const props = {
         navigator: {
             push: jest.fn(),
-            resetTo: jest.fn()
+            toggleDrawer: jest.fn(),
+            handleDeepLink: jest.fn(),
+            resetTo: jest.fn(),
+            setOnNavigatorEvent: jest.fn()
         },
         user: {
             email: '', password: '', passwordAgain: ''

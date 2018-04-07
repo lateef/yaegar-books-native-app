@@ -37,24 +37,4 @@ describe('Dashboard', () => {
         expect(wrapper).toBeTruthy();
         expect(wrapper).toMatchSnapshot();
     });
-
-    it('has log out button with correct behaviour', () => {
-        const {props} = setup();
-        const wrapper = shallow(<Dashboard {...props}/>);
-        const signOut = wrapper.find('#signOut').first();
-
-        signOut.props().onPress();
-        expect(props.userActions.logout).toHaveBeenCalled();
-        expect(props.navigator.resetTo).toHaveBeenCalled();
-    });
-
-    it('has unregister button with correct behaviour', async () => {
-        const {props} = setup();
-        const wrapper = shallow(<Dashboard {...props}/>);
-        const deleteAccount = wrapper.find('#deleteAccount').first();
-
-        deleteAccount.props().onPress();
-        await expect(props.userActions.unregister).toHaveBeenCalled();
-        expect(props.navigator.resetTo).toHaveBeenCalled();
-    });
 });
