@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {Container, Content, View, Grid, Col, Row, Text, Button} from 'native-base';
+import {Container, Content, Grid, Col, Row, Text, Button} from 'native-base';
 
 import * as userAction from '../actions/userActions';
 
@@ -46,24 +46,25 @@ export class Drawer extends Component {
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={{flex: 1}}>
-                    <Grid style={styles.container}>
+                <Content contentContainerStyle={{flex: 1, backgroundColor: '#fff'}}>
+                    <Grid>
                         <Row size={1}>
-                            <View>
-                                <Text>{this.props.user.email}</Text>
-                            </View>
                         </Row>
-                        <Row size={1}>
+                        <Row size={3}>
+                            <Col size={4}>
+                                <Text>{this.props.user.email}</Text>
+                            </Col>
                         </Row>
                         <Row size={7}>
-
                         </Row>
                         <Row size={1}>
                             <Col size={1}></Col>
                             <Col size={4}>
                                 <Button id="deleteAccount"
                                         testID="dashboardDeleteAccount"
-                                        block onPress={() => {this.handleUnregister()}}>
+                                        block onPress={() => {
+                                    this.handleUnregister()
+                                }}>
                                     <Text>Delete Account</Text>
                                 </Button>
                             </Col>

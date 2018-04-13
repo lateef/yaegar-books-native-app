@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {Container, Content, View, Grid, Col, Row, Text} from 'native-base';
 
 import * as userAction from '../actions/userActions';
+import {iconsMap} from '../util/app-icons';
 
 export class Dashboard extends Component {
     static navigatorStyle = {
@@ -13,20 +14,19 @@ export class Dashboard extends Component {
         screenBackgroundColor: 'white'
     };
 
-    static navigatorButtons = {
-        leftButtons: [
-            {
-                id: 'sideMenu'
-            },
-            {
-                icon: require('../img/menu.png'),
-                id: 'menuIcon'
-            }
-        ]
-    };
-
     constructor(props) {
         super(props);
+        this.props.navigator.setButtons({
+            leftButtons: [
+                {
+                    id: 'sideMenu'
+                },
+                {
+                    icon: iconsMap['ios-menu'],
+                    id: 'menuIcon'
+                }
+            ]
+        });
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
@@ -38,7 +38,6 @@ export class Dashboard extends Component {
     };
 
     onNavigatorEvent(event) {
-        console.log(event)
         if ('NavBarButtonPress' === event.type && Platform.OS === 'ios') {
            this.toggleDrawer();
         } else if ('DeepLink' === event.type) {

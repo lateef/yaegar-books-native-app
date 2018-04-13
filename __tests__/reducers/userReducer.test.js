@@ -6,13 +6,9 @@ describe('User reducer', () => {
             error: null,
             user: {
                 email: "",
-                hasSentForgottenPassword: false,
                 isLoggedIn: false,
                 password: "",
                 passwordAgain: "",
-                passwordMatched: false,
-                passwordReset: false,
-                resetCode: null,
                 phoneNumber: ""
             }
         });

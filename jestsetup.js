@@ -15,7 +15,8 @@ global.setup = function setup() {
             toggleDrawer: jest.fn(),
             handleDeepLink: jest.fn(),
             resetTo: jest.fn(),
-            setOnNavigatorEvent: jest.fn()
+            setOnNavigatorEvent: jest.fn(),
+            setButtons: jest.fn()
         },
         user: {
             email: '', password: '', passwordAgain: ''
