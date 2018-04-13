@@ -63,23 +63,27 @@ export default function reducer(state = {
         case 'SET_CODE': {
             return {...state, user: {...state.user, resetCode: action.payload}, error: null}
         }
-        // INIT REGISTER_SUCCEEDED LOGGED_OUT UNREGISTER_FAILED
-        default:
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    email: '',
-                    password: '',
-                    passwordAgain: '',
-                    phoneNumber: '',
-                    passwordMatched: false,
-                    isLoggedIn: false,
-                    hasSentForgottenPassword: false,
-                    resetCode: null,
-                    passwordReset: false
-                },
+        case 'INIT': {
+            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
                 error: null
             }
+        }
+        case 'REGISTER_SUCCEEDED': {
+            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+                error: null
+            }
+        }
+        case 'LOGGED_OUT': {
+            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+                error: null
+            }
+        }
+        case 'UNREGISTER_FAILED': {
+            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+                error: null
+            }
+        }
+        default:
+            return state
     }
 }

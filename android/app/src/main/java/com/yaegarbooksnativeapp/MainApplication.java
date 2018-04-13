@@ -11,6 +11,8 @@ import com.reactnativenavigation.NavigationApplication;
 import java.util.Arrays;
 import java.util.List;
 
+import io.realm.react.RealmReactPackage;
+
 public class MainApplication extends NavigationApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -23,6 +25,7 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.asList(
               new MainReactPackage(),
+              new RealmReactPackage(),
               new VectorIconsPackage(),
               new RNAWSCognitoPackage()
       );
@@ -56,8 +59,9 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new VectorIconsPackage(),
-            new RNAWSCognitoPackage()
-    );
+            new RNAWSCognitoPackage(),
+            new RealmReactPackage()
+            );
   }
 
   @Override
