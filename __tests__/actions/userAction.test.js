@@ -14,9 +14,19 @@ afterEach(() => {
 });
 
 describe('User action', () => {
-    it('should return default action on init', () => {
+    it('should return init action', () => {
         const expectedActions = [{"type": "INIT"}];
         const action = actions.init();
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it('should return reset action', () => {
+        const expectedActions = [{"type": "RESET"}];
+        const action = actions.reset();
         const store = mockStore({}, action);
 
         store.dispatch(action);

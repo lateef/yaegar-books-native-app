@@ -23,6 +23,7 @@ global.setup = function setup() {
         },
         userActions: {
             init: jest.fn(),
+            reset: jest.fn(),
             updateEmail: jest.fn(),
             validateEmail: jest.fn(),
             setPassword: jest.fn(),

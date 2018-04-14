@@ -14,6 +14,16 @@ describe('User reducer', () => {
         });
     });
 
+    it('should handle RESET', () => {
+        const action = {type: 'RESET', payload: 'a'};
+
+        expect(reducer([], action)).toEqual({error: null, user:
+            {email: "", hasSentForgottenPassword: false, isLoggedIn: false, isLoggedOut: false,
+                password: "", passwordAgain: "", passwordMatched: false, passwordReset: false,
+                phoneNumber: "", resetCode: null}}
+        );
+    });
+
     it('should handle UPDATE_EMAIL', () => {
         const action = {type: 'UPDATE_EMAIL', payload: 'a'};
 

@@ -64,7 +64,12 @@ export default function reducer(state = {
             return {...state, user: {...state.user, resetCode: action.payload}, error: null}
         }
         case 'INIT': {
-            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+            return {...state, user: {...state.user, password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+                error: null
+            }
+        }
+        case 'RESET': {
+            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, isLoggedOut: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
                 error: null
             }
         }
@@ -74,7 +79,7 @@ export default function reducer(state = {
             }
         }
         case 'LOGGED_OUT': {
-            return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+            return {...state, user: {...state.user, password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, isLoggedOut: true, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
                 error: null
             }
         }

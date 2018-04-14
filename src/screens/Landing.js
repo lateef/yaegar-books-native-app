@@ -65,12 +65,22 @@ export class Landing extends Component {
             </Container>
         );
     }
+
+    componentWillMount() {
+        if (this.props.user.email && this.props.user.isLoggedOut) {
+            this.props.navigator.resetTo({
+                screen: 'LogIn'
+            });
+        }
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing)
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        user: state.userReducer.user
+    };
 }
 
 function mapDispatchToProps(dispatch) {
