@@ -27,9 +27,28 @@ export class LogIn extends Component {
         screenBackgroundColor: 'white'
     };
 
+    static navigatorButtons = {
+        rightButtons: [
+            {
+                title: 'Home',
+                id: 'home'
+            }
+        ]
+    };
+
     constructor(props) {
         super(props);
         this.props.userActions.init();
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event) {
+        if ('NavBarButtonPress' === event.type) {
+            this.props.userActions.reset();
+            this.props.navigator.resetTo({
+                screen: 'Landing'
+            });
+        }
     }
 
     handleEmailChangeText = (email) => {

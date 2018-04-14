@@ -34,4 +34,8 @@ describe('Yaegar Books Log In', () => {
 
         await expect(element(by.id('dashboardTitle'))).toHaveText('Yaegar Books Dashboard');
     });
+
+    it('should go straight to login if app is aware of a user', async () => {
+
+    });
 });

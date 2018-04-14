@@ -9,6 +9,12 @@ export function init() {
     }
 }
 
+export function reset() {
+    return function (dispatch) {
+        dispatch({type: 'RESET'});
+    }
+}
+
 export function updateEmail(email) {
     return function (dispatch) {
         dispatch({type: 'UPDATE_EMAIL', payload: email});
