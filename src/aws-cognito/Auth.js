@@ -179,6 +179,10 @@ function check(error) {
         return {
             invalidCredentialsMessage: 'User already exists',
         }
+    }  else if (/User does not exist.$/.test(err)) {
+        return {
+            invalidCredentialsMessage: 'User does not exist',
+        }
     }  else if (/Incorrect username or password.$/.test(err)) {
         return {
             invalidCredentialsMessage: 'Incorrect username or password',
