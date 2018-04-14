@@ -70,7 +70,9 @@ export class ForgotPassword extends Component {
                                             floatingLabel
                                             error={this.props.error !== null}>
                                             <Label>Email</Label>
-                                            <Input testID="forgotPasswordEmailInput" id="emailInput"
+                                            <Input testID="forgotPasswordEmailInput"
+                                                   id="emailInput"
+                                                   value={this.props.user.email}
                                                    onChangeText={(email) => {
                                                        this.handleEmailChangeText(email)
                                                    }} keyboardType={'email-address'} autoCapitalize="none"/>
