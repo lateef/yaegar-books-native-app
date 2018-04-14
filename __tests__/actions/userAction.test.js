@@ -195,6 +195,16 @@ describe('User action', () => {
     //     });
     // });
 
+    // it('should return clear log out action', () => {
+    //     const expectedActions = [{"type": "CLEAR_LOGGED_OUT"}];
+    //     const action = actions.clearLogout();
+    //     const store = mockStore({}, action);
+    //
+    //     store.dispatch(action);
+    //
+    //     expect(store.getActions()).toEqual(expectedActions);
+    // });
+
     // it('should return unregister action', () => {
     //    const action = actions.unregister();
     //     const store = mockStore({}, action);

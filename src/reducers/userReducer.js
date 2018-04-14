@@ -83,6 +83,10 @@ export default function reducer(state = {
                 error: null
             }
         }
+        case 'CLEAR_LOGGED_OUT': {
+            return {...state, user: {...state.user, isLoggedOut: false}
+            }
+        }
         case 'UNREGISTER_FAILED': {
             return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
                 error: null

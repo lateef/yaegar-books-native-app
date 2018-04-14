@@ -59,6 +59,10 @@ export class LogIn extends Component {
         this.props.userActions.setPassword(password);
     };
 
+    handleClearLogout = () => {
+        setTimeout(this.props.userActions.clearLogout, 5000);
+    };
+
     handlePress = async () => {
         await this.props.userActions.validateEmail(this.props.user.email);
         await this.props.userActions.validatePassword(this.props.user.password, this.props.user.password);
@@ -121,6 +125,11 @@ export class LogIn extends Component {
                                         {this.props.error ?
                                             <Label testID="logInErrorLabel"
                                                    style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
+
+                                        {this.props.user.isLoggedOut ?
+                                            <Label testID="isLoggedOutLabel"
+                                                   onLayout={() => {this.handleClearLogout()}}
+                                                   style={{color: 'green'}}>Logged out successfully</Label> : <Text/>}
                                     </Row>
                                     <Row size={2}>
                                         <Button id="logInButton"
