@@ -98,7 +98,9 @@ export class LogIn extends Component {
                                         <Col style={{padding: 10}}>
                                             <Item floatingLabel>
                                                 <Label>Email</Label>
-                                                <Input testID="logInEmailInput" id="emailInput"
+                                                <Input testID="logInEmailInput"
+                                                       id="emailInput"
+                                                       value={this.props.user.email}
                                                        onChangeText={(email) => {
                                                            this.handleEmailChangeText(email)
                                                        }} keyboardType={'email-address'} autoCapitalize="none"/>

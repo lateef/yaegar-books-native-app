@@ -38,4 +38,16 @@ describe('Yaegar Books Log In', () => {
     it('should go straight to login if app is aware of a user', async () => {
 
     });
+
+    it('should not go straight to login if app is not aware of a user', async () => {
+
+    });
+
+    it('should have email on forgot password if app is aware of a user', async () => {
+
+    });
+
+    it('should not have email on forgot password if app is aware of a user', async () => {
+
+    });
 });
