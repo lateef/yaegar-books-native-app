@@ -67,7 +67,7 @@ export class Landing extends Component {
     }
 
     componentWillMount() {
-        if (this.props.user.email && this.props.user.isLoggedOut) {
+        if (this.props.user.email && !this.props.user.isLoggedIn) {
             this.props.navigator.resetTo({
                 screen: 'LogIn'
             });

@@ -124,6 +124,12 @@ export function logout() {
     }
 }
 
+export function clearLogout() {
+    return async function (dispatch) {
+        dispatch({type: 'CLEAR_LOGGED_OUT'});
+    }
+}
+
 export function unregister() {
     return async function (dispatch) {
         try {

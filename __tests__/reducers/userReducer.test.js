@@ -30,6 +30,22 @@ describe('User reducer', () => {
         expect(reducer([], action)).toEqual({error: null, user: {email: "a"}});
     });
 
+    it('should handle LOGGED_OUT', () => {
+        const action = {type: 'LOGGED_OUT', payload: ''};
+
+        expect(reducer([], action)).toEqual({error: null, user: {hasSentForgottenPassword: false,
+            isLoggedIn: false, isLoggedOut: true, password: "", passwordAgain: "", passwordMatched: false,
+            passwordReset: false, phoneNumber: "", resetCode: null}}
+        );
+    });
+
+    it('should handle CLEAR_LOGGED_OUT', () => {
+        const action = {type: 'CLEAR_LOGGED_OUT', payload: ''};
+
+        expect(reducer([], action)).toEqual({user: {isLoggedOut: false}}
+        );
+    });
+
     it('should handle second request to UPDATE_EMAIL', () => {
         const action = {type: 'UPDATE_EMAIL', payload: 'ad'};
         const expectedState = {"0": {error: null, user: {email: "a"}}, error: null, user: {email: "ad"}};
