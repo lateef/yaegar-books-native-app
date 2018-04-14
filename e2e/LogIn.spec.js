@@ -21,6 +21,9 @@ describe('Yaegar Books Log In', () => {
         await expect(element(by.id('logInErrorLabel'))).toHaveText("That's not a valid email address");
     });
 
+    it('should return log in error when unregistered email or password', async () => {
+    });
+
     it('should log in successfully', async () => {
         await expect(element(by.id('landingTitle'))).toHaveText('Yaegar Books');
         await element(by.id('landingLogInButton')).tap();
