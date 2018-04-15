@@ -28,7 +28,6 @@ export class ForgotPassword extends Component {
 
     constructor(props) {
         super(props);
-        this.props.userActions.init();
     }
 
     handleEmailChangeText = (email) => {
@@ -59,10 +58,17 @@ export class ForgotPassword extends Component {
                                     <Text testID="forgotPasswordTitle" style={{fontSize: 30}}>Forgot Password</Text>
                                 </Row>
                                 <Row size={2}>
-                                    <Text testID="forgotPasswordHeading"
-                                          style={{color: 'grey', fontSize: 14, padding: 10, textAlign: 'center'}}>
-                                        Enter your email address and we'll send you a link to reset your password
-                                    </Text>
+                                    {this.props.error === 'User already exists' ?
+                                        <Text style={{color: 'grey', fontSize: 14, padding: 10, textAlign: 'center'}}>
+                                            This user already exists, if you would like to reset your password,
+                                            please enter your email address and we'll send you a link to reset it
+                                        </Text>
+                                        :
+                                        <Text testID="forgotPasswordHeading"
+                                              style={{color: 'grey', fontSize: 14, padding: 10, textAlign: 'center'}}>
+                                            Enter your email address and we'll send you a link to reset your password
+                                        </Text>
+                                    }
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
@@ -90,7 +96,7 @@ export class ForgotPassword extends Component {
                                             {this.props.user.email.length > 0 ?
                                                 <Button id="continueButton"
                                                         testID="forgotPasswordContinueButton"
-                                                        disabled={this.props.error !== null}
+                                                        disabled={this.props.error !== null && this.props.error !== 'User already exists'}
                                                         rounded
                                                         onPress={this.handlePress}>
                                                     <Text>Send</Text>

@@ -63,10 +63,11 @@ export class SignUpContinue extends Component {
                                 <Row size={1}>
                                     <Text testID="signUpContinueHeading">Enter your password</Text>
                                 </Row>
-                                <Row size={1}>
+                                <Row size={2}>
                                     <Col style={{flex: 1, alignItems: 'center'}}>
                                         <Text style={{color: 'grey', fontSize: 14, padding: 10, textAlign: 'center'}}>
-                                            Minimum 6 characters, and must contain at least 1 lowercase, 1 uppercase and 1 number
+                                            Minimum 6 characters, and must contain at least 1 lowercase, 1 uppercase and
+                                            1 number
                                         </Text>
                                     </Col>
                                 </Row>
@@ -128,6 +129,12 @@ export class SignUpContinue extends Component {
             });
         }
         this.canNavigate = false;
+
+        if ('User already exists' === this.props.error) {
+            this.props.navigator.push({
+                screen: 'ForgotPassword'
+            });
+        }
     }
 }
 

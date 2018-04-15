@@ -30,8 +30,8 @@ export class LogIn extends Component {
     static navigatorButtons = {
         rightButtons: [
             {
-                title: 'Home',
-                id: 'home'
+                title: 'Sign Up',
+                id: 'signUp'
             }
         ]
     };
