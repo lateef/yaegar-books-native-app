@@ -7,6 +7,8 @@ import {Container, Content, View, Grid, Col, Row, Text} from 'native-base';
 import * as userAction from '../actions/userActions';
 import {iconsMap} from '../util/app-icons';
 
+export let rootNavigator = null;
+
 export class Dashboard extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
@@ -28,6 +30,7 @@ export class Dashboard extends Component {
             ]
         });
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        rootNavigator = this.props.navigator
     }
 
     toggleDrawer = () => {

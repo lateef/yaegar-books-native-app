@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {Container, Content, Grid, Col, Row, Text, Button} from 'native-base';
+import {Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon} from 'native-base';
 
 import * as userAction from '../actions/userActions';
+import {rootNavigator} from './Dashboard';
 
 export class Drawer extends Component {
     static navigatorStyle = {
@@ -25,14 +26,22 @@ export class Drawer extends Component {
         });
     };
 
-    handleLogout = async () => {
-        await this.props.userActions.logout();
+    handleSettings = () => {
         this.toggleDrawer();
-        this.navigateToLandingPage();
+        if (Platform.OS === 'android') {
+            this.props.navigator.push({
+                screen: 'Settings'
+            });
+        }
+        if (Platform.OS === 'ios') {
+            rootNavigator.push({
+                screen: 'Settings'
+            });
+        }
     };
 
-    handleUnregister = async () => {
-        await this.props.userActions.unregister();
+    handleLogout = async () => {
+        await this.props.userActions.logout();
         this.toggleDrawer();
         this.navigateToLandingPage();
     };
@@ -46,41 +55,53 @@ export class Drawer extends Component {
     render() {
         return (
             <Container>
+                <Header>
+                    <Left style={{flex: 1}}>
+                        <Icon ios="ios-contact" android="md-contact"/>
+                    </Left>
+                    <Body style={{flex: 4}}>
+                    <Text>{this.props.user.email}</Text>
+                    </Body>
+                    <Right style={{flex: 1}}>
+                    </Right>
+                </Header>
                 <Content contentContainerStyle={{flex: 1, backgroundColor: '#fff'}}>
-                    <Grid>
-                        <Row size={1}>
-                        </Row>
-                        <Row size={3}>
-                            <Col size={4}>
-                                <Text>{this.props.user.email}</Text>
-                            </Col>
-                        </Row>
-                        <Row size={7}>
-                        </Row>
-                        <Row size={1}>
-                            <Col size={1}></Col>
-                            <Col size={4}>
-                                <Button id="deleteAccount"
-                                        testID="dashboardDeleteAccount"
-                                        block onPress={() => {
-                                    this.handleUnregister()
-                                }}>
-                                    <Text>Delete Account</Text>
-                                </Button>
-                            </Col>
-                            <Col size={1}></Col>
-                            <Col size={4}>
-                                <Button id="signOut"
-                                        testID="dashboardSignOut"
-                                        block onPress={() => {
-                                    this.handleLogout()
-                                }}>
-                                    <Text>Sign Out</Text>
-                                </Button>
-                            </Col>
-                            <Col size={1}></Col>
-                        </Row>
-                    </Grid>
+                    <List>
+                        <ListItem itemDivider>
+                            <Text/>
+                        </ListItem>
+                        <ListItem id="settings"
+                                  icon button onPress={() => {
+                            this.handleSettings()
+                        }}>
+                            <Left>
+                                <Icon ios="ios-cog" android="md-cog"/>
+                            </Left>
+                            <Body>
+                            <Text>Settings</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="arrow-forward"/>
+                            </Right>
+                        </ListItem>
+                        <ListItem itemDivider>
+                            <Text/>
+                        </ListItem>
+                        <ListItem id="signOut"
+                            icon button onPress={() => {
+                            this.handleLogout()
+                        }}>
+                            <Left>
+                                <Icon ios="ios-log-out" android="md-log-out"/>
+                            </Left>
+                            <Body>
+                            <Text>Sign Out</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="arrow-forward"/>
+                            </Right>
+                        </ListItem>
+                    </List>
                 </Content>
             </Container>
         );

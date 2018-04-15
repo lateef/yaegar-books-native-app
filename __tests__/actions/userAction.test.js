@@ -269,4 +269,14 @@ describe('User action', () => {
 
         expect(store.getActions()).toEqual(expectedActions);
     });
+
+    it('should return can delete action', () => {
+        const expectedActions = [{type: 'CAN_DELETE', payload: true}];
+        const action = actions.setCanDelete('delete');
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
 });

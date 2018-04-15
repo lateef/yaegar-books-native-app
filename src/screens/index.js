@@ -10,6 +10,7 @@ import ForgotPassword from './ForgotPassword';
 import ForgotPasswordSent from './ForgotPasswordSent';
 import Dashboard from './Dashboard';
 import Drawer from './Drawer';
+import Settings from './Settings';
 
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('Landing', () => Landing, store, Provider);
@@ -21,4 +22,5 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('ForgotPasswordSent', () => ForgotPasswordSent, store, Provider);
     Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
     Navigation.registerComponent('Drawer', () => Drawer, store, Provider);
+    Navigation.registerComponent('Settings', () => Settings, store, Provider);
 }

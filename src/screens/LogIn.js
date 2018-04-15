@@ -158,6 +158,12 @@ export class LogIn extends Component {
             </Container>
         )
     }
+
+    componentWillMount() {
+        if (this.props.error) {
+            this.props.userActions.reset();
+        }
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn)

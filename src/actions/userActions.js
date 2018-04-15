@@ -199,3 +199,13 @@ export function setResetCode(resetCode) {
         dispatch({type: 'SET_CODE', payload: resetCode});
     }
 }
+
+export function setCanDelete(deleteText) {
+    return function (dispatch) {
+        let canDelete = false;
+        if ('delete' === deleteText) {
+            canDelete = true;
+        }
+        dispatch({type: 'CAN_DELETE', payload: canDelete});
+    }
+}
