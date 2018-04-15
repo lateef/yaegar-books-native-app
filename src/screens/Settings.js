@@ -54,7 +54,7 @@ export class Settings extends Component {
                             <Form style={styles.container}>
                                 <Row size={1}/>
                                 <Row size={2}>
-                                    <Text testID="signUpContinueTitle" style={{fontSize: 30}}>Delete Account</Text>
+                                    <Text testID="settingsTitle" style={{fontSize: 30}}>Delete Account</Text>
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{flex: 1, padding: 10, alignItems: 'center'}}>
