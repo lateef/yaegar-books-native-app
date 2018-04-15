@@ -36,7 +36,8 @@ global.setup = function setup() {
             unregister: jest.fn(),
             forgotPassword: jest.fn(),
             setResetCode: jest.fn(),
-            forgotPasswordReset: jest.fn()
+            forgotPasswordReset: jest.fn(),
+            setCanDelete: jest.fn()
         }
     };
 

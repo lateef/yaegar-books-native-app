@@ -1,5 +1,5 @@
 export default function reducer(state = {
-    user: {email: '', password: '', passwordAgain: '', phoneNumber: '', isLoggedIn: false},
+    user: {email: '', password: '', passwordAgain: '', phoneNumber: '', isLoggedIn: false, canDelete: false},
     error: null
 }, action) {
     switch (action.type) {
@@ -89,6 +89,11 @@ export default function reducer(state = {
         }
         case 'UNREGISTER_FAILED': {
             return {...state, user: {...state.user, email: '', password: '', passwordAgain: '', phoneNumber: '', passwordMatched: false, isLoggedIn: false, hasSentForgottenPassword: false, resetCode: null, passwordReset: false},
+                error: null
+            }
+        }
+        case 'CAN_DELETE': {
+            return {...state, user: {...state.user, canDelete: action.payload},
                 error: null
             }
         }

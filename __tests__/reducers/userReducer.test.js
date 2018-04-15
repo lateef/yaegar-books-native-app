@@ -9,7 +9,8 @@ describe('User reducer', () => {
                 isLoggedIn: false,
                 password: "",
                 passwordAgain: "",
-                phoneNumber: ""
+                phoneNumber: "",
+                canDelete: false
             }
         });
     });
@@ -148,6 +149,13 @@ describe('User reducer', () => {
     it('should return error if SET_CODE', () => {
         const action = {type: 'SET_CODE', payload: '11111'};
         const expectedState = {user: {resetCode: '11111'}, error: null};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return error if CAN_DELETE', () => {
+        const action = {type: 'CAN_DELETE', payload: 'true'};
+        const expectedState = {user: {canDelete: 'true'}, error: null};
 
         expect(reducer([], action)).toEqual(expectedState);
     });

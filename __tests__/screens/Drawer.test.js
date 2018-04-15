@@ -38,6 +38,16 @@ describe('Drawer', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
+    // it('has settings button with correct behaviour', async () => {
+    //     const {props} = setup();
+    //     const wrapper = shallow(<Drawer {...props}/>);
+    //     const settings = wrapper.find('#settings').first();
+    //
+    //     settings.props().onPress();
+    //     expect(props.navigator.toggleDrawer).toHaveBeenCalled();
+    //     expect(props.rootNavigator.push).toHaveBeenCalled();
+    // });
+
     it('has log out button with correct behaviour', async () => {
         const {props} = setup();
         const wrapper = shallow(<Drawer {...props}/>);
@@ -45,17 +55,6 @@ describe('Drawer', () => {
 
         signOut.props().onPress();
         await expect(props.userActions.logout).toHaveBeenCalled();
-        expect(props.navigator.toggleDrawer).toHaveBeenCalled();
-        expect(props.navigator.handleDeepLink).toHaveBeenCalled();
-    });
-
-    it('has unregister button with correct behaviour', async () => {
-        const {props} = setup();
-        const wrapper = shallow(<Drawer {...props}/>);
-        const deleteAccount = wrapper.find('#deleteAccount').first();
-
-        deleteAccount.props().onPress();
-        await expect(props.userActions.unregister).toHaveBeenCalled();
         expect(props.navigator.toggleDrawer).toHaveBeenCalled();
         expect(props.navigator.handleDeepLink).toHaveBeenCalled();
     });
