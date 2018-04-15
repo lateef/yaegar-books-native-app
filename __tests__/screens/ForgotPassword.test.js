@@ -44,8 +44,6 @@ describe('Forgot Password', () => {
     it('should call correct user actions when rendered', () => {
         const {props} = setup();
         shallow(<ForgotPassword {...props}/>);
-
-        expect(props.userActions.init).toHaveBeenCalled();
     });
 
     it('should call correct user actions when text is entered in email field', () => {
