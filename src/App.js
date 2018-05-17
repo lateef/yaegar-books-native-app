@@ -1,60 +1,23 @@
-import React, {Component} from 'react';
-import {persistStore} from 'redux-persist';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-import {Navigation} from 'react-native-navigation';
-import {Provider} from 'react-redux';
-
-import store from './store';
-import * as appAction from './actions/appActions';
-import {registerScreens} from './screens';
-import {iconsMap, iconsLoaded} from './util/app-icons';
-
-export default class App extends Component {
-    constructor(props) {
-        super(props);
-        iconsLoaded.then(() => {});
-        store.subscribe(this.onStoreUpdate.bind(this));
-        store.dispatch(appAction.onInit());
-    }
-
-    onStoreUpdate() {
-        let {root} = store.getState().appReducer;
-        if (this.currentRoot !== root) {
-            this.currentRoot = root;
-            this.startApp(root);
-        }
-    }
-
-    startApp(navigation) {
-        persistStore(store, null, () => {
-            registerScreens(store, Provider);
-
-            switch (navigation) {
-                case 'tabbed':
-                    Navigation.startTabBasedApp({
-                        tabs: [
-                            {
-                                label: 'Dashboard',
-                                icon: iconsMap['ios-desktop'],
-                                screen: 'Dashboard'
-                            }
-                        ]
-                    });
-                    return;
-                default :
-                    Navigation.startSingleScreenApp({
-                        screen: {
-                            label: 'Landing',
-                            screen: 'Landing'
-                        },
-                        drawer: {
-                            left: {
-                                screen: 'Drawer'
-                            },
-                            disableOpenGesture: true
-                        }
-                    });
-            }
-        });
-    }
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Changes you make will automatically reload.</Text>
+        <Text>Shake your phone to open the developer menu.</Text>
+      </View>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

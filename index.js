@@ -1,3 +1,3 @@
-import App from './src/App';
-
-new App();
+import { AppRegistry } from 'react-native';
+import App from './App';
+AppRegistry.registerComponent('yaegarbooksnativeapp', () => App);
