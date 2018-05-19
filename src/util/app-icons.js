@@ -6,6 +6,7 @@ const navIconSize = (__DEV__ === false && Platform.OS === 'android') ? PixelRati
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
     'ios-menu': [40],
+    'ios-add' : [40],
     'ios-search': [30],
     'ios-arrow-round-down': [navIconSize],
     'ios-close': [40]

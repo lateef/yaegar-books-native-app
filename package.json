@@ -7,6 +7,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
+    "fetch-mock": "^6.4.2",
     "jest": "^22.4.3",
     "jest-react-native": "^18.0.0",
     "jsdom-global": "^3.0.2",
@@ -44,10 +45,12 @@
     "react-native-navigation": "^1.1.462",
     "react-native-vector-icons": "^4.6.0",
     "react-redux": "^5.0.7",
+    "realm": "^2.6.0",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
     "redux-promise-middleware": "^5.1.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.2.1"
   }
 }

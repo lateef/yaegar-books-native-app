@@ -1,10 +1,12 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Container, Content, View, Grid, Col, Row, Text} from 'native-base';
+import {Button, Container, Content, Icon, View, Grid, Col, Row, Text} from 'native-base';
 
 import {iconsMap} from '../util/app-icons';
+
+export let rootNavigator = null;
 
 export class Dashboard extends React.Component {
     static navigatorStyle = {
@@ -24,8 +26,49 @@ export class Dashboard extends React.Component {
                     icon: iconsMap['ios-menu'],
                     id: 'menuIcon'
                 }
+            ],
+            rightButtons: [
+                {
+                    icon: iconsMap['ios-add'],
+                    id: 'addAccount'
+                }
             ]
         });
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        rootNavigator = this.props.navigator;
+    }
+
+    toggleDrawer = () => {
+        this.props.navigator.toggleDrawer({
+            side: 'left',
+            animated: true
+        });
+    };
+
+    showLightBox = () => {
+        this.props.navigator.showLightBox({
+            screen: 'AccountTypeSelection',
+            passProps: {
+                title: 'Choose account type'
+            },
+            style: {
+                backgroundBlur: 'dark',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                tapBackgroundToDismiss: true
+            }
+        });
+    };
+
+    onNavigatorEvent(event) {
+        if ('NavBarButtonPress' === event.type && 'menuIcon' === event.id && Platform.OS === 'ios') {
+            this.toggleDrawer();
+        } else if ('DeepLink' === event.type) {
+            this.props.navigator.resetTo({
+                'screen': event.link
+            })
+        } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
+            this.showLightBox();
+        }
     }
 
     render() {
@@ -33,20 +76,27 @@ export class Dashboard extends React.Component {
             <Container>
                 <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
                     <Grid>
-                        <Row style={{}}>
+                        <Row>
                             <Col>
+                                {Platform.OS === "android" ? <Row size={1}>
+                                </Row> : <View/>}
                                 <Row size={1}>
-                                </Row>
-                                <Row size={1}>
-                                </Row>
-                                <Row size={7}>
                                     <View style={styles.container}>
-                                        <Text style={{fontSize: 30}}>
-                                            Yaegar Books Dashboard
+                                        <Icon type="FontAwesome" name="university"/>
+                                        <Text testID="dashboardTitle">
+                                            Add a bank account
                                         </Text>
                                     </View>
                                 </Row>
                                 <Row size={1}>
+                                    <Col size={3}/>
+                                    <Col size={2}>
+                                        <Button onPress={() => this.showLightBox()}>
+                                            <Text>New Account</Text>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <Row size={8}>
                                 </Row>
                             </Col>
                         </Row>
@@ -60,9 +110,7 @@ export class Dashboard extends React.Component {
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 
 function mapStateToProps(state, ownProps) {
-    return {
-
-    };
+    return {};
 }
 
 function mapDispatchToProps(dispatch) {
