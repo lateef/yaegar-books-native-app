@@ -11,7 +11,7 @@ import reducers from '../reducers';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['userReducer'],
+    whitelist: [],
     stateReconciler: autoMergeLevel2
 };
 

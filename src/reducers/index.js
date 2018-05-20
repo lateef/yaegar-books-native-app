@@ -1,6 +1,6 @@
 import appReducer from './appReducer';
-import userReducer from './userReducer';
+import generalLedgerReducer from './generalLedgerReducer';
 
 export default ({
-    appReducer, userReducer
+    appReducer, generalLedgerReducer
 })

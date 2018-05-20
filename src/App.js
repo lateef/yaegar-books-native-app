@@ -1,15 +1,14 @@
-import React, {Component} from 'react';
-import {persistStore} from 'redux-persist';
-
+import React from 'react';
 import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
+import {persistStore} from 'redux-persist';
 
 import store from './store';
 import * as appAction from './actions/appActions';
 import {registerScreens} from './screens';
 import {iconsMap, iconsLoaded} from './util/app-icons';
 
-export default class App extends Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
         iconsLoaded.then(() => {});
@@ -28,30 +27,12 @@ export default class App extends Component {
     startApp(navigation) {
         persistStore(store, null, () => {
             registerScreens(store, Provider);
-
             switch (navigation) {
-                case 'tabbed':
-                    Navigation.startTabBasedApp({
-                        tabs: [
-                            {
-                                label: 'Dashboard',
-                                icon: iconsMap['ios-desktop'],
-                                screen: 'Dashboard'
-                            }
-                        ]
-                    });
-                    return;
-                default :
+                default:
                     Navigation.startSingleScreenApp({
                         screen: {
-                            label: 'Landing',
-                            screen: 'Landing'
-                        },
-                        drawer: {
-                            left: {
-                                screen: 'Drawer'
-                            },
-                            disableOpenGesture: true
+                            label: 'Dashboard',
+                            screen: 'Dashboard'
                         }
                     });
             }

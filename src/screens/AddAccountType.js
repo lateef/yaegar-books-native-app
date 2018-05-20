@@ -17,29 +17,25 @@ import {
     Input
 } from 'native-base';
 
-import * as userAction from '../actions/userActions';
+import * as generalLedgerAction from '../actions/generalLedgerActions';
 
-export class SignUp extends Component {
+export class AddAccountType extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
         screenBackgroundColor: 'white'
     };
 
-    canNavigate = false;
-
-    constructor(props) {
-        super(props);
-        this.props.userActions.init();
-    }
-
-    handleEmailChangeText = (email) => {
-        this.props.userActions.updateEmail(email.trim());
+    handleNameChangeText = (name) => {
+        this.props.generalLedgerActions.updateName(name.trim());
     };
 
-    handlePress = () => {
-        this.canNavigate = true;
-        this.props.userActions.validateEmail(this.props.user.email);
+    handlePress = (accountType) => {
+        this.props.generalLedgerActions.save(this.props.generalLedger, accountType);
+        this.props.navigator.resetTo({
+            screen: 'Dashboard'
+        });
+
     };
 
     render() {
@@ -51,20 +47,18 @@ export class SignUp extends Component {
                             <Form style={styles.container}>
                                 <Row size={1}/>
                                 <Row size={2}>
-                                    <Text testID="signUpTitle" style={{fontSize: 30}}>Sign Up</Text>
+                                    <Text testID="addAccountTitle" style={{fontSize: 30}}>Add Account</Text>
                                 </Row>
                                 <Row size={1}>
-                                    <Text testID="signUpHeading">Enter your email address</Text>
+                                    <Text testID="addAccountHeading">Enter {this.props.accountType} name</Text>
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
-                                        <Item
-                                            floatingLabel
-                                            error={this.props.error !== null}>
-                                            <Label>Email</Label>
-                                            <Input testID="signUpEmailInput" id="emailInput" onChangeText={(email) => {
-                                                this.handleEmailChangeText(email)
-                                            }} keyboardType={'email-address'} autoCapitalize="none"/>
+                                        <Item floatingLabel
+                                              error={this.props.error !== null}>
+                                            <Label>{this.props.accountType}</Label>
+                                            <Input testID="addAccountNameInput" id="nameInput" onChangeText={(name) => {
+                                                this.handleNameChangeText(name)}}  autoCapitalize="words"/>
                                         </Item>
                                     </Col>
                                 </Row>
@@ -72,16 +66,16 @@ export class SignUp extends Component {
                                     <Col style={styles.container}>
                                         <Row size={1}>
                                             {this.props.error ?
-                                                <Label testID="signUpErrorLabel" style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
+                                                <Label testID="addAccountErrorLabel" style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
                                         </Row>
                                         <Row size={1}>
-                                            {this.props.user.email.length > 0 ?
+                                            {this.props.generalLedger.name.length > 0 ?
                                                 <Button id="continueButton"
-                                                        testID="signUpContinueButton"
+                                                        testID="addAccountContinueButton"
                                                         disabled={this.props.error !== null}
                                                         rounded
-                                                        onPress={this.handlePress}>
-                                                    <Text>Continue</Text>
+                                                        onPress={() => this.handlePress(this.props.accountType)}>
+                                                    <Text>Add Account</Text>
                                                 </Button> : <Text/>}
                                         </Row>
                                     </Col>
@@ -95,29 +89,20 @@ export class SignUp extends Component {
             </Container>
         )
     }
-
-    componentDidUpdate() {
-        if (this.canNavigate && !this.props.error) {
-            this.props.navigator.push({
-                screen: 'SignUpContinue'
-            });
-        }
-        this.canNavigate = false;
-    }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(AddAccountType)
 
 function mapStateToProps(state, ownProps) {
     return {
-        user: state.userReducer.user,
-        error: state.userReducer.error
+        generalLedger: state.generalLedgerReducer.generalLedger,
+        error: state.generalLedgerReducer.error
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        userActions: bindActionCreators(userAction, dispatch)
+        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch)
     };
 }
 

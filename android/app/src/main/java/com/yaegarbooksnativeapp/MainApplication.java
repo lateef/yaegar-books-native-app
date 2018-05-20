@@ -1,17 +1,18 @@
 package com.yaegarbooksnativeapp;
 
-import com.amazonaws.RNAWSCognitoPackage;
+import android.app.Application;
+
+import com.facebook.react.ReactApplication;
+import io.realm.react.RealmReactPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
 import java.util.List;
-
-import io.realm.react.RealmReactPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -23,11 +24,10 @@ public class MainApplication extends NavigationApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.asList(
-              new MainReactPackage(),
-              new RealmReactPackage(),
-              new VectorIconsPackage(),
-              new RNAWSCognitoPackage()
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+            new RealmReactPackage(),
+            new VectorIconsPackage()
       );
     }
 
@@ -57,11 +57,9 @@ public class MainApplication extends NavigationApplication {
     // Add additional packages you require here
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
-            // eg. new VectorIconsPackage()
-            new VectorIconsPackage(),
-            new RNAWSCognitoPackage(),
-            new RealmReactPackage()
-            );
+            new RealmReactPackage(),
+            new VectorIconsPackage()
+    );
   }
 
   @Override

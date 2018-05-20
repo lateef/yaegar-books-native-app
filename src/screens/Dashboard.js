@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {Container, Content, View, Grid, Col, Row, Text} from 'native-base';
+import {connect} from 'react-redux';
+import {Button, Container, Content, Icon, List, ListItem, View, Grid, Col, Row, Text} from 'native-base';
 
-import * as userAction from '../actions/userActions';
+import * as generalLedgerAction from '../actions/generalLedgerActions';
+
 import {iconsMap} from '../util/app-icons';
 
 export let rootNavigator = null;
 
-export class Dashboard extends Component {
+export class Dashboard extends React.Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -19,18 +20,24 @@ export class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.props.navigator.setButtons({
-            leftButtons: [
+            // leftButtons: [
+            //     {
+            //         id: 'sideMenu'
+            //     },
+            //     {
+            //         icon: iconsMap['ios-menu'],
+            //         id: 'menuIcon'
+            //     }
+            // ],
+            rightButtons: [
                 {
-                    id: 'sideMenu'
-                },
-                {
-                    icon: iconsMap['ios-menu'],
-                    id: 'menuIcon'
+                    icon: iconsMap['ios-add'],
+                    id: 'addAccount'
                 }
             ]
         });
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-        rootNavigator = this.props.navigator
+        rootNavigator = this.props.navigator;
     }
 
     toggleDrawer = () => {
@@ -40,13 +47,29 @@ export class Dashboard extends Component {
         });
     };
 
+    showLightBox = () => {
+        this.props.navigator.showLightBox({
+            screen: 'AccountTypeSelection',
+            passProps: {
+                title: 'Choose account type'
+            },
+            style: {
+                backgroundBlur: 'dark',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                tapBackgroundToDismiss: true
+            }
+        });
+    };
+
     onNavigatorEvent(event) {
-        if ('NavBarButtonPress' === event.type && Platform.OS === 'ios') {
-           this.toggleDrawer();
+        if ('NavBarButtonPress' === event.type && 'menuIcon' === event.id && Platform.OS === 'ios') {
+            this.toggleDrawer();
         } else if ('DeepLink' === event.type) {
             this.props.navigator.resetTo({
                 'screen': event.link
             })
+        } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
+            this.showLightBox();
         }
     }
 
@@ -55,27 +78,55 @@ export class Dashboard extends Component {
             <Container>
                 <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
                     <Grid>
-                        <Row style={{}}>
-                            <Col>
-                                <Row size={1}>
-                                </Row>
-                                <Row size={1}>
-                                </Row>
-                                <Row size={7}>
-                                    <View style={styles.container}>
-                                        <Text testID="dashboardTitle" style={{fontSize: 30}}>
-                                            Yaegar Books Dashboard
-                                        </Text>
-                                    </View>
-                                </Row>
-                                <Row size={1}>
-                                </Row>
-                            </Col>
-                        </Row>
+                        {this.props.generalLedgers.length > 0
+                            ?
+                            <Row>
+                                <Col>
+                                    {Platform.OS === "android" ? <Row size={1}>
+                                    </Row> : <View/>}
+                                    <Row size={9}>
+                                        <List style={{flex: 1}}>
+                                            {this.props.generalLedgers.map((generalLedger, i) =>
+                                                <ListItem key={i} style={{alignItems: 'center'}}>
+                                                    <Text>{generalLedger.name}</Text>
+                                                </ListItem>)}
+                                        </List>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            :
+                            <Row>
+                                <Col>
+                                    {Platform.OS === "android" ? <Row size={1}>
+                                    </Row> : <View/>}
+                                    <Row size={1}>
+                                        <View style={styles.container}>
+                                            <Icon type="FontAwesome" name="university"/>
+                                            <Text testID="dashboardTitle">
+                                                Add a bank account
+                                            </Text>
+                                        </View>
+                                    </Row>
+                                    <Row size={1}>
+                                        <Col size={3}/>
+                                        <Col size={2}>
+                                            <Button onPress={() => this.showLightBox()}>
+                                                <Text>New Account</Text>
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                    <Row size={8}>
+                                    </Row>
+                                </Col>
+                            </Row>}
                     </Grid>
                 </Content>
             </Container>
         );
+    }
+
+    componentWillMount() {
+        this.props.generalLedgerActions.list();
     }
 }
 
@@ -83,14 +134,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 
 function mapStateToProps(state, ownProps) {
     return {
-        user: state.userReducer.user,
-        error: state.userReducer.error
+        generalLedger: state.generalLedgerReducer.generalLedger,
+        generalLedgers: state.generalLedgerReducer.list,
+        error: state.generalLedgerReducer.error
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        userActions: bindActionCreators(userAction, dispatch)
+        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch)
     };
 }
 
