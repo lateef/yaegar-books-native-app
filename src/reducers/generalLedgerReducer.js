@@ -8,7 +8,8 @@ export default function reducer(state = {
             return {...state, generalLedger: {...state.generalLedger, name: action.payload}, error: null}
         }
         case 'LIST': {
-            return {...state, generalLedger: {...state.generalLedger, list: action.payload}, error: null}
+            const generalLedgers = action.payload.filter(x => x !== null && x !== undefined);
+            return {...state, list: generalLedgers, error: null}
         }
         default:
             return state

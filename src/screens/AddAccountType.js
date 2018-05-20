@@ -32,7 +32,7 @@ export class AddAccountType extends Component {
 
     handlePress = (accountType) => {
         this.props.generalLedgerActions.save(this.props.generalLedger, accountType);
-        this.props.navigator.push({
+        this.props.navigator.resetTo({
             screen: 'Dashboard'
         });
 

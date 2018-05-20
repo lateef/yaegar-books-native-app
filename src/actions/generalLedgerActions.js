@@ -22,8 +22,8 @@ export function save(generalLedger, generalLedgerType) {
 }
 
 export function list() {
-    return  function (dispatch) {
-            const chartOfAccounts = new GeneralLedgerQueries().list();
+    return async function (dispatch) {
+            const chartOfAccounts = await new GeneralLedgerQueries().list();
             dispatch({
                 type: 'LIST',
                 payload: chartOfAccounts

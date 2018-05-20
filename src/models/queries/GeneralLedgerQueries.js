@@ -25,11 +25,10 @@ export default class GeneralLedgerQueries {
     }
 
     list() {
-        Realm.open({
+        return Realm.open({
             schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            const chartOfAccounts = realm.objects('ChartOfAccounts').map(x => Object.assign({}, x));
-            return chartOfAccounts;
+            return realm.objects('ChartOfAccounts').map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);
         });

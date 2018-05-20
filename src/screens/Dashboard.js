@@ -2,7 +2,9 @@ import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Button, Container, Content, Icon, View, Grid, Col, Row, Text} from 'native-base';
+import {Button, Container, Content, Icon, List, ListItem, View, Grid, Col, Row, Text} from 'native-base';
+
+import * as generalLedgerAction from '../actions/generalLedgerActions';
 
 import {iconsMap} from '../util/app-icons';
 
@@ -18,15 +20,15 @@ export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.props.navigator.setButtons({
-            leftButtons: [
-                {
-                    id: 'sideMenu'
-                },
-                {
-                    icon: iconsMap['ios-menu'],
-                    id: 'menuIcon'
-                }
-            ],
+            // leftButtons: [
+            //     {
+            //         id: 'sideMenu'
+            //     },
+            //     {
+            //         icon: iconsMap['ios-menu'],
+            //         id: 'menuIcon'
+            //     }
+            // ],
             rightButtons: [
                 {
                     icon: iconsMap['ios-add'],
@@ -76,46 +78,63 @@ export class Dashboard extends React.Component {
             <Container>
                 <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
                     <Grid>
-                        <Row>
-                            <Col>
-                                {Platform.OS === "android" ? <Row size={1}>
-                                </Row> : <View/>}
-                                <Row size={1}>
-                                    <View style={styles.container}>
-                                        <Icon type="FontAwesome" name="university"/>
-                                        <Text testID="dashboardTitle">
-                                            Add a bank account
-                                        </Text>
-                                    </View>
-                                </Row>
-                                <Row size={1}>
-                                    <Col size={3}/>
-                                    <Col size={2}>
-                                        <Button onPress={() => this.showLightBox()}>
-                                            <Text>New Account</Text>
-                                        </Button>
-                                    </Col>
-                                </Row>
-                                <Row size={8}>
-                                </Row>
-                            </Col>
-                        </Row>
+                        {this.props.generalLedgers.length > 0
+                            ?
+                            <List style={{flex: 1}}>
+                                {this.props.generalLedgers.map((generalLedger, i) =>
+                                    <ListItem key={i} style={{alignItems: 'center'}}>
+                                        <Text>{generalLedger.name}</Text>
+                                    </ListItem>)}
+                            </List>
+                            :
+                            <Row>
+                                <Col>
+                                    {Platform.OS === "android" ? <Row size={1}>
+                                    </Row> : <View/>}
+                                    <Row size={1}>
+                                        <View style={styles.container}>
+                                            <Icon type="FontAwesome" name="university"/>
+                                            <Text testID="dashboardTitle">
+                                                Add a bank account
+                                            </Text>
+                                        </View>
+                                    </Row>
+                                    <Row size={1}>
+                                        <Col size={3}/>
+                                        <Col size={2}>
+                                            <Button onPress={() => this.showLightBox()}>
+                                                <Text>New Account</Text>
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                    <Row size={8}>
+                                    </Row>
+                                </Col>
+                            </Row>}
                     </Grid>
                 </Content>
             </Container>
         );
+    }
+
+    async componentWillMount() {
+        await this.props.generalLedgerActions.list();
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        generalLedger: state.generalLedgerReducer.generalLedger,
+        generalLedgers: state.generalLedgerReducer.list,
+        error: state.generalLedgerReducer.error
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        userActions: bindActionCreators(dispatch)
+        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch)
     };
 }
 
