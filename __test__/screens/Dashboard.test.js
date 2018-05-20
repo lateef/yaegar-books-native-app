@@ -10,10 +10,11 @@ require('bezier');
 
 const mockStore = configureStore([promise(), thunk, logger]);
 const store = mockStore({
-    userReducer: {
-        user: {
-            email: ''
-        }
+    generalLedgerReducer: {
+        generalLedger: {
+            name: ''
+        },
+        list: []
     }
 });
 

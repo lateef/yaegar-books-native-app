@@ -4,7 +4,8 @@ describe('General ledger reducer', () => {
     it('should return initial state', () => {
         expect(reducer(undefined, {})).toEqual({
             error: null,
-            generalLedger: {"name": ""}
+            generalLedger: {name: ""},
+            list: []
         });
     });
 

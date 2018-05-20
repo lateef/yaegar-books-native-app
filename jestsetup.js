@@ -11,8 +11,13 @@ global.render = render;
 global.setup = function setup() {
     const props = {
         navigator: {
+            push: jest.fn(),
+            toggleDrawer: jest.fn(),
+            handleDeepLink: jest.fn(),
+            resetTo: jest.fn(),
+            setOnNavigatorEvent: jest.fn(),
             setButtons: jest.fn()
-        }
+        },
     };
 
     return {
