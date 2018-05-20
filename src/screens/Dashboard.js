@@ -80,12 +80,20 @@ export class Dashboard extends React.Component {
                     <Grid>
                         {this.props.generalLedgers.length > 0
                             ?
-                            <List style={{flex: 1}}>
-                                {this.props.generalLedgers.map((generalLedger, i) =>
-                                    <ListItem key={i} style={{alignItems: 'center'}}>
-                                        <Text>{generalLedger.name}</Text>
-                                    </ListItem>)}
-                            </List>
+                            <Row>
+                                <Col>
+                                    {Platform.OS === "android" ? <Row size={1}>
+                                    </Row> : <View/>}
+                                    <Row size={9}>
+                                        <List style={{flex: 1}}>
+                                            {this.props.generalLedgers.map((generalLedger, i) =>
+                                                <ListItem key={i} style={{alignItems: 'center'}}>
+                                                    <Text>{generalLedger.name}</Text>
+                                                </ListItem>)}
+                                        </List>
+                                    </Row>
+                                </Col>
+                            </Row>
                             :
                             <Row>
                                 <Col>
@@ -117,8 +125,8 @@ export class Dashboard extends React.Component {
         );
     }
 
-    async componentWillMount() {
-        await this.props.generalLedgerActions.list();
+    componentWillMount() {
+        this.props.generalLedgerActions.list();
     }
 }
 
