@@ -118,6 +118,7 @@ export class Dashboard extends React.Component {
                                             </Text>
                                         </View>
                                     </Row>
+                                    <Row size={1}/>
                                     <Row size={1}>
                                         <Col size={3}/>
                                         <Col size={2}>
@@ -126,7 +127,7 @@ export class Dashboard extends React.Component {
                                             </Button>
                                         </Col>
                                     </Row>
-                                    <Row size={8}>
+                                    <Row size={7}>
                                     </Row>
                                 </Col>
                             </Row>}
