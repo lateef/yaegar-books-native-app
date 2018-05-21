@@ -19,7 +19,7 @@ import {
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 
-export class AddAccountType extends Component {
+export class AddAccount extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -35,7 +35,6 @@ export class AddAccountType extends Component {
         this.props.navigator.resetTo({
             screen: 'Dashboard'
         });
-
     };
 
     render() {
@@ -91,7 +90,7 @@ export class AddAccountType extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddAccountType)
+export default connect(mapStateToProps, mapDispatchToProps)(AddAccount)
 
 function mapStateToProps(state, ownProps) {
     return {

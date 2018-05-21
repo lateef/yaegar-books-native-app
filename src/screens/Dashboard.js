@@ -67,10 +67,20 @@ export class Dashboard extends React.Component {
         } else if ('DeepLink' === event.type) {
             this.props.navigator.resetTo({
                 'screen': event.link
-            })
+            });
         } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         }
+    }
+
+    displayAccount(accountName, accountUuid) {
+        this.props.navigator.push({
+            'screen': 'Account',
+            passProps: {
+                accountName: accountName,
+                accountUuid: accountUuid
+            }
+        });
     }
 
     render() {
@@ -87,7 +97,8 @@ export class Dashboard extends React.Component {
                                     <Row size={9}>
                                         <List style={{flex: 1}}>
                                             {this.props.generalLedgers.map((generalLedger, i) =>
-                                                <ListItem key={i} style={{alignItems: 'center'}}>
+                                                <ListItem key={i} style={{alignItems: 'center'}}
+                                                          onPress={() => this.displayAccount(generalLedger.name, generalLedger.uuid)}>
                                                     <Text>{generalLedger.name}</Text>
                                                 </ListItem>)}
                                         </List>

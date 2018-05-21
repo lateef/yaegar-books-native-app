@@ -2,12 +2,14 @@ import {Navigation} from 'react-native-navigation';
 
 import Dashboard from './Dashboard';
 import AccountTypeSelection from './lightboxes/AccountTypeSelection';
-import AddAccountType from './AddAccountType';
+import AddAccount from './AddAccount';
+import Account from './Account';
 // import Drawer from './Drawer';
 
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
     Navigation.registerComponent('AccountTypeSelection', () => AccountTypeSelection, store, Provider);
-    Navigation.registerComponent('AddAccountType', () => AddAccountType, store, Provider);
+    Navigation.registerComponent('AddAccountType', () => AddAccount, store, Provider);
+    Navigation.registerComponent('Account', () => Account, store, Provider);
     // Navigation.registerComponent('Drawer', () => Drawer, store, Provider);
 }
