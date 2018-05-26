@@ -10,6 +10,7 @@
     "fetch-mock": "^6.4.2",
     "jest": "^22.4.3",
     "jest-react-native": "^18.0.0",
+    "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
     "react-test-renderer": "16.3.1",
     "redux-mock-store": "^1.5.1"
@@ -40,11 +41,13 @@
     ]
   },
   "dependencies": {
+    "moment": "^2.22.1",
     "native-base": "^2.4.4",
     "react": "16.3.1",
     "react-dom": "^16.3.2",
     "react-native": "~0.55.2",
     "react-native-action-button": "^2.8.4",
+    "react-native-datepicker": "^1.7.2",
     "react-native-navigation": "^1.1.462",
     "react-native-vector-icons": "^4.6.0",
     "react-redux": "^5.0.7",

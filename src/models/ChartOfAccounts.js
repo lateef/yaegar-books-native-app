@@ -5,12 +5,14 @@ ChartOfAccounts.schema = {
     name: 'ChartOfAccounts',
     primaryKey: 'uuid',
     properties: {
-        id: {type: 'int', optional: true},
+        id: 'int?',
         uuid: 'string',
         code: 'int',
         name: 'string',
         description: 'string',
-        parentCode: {type: 'int', optional: true},
-        ownerUuid: 'string'
+        reportSortOrder: {type:'int', optional: true},
+        parentUuid: {type: 'string', optional: true},
+        ownerUuid: {type: 'string', optional: true},
+        showOnDashboard: {type: 'string', default: 'Y'}
     }
 };

@@ -7,7 +7,7 @@ import ActionButton from 'react-native-action-button';
 import {
     Container,
     Header,
-    H1,
+    Text,
     Grid,
     Row,
     Icon,
@@ -36,18 +36,18 @@ export class Account extends Component {
         return (
             <Container>
                 <Header>
-                    <H1>{this.props.accountName}</H1>
+                    <Text>{this.props.accountName}</Text>
                 </Header>
                 <Grid>
                     <Row style={styles.height}>
                         <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
                             {/* Rest of the app comes ABOVE the action button component !*/}
                             <ActionButton buttonColor="#3498db">
-                                <ActionButton.Item buttonColor='#E74C3C' title="EXPENSES" onPress={() => this.transact('expenses')}>
-                                    <Icon type="FontAwesome" name="angle-double-up" style={styles.actionButtonIcon} />
-                                </ActionButton.Item>
-                                <ActionButton.Item buttonColor='#1abc9c' title="INCOMES" onPress={() => this.transact('incomes')}>
+                                <ActionButton.Item buttonColor='#1abc9c' title="INCOME" onPress={() => this.transact('income')}>
                                     <Icon type="FontAwesome" name="angle-double-down" style={styles.actionButtonIcon} />
+                                </ActionButton.Item>
+                                <ActionButton.Item buttonColor='#E74C3C' title="EXPENSE" onPress={() => this.transact('expense')}>
+                                    <Icon type="FontAwesome" name="angle-double-up" style={styles.actionButtonIcon} />
                                 </ActionButton.Item>
                             </ActionButton>
                         </View>

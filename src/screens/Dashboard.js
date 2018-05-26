@@ -96,6 +96,9 @@ export class Dashboard extends React.Component {
                                     </Row> : <View/>}
                                     <Row size={9}>
                                         <List style={{flex: 1}}>
+                                            <ListItem itemDivider>
+                                                <Text>Accounts</Text>
+                                            </ListItem>
                                             {this.props.generalLedgers.map((generalLedger, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}}
                                                           onPress={() => this.displayAccount(generalLedger.name, generalLedger.uuid)}>
@@ -138,7 +141,7 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        this.props.generalLedgerActions.list();
+        this.props.generalLedgerActions.listByParentUuid('1b7b337b-db56-4974-9a45-55b3022bf85f');
     }
 }
 
