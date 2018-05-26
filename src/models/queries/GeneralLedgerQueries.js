@@ -18,6 +18,7 @@ export default class GeneralLedgerQueries {
             maxCode = (maxCode) ? maxCode : generalLedger.code;
 
             realm.write(() => {
+                const date = new Date();
                 realm.create('ChartOfAccounts',
                     {
                         uuid: uuid(),
@@ -26,7 +27,9 @@ export default class GeneralLedgerQueries {
                         description: generalLedger.description,
                         reportSortOrder: generalLedger.reportSortOrder,
                         parentUuid: generalLedger.parentUuid,
-                        ownerUuid: generalLedger.ownerUuid
+                        ownerUuid: generalLedger.ownerUuid,
+                        createdTimestamp: date,
+                        updatedTimestamp: date
                     });
             });
             return realm;

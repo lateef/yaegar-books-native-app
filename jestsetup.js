@@ -17,7 +17,7 @@ global.setup = function setup() {
             resetTo: jest.fn(),
             setOnNavigatorEvent: jest.fn(),
             setButtons: jest.fn()
-        },
+        }
     };
 
     return {

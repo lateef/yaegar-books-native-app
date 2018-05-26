@@ -30,9 +30,8 @@ export class Transaction extends Component {
         screenBackgroundColor: 'white'
     };
 
-    constructor() {
-        super();
-        this.state = {date: moment().format('MMMM DD YYYY')};
+    onValueChange(value) {
+       console.log(value);
     }
 
     render() {
@@ -47,12 +46,12 @@ export class Transaction extends Component {
                             <Col>
                                 <Form style={styles.container}>
                                     <Row size={1}>
-                                        <Right><Button id="saveTransactionButton"
-                                                disabled={true}
-                                                rounded
-                                                onPress={() => {}}>
-                                            <Text>Save</Text>
-                                        </Button></Right>
+                                        <Right>
+                                            <Button id="saveTransactionButton" disabled={true} rounded onPress={() => {
+                                            }}>
+                                                <Text>Save</Text>
+                                            </Button>
+                                        </Right>
                                     </Row>
                                     <Row size={1}/>
                                     <Row size={2}>
@@ -79,7 +78,7 @@ export class Transaction extends Component {
                                                     }
                                                 }}
                                                 onDateChange={(date) => {
-                                                    this.setState({date: date})
+                                                    // set date/// this.setState({date: date})
                                                 }}
                                             />
                                         </Col>
@@ -89,14 +88,12 @@ export class Transaction extends Component {
                                         <Picker
                                             iosHeader="Category"
                                             mode="dropdown"
-                                            selectedValue={'key0'}
-                                            // onValueChange={this.onValueChange.bind(this)}
+                                            selectedValue={'nouuid'}
+                                            onValueChange={this.onValueChange.bind(this)}
                                         >
-                                            <Picker.Item label="Choose category" value="key0"/>
-                                            <Picker.Item label="ATM Card" value="key1"/>
-                                            <Picker.Item label="Debit Card" value="key2"/>
-                                            <Picker.Item label="Credit Card" value="key3"/>
-                                            <Picker.Item label="Net Banking" value="key4"/>
+                                            {this.props.generalLedgers.map((generalLedger, i) =>
+                                                <Picker.Item key={i} label={generalLedger.name} value={generalLedger.uuid}/>
+                                            )}
                                         </Picker>
                                     </Row>
                                     <Row size={1}/>
@@ -116,6 +113,10 @@ export class Transaction extends Component {
             </Container>
         )
     }
+
+    componentWillMount() {
+        this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4ec43749-b607-4951-9cc6-1e81d657c56c');
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transaction)
@@ -123,6 +124,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Transaction)
 function mapStateToProps(state, ownProps) {
     return {
         generalLedger: state.generalLedgerReducer.generalLedger,
+        generalLedgers: [{name: 'Select Category', uuid: 'nouuid'}].concat(state.generalLedgerReducer.categories),
         error: state.generalLedgerReducer.error,
         date: moment().format('MMMM DD YYYY')
     };

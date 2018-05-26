@@ -8,7 +8,8 @@ export default function reducer(state = {
         parentUuid: '',
         ownerUuid: 'GUEST'
     },
-    list: [],
+    accounts: [],
+    categories: [],
     error: null
 }, action) {
     switch (action.type) {
@@ -21,9 +22,13 @@ export default function reducer(state = {
         case 'UPDATE_PARENT_UUID': {
             return {...state, generalLedger: {...state.generalLedger, parentUuid: action.payload}, error: null}
         }
-        case 'LIST': {
+        case 'LIST_ACCOUNTS': {
             const generalLedgers = action.payload.filter(x => x !== null && x !== undefined);
-            return {...state, list: generalLedgers, error: null}
+            return {...state, accounts: generalLedgers, error: null}
+        }
+        case 'LIST_CATEGORIES': {
+            const generalLedgers = action.payload.filter(x => x !== null && x !== undefined);
+            return {...state, categories: generalLedgers, error: null}
         }
         default:
             return state

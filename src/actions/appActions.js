@@ -97,6 +97,14 @@ async function initDatabase() {
                 description: "Current assets",
                 parentUuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
                 showOnDashboard: 'N'
+            },
+            {
+                uuid: "a59c1c6f-e58d-47e8-bfe2-1ff6d4dbce70",
+                code: 109999,
+                name: "Salary",
+                description: "Salary",
+                parentUuid: "4ec43749-b607-4951-9cc6-1e81d657c56c",
+                showOnDashboard: 'N'
             }
         ]
     };

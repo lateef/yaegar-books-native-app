@@ -13,6 +13,8 @@ ChartOfAccounts.schema = {
         reportSortOrder: {type:'int', optional: true},
         parentUuid: {type: 'string', optional: true},
         ownerUuid: {type: 'string', optional: true},
-        showOnDashboard: {type: 'string', default: 'Y'}
+        showOnDashboard: {type: 'string', default: 'Y'},
+        createdTimestamp: 'date',
+        updatedTimestamp: 'date'
     }
 };

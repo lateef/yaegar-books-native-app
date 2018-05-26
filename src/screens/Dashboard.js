@@ -141,7 +141,7 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        this.props.generalLedgerActions.listByParentUuid('1b7b337b-db56-4974-9a45-55b3022bf85f');
+        this.props.generalLedgerActions.listByParentUuid('LIST_ACCOUNTS', '1b7b337b-db56-4974-9a45-55b3022bf85f');
     }
 }
 
@@ -150,7 +150,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 function mapStateToProps(state, ownProps) {
     return {
         generalLedger: state.generalLedgerReducer.generalLedger,
-        generalLedgers: state.generalLedgerReducer.list,
+        generalLedgers: state.generalLedgerReducer.accounts,
         error: state.generalLedgerReducer.error
     };
 }
