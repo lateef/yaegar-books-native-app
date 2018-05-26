@@ -30,8 +30,10 @@ export class AddAccount extends Component {
         this.props.generalLedgerActions.updateName(name.trim());
     };
 
-    handlePress = (accountType) => {
-        this.props.generalLedgerActions.save(this.props.generalLedger, accountType);
+    handlePress = async (accountType) => {
+        await this.props.generalLedgerActions.updateType(accountType.trim());
+        await this.props.generalLedgerActions.updateParentUuid('1b7b337b-db56-4974-9a45-55b3022bf85f');
+        this.props.generalLedgerActions.save(this.props.generalLedger);
         this.props.navigator.resetTo({
             screen: 'Dashboard'
         });

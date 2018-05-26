@@ -7,16 +7,27 @@ export default class GeneralLedgerQueries {
         console.log(Realm.defaultPath);
     }
 
-    create(code, name, description, ownerUuid) {
+    create(generalLedger) {
         Realm.open({
             schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            let maxCode = realm.objects(ChartOfAccounts).max("code");
-            maxCode = (maxCode) ? maxCode : code;
+            let maxCode = realm
+                .objects(ChartOfAccounts)
+                .filtered('parentUuid = $0', '1b7b337b-db56-4974-9a45-55b3022bf85f')
+                .max("code");
+            maxCode = (maxCode) ? maxCode : generalLedger.code;
 
             realm.write(() => {
                 realm.create('ChartOfAccounts',
-                    {uuid: uuid(), code: maxCode + 1, name: name, description: description, ownerUuid: ownerUuid});
+                    {
+                        uuid: uuid(),
+                        code: maxCode + 1,
+                        name: generalLedger.name,
+                        description: generalLedger.description,
+                        reportSortOrder: generalLedger.reportSortOrder,
+                        parentUuid: generalLedger.parentUuid,
+                        ownerUuid: generalLedger.ownerUuid
+                    });
             });
             return realm;
         }).catch(error => {
@@ -29,6 +40,26 @@ export default class GeneralLedgerQueries {
             schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('ChartOfAccounts').map(x => Object.assign({}, x));
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+
+    listByParentUuid(parentUuid) {
+        return Realm.open({
+            schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            return realm.objects('ChartOfAccounts').filtered('parentUuid = $0', parentUuid).map(x => Object.assign({}, x));
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+
+    count() {
+        return Realm.open({
+            schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            return realm.objects('ChartOfAccounts').length;
         }).catch(error => {
             console.error(error);
         });
