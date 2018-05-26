@@ -6,7 +6,8 @@ describe('General ledger reducer', () => {
             error: null,
             generalLedger:
                     {code: null, description: "", name: "", ownerUuid: "GUEST", parentUuid: "", type: "", uuid: ""},
-                list: []
+                accounts: [],
+                categories: []
             });
     });
 
@@ -31,10 +32,17 @@ describe('General ledger reducer', () => {
         );
     });
 
-    it('should handle LIST', () => {
-        const action = {type: 'LIST', payload: ['Bank', null]};
+    it('should handle LIST_ACCOUNTS', () => {
+        const action = {type: 'LIST_ACCOUNTS', payload: ['Bank', null]};
 
-        expect(reducer([], action)).toEqual({error: null, list: ["Bank"]}
+        expect(reducer([], action)).toEqual({error: null, accounts: ["Bank"]}
+        );
+    });
+
+    it('should handle LIST_CATEGORIES', () => {
+        const action = {type: 'LIST_CATEGORIES', payload: ['Salary', null]};
+
+        expect(reducer([], action)).toEqual({error: null, categories: ["Salary"]}
         );
     });
 });

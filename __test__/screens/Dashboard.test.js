@@ -14,7 +14,8 @@ const store = mockStore({
         generalLedger: {
             name: ''
         },
-        list: []
+        accounts: [],
+        categories: []
     }
 });
 
