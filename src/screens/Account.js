@@ -43,10 +43,10 @@ export class Account extends Component {
                         <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
                             {/* Rest of the app comes ABOVE the action button component !*/}
                             <ActionButton buttonColor="#3498db">
-                                <ActionButton.Item buttonColor='#1abc9c' title="INCOME" onPress={() => this.transact('income')}>
+                                <ActionButton.Item buttonColor='#1abc9c' title="INCOME" onPress={() => this.transact('Income')}>
                                     <Icon type="FontAwesome" name="angle-double-down" style={styles.actionButtonIcon} />
                                 </ActionButton.Item>
-                                <ActionButton.Item buttonColor='#E74C3C' title="EXPENSE" onPress={() => this.transact('expense')}>
+                                <ActionButton.Item buttonColor='#E74C3C' title="EXPENSE" onPress={() => this.transact('Expense')}>
                                     <Icon type="FontAwesome" name="angle-double-up" style={styles.actionButtonIcon} />
                                 </ActionButton.Item>
                             </ActionButton>

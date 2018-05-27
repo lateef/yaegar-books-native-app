@@ -27,7 +27,7 @@ async function initDatabase() {
                 showOnDashboard: 'N'
             },
             {
-                uuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
+                uuid: "6c5bd845-93ec-4da8-a4a8-d195f0a96ea0",
                 code: 200000,
                 name: "Non-operating income",
                 description: "Income that isn’t from normal business operations",
@@ -43,7 +43,7 @@ async function initDatabase() {
                 showOnDashboard: 'N'
             },
             {
-                uuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
+                uuid: "a4b153c8-b69b-4243-9778-ed3dc9062d4d",
                 code: 400000,
                 name: "Direct cost",
                 description: "Costs incurred that relate directly to earning Income",
@@ -51,7 +51,7 @@ async function initDatabase() {
                 showOnDashboard: 'N'
             },
             {
-                uuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
+                uuid: "4e0de115-6eaa-498e-82fa-34d4f87935f9",
                 code: 500000,
                 name: "Operating expenses",
                 description: "Expenses incurred from the day to day operations of the business",
@@ -59,7 +59,7 @@ async function initDatabase() {
                 showOnDashboard: 'N'
             },
             {
-                uuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
+                uuid: "17dd80d1-6685-4e22-830e-c97f02f8a696",
                 code: 600000,
                 name: "Non-operating expenses",
                 description: "Expenditure that isn’t from normal business operations",
@@ -75,7 +75,7 @@ async function initDatabase() {
                 showOnDashboard: 'N'
             },
             {
-                uuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
+                uuid: "dcbf0554-8d0a-4706-b98d-9a67359b2abb",
                 code: 800000,
                 name: "Liabilities",
                 description: "A liability is an obligation that arises in the course of doing business to be paid over a period of time",
@@ -83,7 +83,7 @@ async function initDatabase() {
                 showOnDashboard: 'N'
             },
             {
-                uuid: "db5d6c60-b174-422b-82b5-663ed0bd8723",
+                uuid: "33ed413b-288b-4218-982c-7d3cd842f3ce",
                 code: 900000,
                 name: "Equity and reserves",
                 description: "Shareholders' funds",
@@ -105,7 +105,15 @@ async function initDatabase() {
                 description: "Salary",
                 parentUuid: "4ec43749-b607-4951-9cc6-1e81d657c56c",
                 showOnDashboard: 'N'
-            }
+            },
+            {
+                uuid: "21d7d0f8-4eb9-4ecb-8980-360a20bbbabe",
+                code: 509999,
+                name: "Mortgage",
+                description: "Mortgage",
+                parentUuid: "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+                showOnDashboard: 'N'
+            },
         ]
     };
 
