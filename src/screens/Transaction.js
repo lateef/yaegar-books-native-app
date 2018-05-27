@@ -115,7 +115,11 @@ export class Transaction extends Component {
     }
 
     componentWillMount() {
-        this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4ec43749-b607-4951-9cc6-1e81d657c56c');
+        if ('Income' === this.props.transactionType) {
+            this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4ec43749-b607-4951-9cc6-1e81d657c56c');
+        } else if ('Expense' === this.props.transactionType) {
+            this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4e0de115-6eaa-498e-82fa-34d4f87935f9');
+        }
     }
 }
 
