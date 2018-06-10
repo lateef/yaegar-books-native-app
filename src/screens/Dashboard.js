@@ -2,9 +2,10 @@ import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Button, Container, Content, Icon, List, ListItem, View, Grid, Col, Row, Text} from 'native-base';
+import {Button, Container, Content, Icon, Left, Body, List, ListItem, View, Grid, Col, Row, Text} from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
+import DATA from '../baseChartOfAccounts';
 
 import {iconsMap} from '../util/app-icons';
 
@@ -100,9 +101,22 @@ export class Dashboard extends React.Component {
                                                 <Text>Accounts</Text>
                                             </ListItem>
                                             {this.props.generalLedgers.map((generalLedger, i) =>
-                                                <ListItem key={i} style={{alignItems: 'center'}}
+                                                <ListItem key={i} style={{alignItems: 'center'}} icon
                                                           onPress={() => this.displayAccount(generalLedger.name, generalLedger.uuid)}>
-                                                    <Text>{generalLedger.name}</Text>
+                                                    <Left>
+                                                        {generalLedger.classifier === "Bank" ?
+                                                            <Icon type="FontAwesome" style={{fontSize: 20}} name="university"/>
+                                                            : <Text/>}
+                                                        {generalLedger.classifier === "Credit" ?
+                                                            <Icon type="FontAwesome" style={{fontSize: 20}} name="credit-card"/>
+                                                            : <Text/>}
+                                                        {generalLedger.classifier === "Cash" ?
+                                                            <Icon name="cash" style={{fontSize: 25}}/>
+                                                            : <Text/>}
+                                                    </Left>
+                                                    <Body>
+                                                        <Text>{generalLedger.name}</Text>
+                                                    </Body>
                                                 </ListItem>)}
                                         </List>
                                     </Row>
@@ -117,7 +131,7 @@ export class Dashboard extends React.Component {
                                         <View style={styles.container}>
                                             <Icon type="FontAwesome" name="university"/>
                                             <Text testID="dashboardTitle">
-                                                Add a bank account
+                                                Add an account
                                             </Text>
                                         </View>
                                     </Row>
@@ -141,7 +155,10 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        this.props.generalLedgerActions.listByParentUuid('LIST_ACCOUNTS', '1b7b337b-db56-4974-9a45-55b3022bf85f');
+        const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Current assets";
+        })[0];
+        this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_ACCOUNTS', currentAsset.uuid);
     }
 }
 

@@ -1,30 +1,39 @@
 import Realm from 'realm';
 import uuid from 'uuid/v4';
 import ChartOfAccounts from '../ChartOfAccounts';
+import Transactions from '../Transactions';
+import DATA from '../../baseChartOfAccounts';
 
 export default class GeneralLedgerQueries {
     constructor() {
         console.log(Realm.defaultPath);
     }
 
-    create(generalLedger) {
-        Realm.open({
-            schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
-        }).then(realm => {
-            let maxCode = realm
-                .objects(ChartOfAccounts)
-                .filtered('parentUuid = $0', '1b7b337b-db56-4974-9a45-55b3022bf85f')
-                .max("code");
-            maxCode = (maxCode) ? maxCode : generalLedger.code;
+    currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+        return ledgerEntry.name === "Current assets";
+    })[0];
 
-            realm.write(() => {
+    create(generalLedger, init) {
+        Realm.open({
+            schema: [ChartOfAccounts, Transactions], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            const maxCode = realm
+                .objects(ChartOfAccounts)
+                .filtered('parentUuid = $0', this.currentAsset.uuid)
+                .max("code");
+
+            const code = (init) ? generalLedger.code : (maxCode) ?
+                maxCode + 1 : this.currentAsset.code + 1;
+
+            return realm.write(() => {
                 const date = new Date();
-                realm.create('ChartOfAccounts',
+                return realm.create('ChartOfAccounts',
                     {
-                        uuid: uuid(),
-                        code: maxCode + 1,
+                        uuid: (init) ? generalLedger.uuid : uuid(),
+                        code: code,
                         name: generalLedger.name,
                         description: generalLedger.description,
+                        classifier: generalLedger.classifier,
                         reportSortOrder: generalLedger.reportSortOrder,
                         parentUuid: generalLedger.parentUuid,
                         ownerUuid: generalLedger.ownerUuid,
@@ -32,7 +41,6 @@ export default class GeneralLedgerQueries {
                         updatedTimestamp: date
                     });
             });
-            return realm;
         }).catch(error => {
             console.error(error);
         });
@@ -40,7 +48,7 @@ export default class GeneralLedgerQueries {
 
     list() {
         return Realm.open({
-            schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
+            schema: [ChartOfAccounts, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('ChartOfAccounts').map(x => Object.assign({}, x));
         }).catch(error => {
@@ -50,7 +58,7 @@ export default class GeneralLedgerQueries {
 
     listByParentUuid(parentUuid) {
         return Realm.open({
-            schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
+            schema: [ChartOfAccounts, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('ChartOfAccounts').filtered('parentUuid = $0', parentUuid).map(x => Object.assign({}, x));
         }).catch(error => {
@@ -60,9 +68,19 @@ export default class GeneralLedgerQueries {
 
     count() {
         return Realm.open({
-            schema: [ChartOfAccounts], deleteRealmIfMigrationNeeded: true
+            schema: [ChartOfAccounts, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('ChartOfAccounts').length;
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+
+    findByUuid(uuid) {
+        return Realm.open({
+            schema: [ChartOfAccounts, Transactions], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            return realm.objectForPrimaryKey('ChartOfAccounts', uuid);
         }).catch(error => {
             console.error(error);
         });

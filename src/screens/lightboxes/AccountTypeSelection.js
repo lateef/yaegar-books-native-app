@@ -54,7 +54,7 @@ export class AccountTypeSelection extends React.Component {
                             <Col size={1}>
                                 <Icon type="FontAwesome" name="university"/>
                             </Col>
-                            <Col size={2} onPress={() => this.addAccount('bank')}>
+                            <Col size={3} onPress={() => this.addAccount('Bank')}>
                                 <Row>
                                     <Text style={styles.title}>BANK</Text>
                                 </Row>
@@ -63,10 +63,38 @@ export class AccountTypeSelection extends React.Component {
                                 </Row>
                             </Col>
                         </Row>
+                        <Row size={1}/>
+                        <Row size={2}>
+                            <Col size={1}>
+                                <Icon type="FontAwesome" name="credit-card"/>
+                            </Col>
+                            <Col size={3} onPress={() => this.addAccount('Credit')}>
+                                <Row>
+                                    <Text style={styles.title}>CREDIT CARD</Text>
+                                </Row>
+                                <Row>
+                                    <Text>Credit card</Text>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row size={1}/>
+                        <Row size={2}>
+                            <Col size={1}>
+                                <Icon name="cash"/>
+                            </Col>
+                            <Col size={3} onPress={() => this.addAccount('Cash')}>
+                                <Row>
+                                    <Text style={styles.title}>CASH/WALLET</Text>
+                                </Row>
+                                <Row>
+                                    <Text>Cash at hand</Text>
+                                </Row>
+                            </Col>
+                        </Row>
                         <Row size={2}/>
                     </Grid>
                 </View>
-                <View style={{flex: 2}}>
+                <View style={{flex: 1}}>
                     <Button
                         title={'Cancel'}
                         onPress={() => this.dismissLightBox()}
@@ -94,7 +122,7 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get('window').width * 0.9,
-        height: Dimensions.get('window').height * 0.3,
+        height: Dimensions.get('window').height * 0.5,
         backgroundColor: '#ffffff',
         borderRadius: 5,
         padding: 16,

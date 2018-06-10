@@ -18,6 +18,7 @@ import {
 } from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
+import DATA from '../baseChartOfAccounts';
 
 export class AddAccount extends Component {
     static navigatorStyle = {
@@ -31,8 +32,12 @@ export class AddAccount extends Component {
     };
 
     handlePress = async (accountType) => {
+        const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Current assets";
+        })[0];
         await this.props.generalLedgerActions.updateType(accountType.trim());
-        await this.props.generalLedgerActions.updateParentUuid('1b7b337b-db56-4974-9a45-55b3022bf85f');
+        await this.props.generalLedgerActions.updateParentUuid(currentAsset.uuid);
+        await this.props.generalLedgerActions.updateClassifier(this.props.accountType);
         this.props.generalLedgerActions.save(this.props.generalLedger);
         this.props.navigator.resetTo({
             screen: 'Dashboard'
@@ -70,7 +75,7 @@ export class AddAccount extends Component {
                                                 <Label testID="addAccountErrorLabel" style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
                                         </Row>
                                         <Row size={1}>
-                                            {this.props.generalLedger.name.length > 0 ?
+                                            {this.props.generalLedger && this.props.generalLedger.name.length > 0 ?
                                                 <Button id="continueButton"
                                                         testID="addAccountContinueButton"
                                                         disabled={this.props.error !== null}

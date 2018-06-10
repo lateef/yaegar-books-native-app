@@ -22,16 +22,45 @@ import {
 } from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
+import * as journalEntryAction from '../actions/journalEntryActions';
 
-export class Transaction extends Component {
+export class AddTransaction extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
         screenBackgroundColor: 'white'
     };
 
-    onValueChange(value) {
-       console.log(value);
+    handleDateChange(date) {
+        this.props.journalEntryActions.updateTransactionDateTime(new Date(date));
+    }
+
+    handleGeneralLedgerChange(uuid) {
+        const generalLedger = this.props.generalLedgers.filter(generalLedger => generalLedger.uuid === uuid)[0];
+        this.props.journalEntryActions.updateGeneralLedger(generalLedger);
+    }
+
+    handleAmountChange(amount) {
+        if ('Income' === this.props.transactionType) {
+            this.props.journalEntryActions.updateAmount(Math.abs(amount));
+        } else if ('Expense' === this.props.transactionType) {
+            this.props.journalEntryActions.updateAmount(-Math.abs(amount));
+        }
+    }
+
+    handlePress = async (transactionType) => {
+        if ('Income' === transactionType) {
+            await this.props.journalEntryActions.updateJournalEntrySide('CREDIT');
+        } else if ('Expense' === transactionType) {
+            await this.props.journalEntryActions.updateJournalEntrySide('DEBIT');
+        } else {
+            console.error('This transaction is neither an income or expense');
+            return;
+        }
+        this.props.journalEntryActions.save(this.props.journalEntry);
+        this.props.navigator.pop({
+            screen: 'Account'
+        });
     }
 
     render() {
@@ -47,8 +76,14 @@ export class Transaction extends Component {
                                 <Form style={styles.container}>
                                     <Row size={1}>
                                         <Right>
-                                            <Button id="saveTransactionButton" disabled={true} rounded onPress={() => {
-                                            }}>
+                                            <Button id="saveTransactionButton"
+                                                    disabled={
+                                                        this.props.journalEntry &&
+                                                        (this.props.journalEntry.generalLedger.uuid === 'noUuid'
+                                                            || !this.props.journalEntry.amount)
+                                                    }
+                                                    rounded
+                                                    onPress={() => this.handlePress(this.props.transactionType)}>
                                                 <Text>Save</Text>
                                             </Button>
                                         </Right>
@@ -58,7 +93,9 @@ export class Transaction extends Component {
                                         <Col>
                                             <DatePicker
                                                 style={{width: 300}}
-                                                date={this.props.date}
+                                                date={this.props.journalEntry ?
+                                                    this.props.journalEntry.transactionDatetime :
+                                                    moment().format('MMMM DD YYYY')}
                                                 mode="date"
                                                 placeholder="select date"
                                                 format="MMMM DD YYYY"
@@ -77,9 +114,7 @@ export class Transaction extends Component {
                                                         marginLeft: 72
                                                     }
                                                 }}
-                                                onDateChange={(date) => {
-                                                    // set date/// this.setState({date: date})
-                                                }}
+                                                onDateChange={(date) => this.handleDateChange(date)}
                                             />
                                         </Col>
                                     </Row>
@@ -88,11 +123,14 @@ export class Transaction extends Component {
                                         <Picker
                                             iosHeader="Category"
                                             mode="dropdown"
-                                            selectedValue={'nouuid'}
-                                            onValueChange={this.onValueChange.bind(this)}
+                                            selectedValue={this.props.journalEntry ?
+                                                this.props.journalEntry.generalLedger.uuid :
+                                            'noUuid'}
+                                            onValueChange={this.handleGeneralLedgerChange.bind(this)}
                                         >
                                             {this.props.generalLedgers.map((generalLedger, i) =>
-                                                <Picker.Item key={i} label={generalLedger.name} value={generalLedger.uuid}/>
+                                                <Picker.Item key={i} label={generalLedger.name}
+                                                             value={generalLedger.uuid}/>
                                             )}
                                         </Picker>
                                     </Row>
@@ -100,7 +138,8 @@ export class Transaction extends Component {
                                     <Row size={1}>
                                         <Col>
                                             <Item>
-                                                <Input placeholder='Amount' keyboardType={'numeric'}/>
+                                                <Input placeholder='Amount' keyboardType={'numeric'}
+                                                       onChangeText={(amount) => this.handleAmountChange(amount)}/>
                                             </Item>
                                         </Col>
                                     </Row>
@@ -115,6 +154,10 @@ export class Transaction extends Component {
     }
 
     componentWillMount() {
+        const generalLedger = this.props.generalLedgers.filter(generalLedger => generalLedger.uuid === 'noUuid')[0];
+        this.props.journalEntryActions.updateGeneralLedger(generalLedger);
+        this.props.journalEntryActions.updateAmount(null);
+
         if ('Income' === this.props.transactionType) {
             this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4ec43749-b607-4951-9cc6-1e81d657c56c');
         } else if ('Expense' === this.props.transactionType) {
@@ -123,20 +166,21 @@ export class Transaction extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transaction)
+export default connect(mapStateToProps, mapDispatchToProps)(AddTransaction)
 
 function mapStateToProps(state, ownProps) {
     return {
         generalLedger: state.generalLedgerReducer.generalLedger,
-        generalLedgers: [{name: 'Select Category', uuid: 'nouuid'}].concat(state.generalLedgerReducer.categories),
-        error: state.generalLedgerReducer.error,
-        date: moment().format('MMMM DD YYYY')
+        generalLedgers: [{name: 'Select Category', uuid: 'noUuid'}].concat(state.generalLedgerReducer.categories),
+        journalEntry: state.journalEntryReducer.journalEntry,
+        error: state.generalLedgerReducer.error
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch)
+        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch),
+        journalEntryActions: bindActionCreators(journalEntryAction, dispatch)
     };
 }
 
