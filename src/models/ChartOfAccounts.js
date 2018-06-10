@@ -9,11 +9,12 @@ ChartOfAccounts.schema = {
         uuid: 'string',
         code: 'int',
         name: 'string',
-        description: 'string',
+        description: 'string?',
+        classifier: {type: 'string', optional: true},
         reportSortOrder: {type:'int', optional: true},
         parentUuid: {type: 'string', optional: true},
         ownerUuid: {type: 'string', optional: true},
-        showOnDashboard: {type: 'string', default: 'Y'},
+        showOnDashboard: {type: 'bool', default: true},
         createdTimestamp: 'date',
         updatedTimestamp: 'date'
     }
