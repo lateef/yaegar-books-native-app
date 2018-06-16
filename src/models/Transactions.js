@@ -7,6 +7,7 @@ Transactions.schema = {
     properties: {
         id: 'int?',
         uuid: 'string',
+        name: 'string',
         generalLedger: 'ChartOfAccounts',
         amount: {type:'double', default: 0.00},
         seriesUuid: 'string?',

@@ -74,12 +74,11 @@ export class Dashboard extends React.Component {
         }
     }
 
-    displayAccount(accountName, accountUuid) {
+    displayAccount(generalLedger) {
         this.props.navigator.push({
             'screen': 'Account',
             passProps: {
-                accountName: accountName,
-                accountUuid: accountUuid
+                account: generalLedger
             }
         });
     }
@@ -102,7 +101,7 @@ export class Dashboard extends React.Component {
                                             </ListItem>
                                             {this.props.generalLedgers.map((generalLedger, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}} icon
-                                                          onPress={() => this.displayAccount(generalLedger.name, generalLedger.uuid)}>
+                                                          onPress={() => this.displayAccount(generalLedger)}>
                                                     <Left>
                                                         {generalLedger.classifier === "Bank" ?
                                                             <Icon type="FontAwesome" style={{fontSize: 20}} name="university"/>

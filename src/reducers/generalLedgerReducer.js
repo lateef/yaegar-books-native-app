@@ -28,10 +28,6 @@ export default function reducer(state = {
         case 'UPDATE_GENERAL_LEDGERS_CLASSIFIER': {
             return {...state, generalLedger: {...state.generalLedger, classifier: action.payload}, error: null}
         }
-        case 'LIST_GENERAL_LEDGERS': {
-            const generalLedgers = action.payload.filter(x => x !== null && x !== undefined);
-            return {...state, accounts: generalLedgers, error: null}
-        }
         case 'LIST_GENERAL_LEDGERS_ACCOUNTS': {
             const generalLedgers = action.payload.filter(x => x !== null && x !== undefined);
             return {...state, accounts: generalLedgers, error: null}

@@ -13,6 +13,7 @@ export default class JournalEntryQueries {
                 return realm.create('Transactions',
                     {
                         uuid: uuid(),
+                        name: journalEntry.name,
                         generalLedger: generalLedger,
                         amount: journalEntry.amount,
                         seriesUuid: journalEntry.seriesUuid,
