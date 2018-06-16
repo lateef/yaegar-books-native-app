@@ -31,56 +31,24 @@ export class TransactionDetail extends Component {
         screenBackgroundColor: 'white'
     };
 
-    // handleDateChange(date) {
-    //     this.props.journalEntryActions.updateTransactionDateTime(new Date(date));
-    // }
-    //
-    // handleGeneralLedgerChange(uuid) {
-    //     const generalLedger = this.props.generalLedgers.filter(generalLedger => generalLedger.uuid === uuid)[0];
-    //     this.props.journalEntryActions.updateGeneralLedger(generalLedger);
-    // }
-    //
-    // handleAmountChange(amount) {
-    //     if ('Income' === this.props.transactionType) {
-    //         this.props.journalEntryActions.updateAmount(Math.abs(amount));
-    //     } else if ('Expense' === this.props.transactionType) {
-    //         this.props.journalEntryActions.updateAmount(-Math.abs(amount));
-    //     }
-    // }
-    //
-    // handlePress = async (transactionType) => {
-    //     if ('Income' === transactionType) {
-    //         await this.props.journalEntryActions.updateJournalEntrySide('CREDIT');
-    //     } else if ('Expense' === transactionType) {
-    //         await this.props.journalEntryActions.updateJournalEntrySide('DEBIT');
-    //     } else {
-    //         console.error('This transaction is neither an income or expense');
-    //         return;
-    //     }
-    //     this.props.journalEntryActions.save(this.props.journalEntry);
-    //     this.props.navigator.pop({
-    //         screen: 'Account'
-    //     });
-    // }
-
     render() {
         return (
             <Container>
                 <Header>
-                    <Text>Add {this.props.transactionType}</Text>
+                    <Text>{this.props.primaryJournalEntry.name}</Text>
                 </Header>
                 <Content>
                     <Grid>
-                        {/*<Row>*/}
-                            {/*<Col>*/}
-                                {/*<Form style={styles.container}>*/}
+                        <Row>
+                            <Col>
+                                <Form style={styles.container}>
                                     {/*<Row size={1}>*/}
                                         {/*<Right>*/}
                                             {/*<Button id="saveTransactionButton"*/}
                                                     {/*disabled={*/}
-                                                        {/*this.props.journalEntry &&*/}
-                                                        {/*(this.props.journalEntry.generalLedger.uuid === 'noUuid'*/}
-                                                            {/*|| !this.props.journalEntry.amount)*/}
+                                                        {/*this.props.primaryJournalEntry &&*/}
+                                                        {/*(this.props.primaryJournalEntry.generalLedger.uuid === 'noUuid'*/}
+                                                            {/*|| !this.props.primaryJournalEntry.amount)*/}
                                                     {/*}*/}
                                                     {/*rounded*/}
                                                     {/*onPress={() => this.handlePress(this.props.transactionType)}>*/}
@@ -93,8 +61,8 @@ export class TransactionDetail extends Component {
                                         {/*<Col>*/}
                                             {/*<DatePicker*/}
                                                 {/*style={{width: 300}}*/}
-                                                {/*date={this.props.journalEntry ?*/}
-                                                    {/*this.props.journalEntry.transactionDatetime :*/}
+                                                {/*date={this.props.primaryJournalEntry ?*/}
+                                                    {/*this.props.primaryJournalEntry.transactionDatetime :*/}
                                                     {/*moment().format('MMMM DD YYYY')}*/}
                                                 {/*mode="date"*/}
                                                 {/*placeholder="select date"*/}
@@ -123,8 +91,8 @@ export class TransactionDetail extends Component {
                                         {/*<Picker*/}
                                             {/*iosHeader="Category"*/}
                                             {/*mode="dropdown"*/}
-                                            {/*selectedValue={this.props.journalEntry ?*/}
-                                                {/*this.props.journalEntry.generalLedger.uuid :*/}
+                                            {/*selectedValue={this.props.primaryJournalEntry ?*/}
+                                                {/*this.props.primaryJournalEntry.generalLedger.uuid :*/}
                                             {/*'noUuid'}*/}
                                             {/*onValueChange={this.handleGeneralLedgerChange.bind(this)}*/}
                                         {/*>*/}
@@ -144,9 +112,9 @@ export class TransactionDetail extends Component {
                                         {/*</Col>*/}
                                     {/*</Row>*/}
                                     {/*<Row size={10}/>*/}
-                                {/*</Form>*/}
-                            {/*</Col>*/}
-                        {/*</Row>*/}
+                                </Form>
+                            </Col>
+                        </Row>
                     </Grid>
                 </Content>
             </Container>
@@ -162,7 +130,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(TransactionDetail)
 
 function mapStateToProps(state, ownProps) {
     return {
-        journalEntry: state.journalEntryReducer.journalEntry,
+        primaryJournalEntry: state.journalEntryReducer.primaryJournalEntry,
         error: state.generalLedgerReducer.error
     };
 }

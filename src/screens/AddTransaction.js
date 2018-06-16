@@ -23,6 +23,7 @@ import {
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 import * as journalEntryAction from '../actions/journalEntryActions';
+import DATA from '../baseChartOfAccounts';
 
 export class AddTransaction extends Component {
     static navigatorStyle = {
@@ -37,7 +38,8 @@ export class AddTransaction extends Component {
 
     handleGeneralLedgerChange(uuid) {
         const generalLedger = this.props.generalLedgers.filter(generalLedger => generalLedger.uuid === uuid)[0];
-        this.props.journalEntryActions.updateGeneralLedger(generalLedger);
+        this.props.journalEntryActions.updateGeneralLedger(generalLedger, 'primary');
+        this.props.journalEntryActions.updateName(generalLedger.name);
     }
 
     handleAmountChange(amount) {
@@ -50,18 +52,21 @@ export class AddTransaction extends Component {
 
     handlePress = async (transactionType) => {
         if ('Income' === transactionType) {
-            await this.props.journalEntryActions.updateJournalEntrySide('CREDIT');
+            await this.props.journalEntryActions.updateJournalEntrySide('CREDIT', 'primary');
+            await this.props.journalEntryActions.updateJournalEntrySide('DEBIT', 'secondary');
         } else if ('Expense' === transactionType) {
-            await this.props.journalEntryActions.updateJournalEntrySide('DEBIT');
+            await this.props.journalEntryActions.updateJournalEntrySide('DEBIT', 'primary');
+            await this.props.journalEntryActions.updateJournalEntrySide('CREDIT', 'secondary');
         } else {
             console.error('This transaction is neither an income or expense');
             return;
         }
-        this.props.journalEntryActions.save(this.props.journalEntry);
-        this.props.navigator.pop({
+        this.props.journalEntryActions.save(this.props.primaryJournalEntry, 'primary');
+        this.props.journalEntryActions.save(this.props.secondaryJournalEntry, 'secondary');
+        this.props.navigator.resetTo({
             screen: 'Account'
         });
-    }
+    };
 
     render() {
         return (
@@ -78,9 +83,9 @@ export class AddTransaction extends Component {
                                         <Right>
                                             <Button id="saveTransactionButton"
                                                     disabled={
-                                                        this.props.journalEntry &&
-                                                        (this.props.journalEntry.generalLedger.uuid === 'noUuid'
-                                                            || !this.props.journalEntry.amount)
+                                                        this.props.primaryJournalEntry &&
+                                                        (this.props.primaryJournalEntry.generalLedger.uuid === 'noUuid'
+                                                            || !this.props.primaryJournalEntry.amount)
                                                     }
                                                     rounded
                                                     onPress={() => this.handlePress(this.props.transactionType)}>
@@ -93,8 +98,8 @@ export class AddTransaction extends Component {
                                         <Col>
                                             <DatePicker
                                                 style={{width: 300}}
-                                                date={this.props.journalEntry ?
-                                                    this.props.journalEntry.transactionDatetime :
+                                                date={this.props.primaryJournalEntry ?
+                                                    this.props.primaryJournalEntry.transactionDatetime :
                                                     moment().format('MMMM DD YYYY')}
                                                 mode="date"
                                                 placeholder="select date"
@@ -123,8 +128,8 @@ export class AddTransaction extends Component {
                                         <Picker
                                             iosHeader="Category"
                                             mode="dropdown"
-                                            selectedValue={this.props.journalEntry ?
-                                                this.props.journalEntry.generalLedger.uuid :
+                                            selectedValue={this.props.primaryJournalEntry ?
+                                                this.props.primaryJournalEntry.generalLedger.uuid :
                                             'noUuid'}
                                             onValueChange={this.handleGeneralLedgerChange.bind(this)}
                                         >
@@ -155,13 +160,22 @@ export class AddTransaction extends Component {
 
     componentWillMount() {
         const generalLedger = this.props.generalLedgers.filter(generalLedger => generalLedger.uuid === 'noUuid')[0];
-        this.props.journalEntryActions.updateGeneralLedger(generalLedger);
+        this.props.journalEntryActions.updateGeneralLedger(generalLedger, 'primary');
+        this.props.journalEntryActions.updateGeneralLedger(this.props.account, 'secondary');
         this.props.journalEntryActions.updateAmount(null);
 
+        const incomeRevenue = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Income/Revenue";
+        })[0];
+
+        const operatingExpenses = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Operating expenses";
+        })[0];
+
         if ('Income' === this.props.transactionType) {
-            this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4ec43749-b607-4951-9cc6-1e81d657c56c');
+            this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_CATEGORIES', incomeRevenue.uuid);
         } else if ('Expense' === this.props.transactionType) {
-            this.props.generalLedgerActions.listByParentUuid('LIST_CATEGORIES', '4e0de115-6eaa-498e-82fa-34d4f87935f9');
+            this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_CATEGORIES', operatingExpenses.uuid);
         }
     }
 }
@@ -172,7 +186,8 @@ function mapStateToProps(state, ownProps) {
     return {
         generalLedger: state.generalLedgerReducer.generalLedger,
         generalLedgers: [{name: 'Select Category', uuid: 'noUuid'}].concat(state.generalLedgerReducer.categories),
-        journalEntry: state.journalEntryReducer.journalEntry,
+        primaryJournalEntry: state.journalEntryReducer.primaryJournalEntry,
+        secondaryJournalEntry: state.journalEntryReducer.secondaryJournalEntry,
         error: state.generalLedgerReducer.error
     };
 }

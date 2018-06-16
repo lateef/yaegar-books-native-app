@@ -60,7 +60,7 @@ export class AddAccount extends Component {
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
-                                        <Item floatingLabel
+                                        <Item
                                               error={this.props.error !== null}>
                                             <Label>{this.props.accountType}</Label>
                                             <Input testID="addAccountNameInput" id="nameInput" onChangeText={(name) => {

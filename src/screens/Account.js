@@ -32,16 +32,18 @@ export class Account extends Component {
         this.props.navigator.push({
             'screen': 'AddTransaction',
             passProps: {
-                transactionType: transactionType
+                transactionType: transactionType,
+                account: this.props.account
             }
         });
     }
 
-    displayTransaction(uuid) {
+    displayTransaction(journalEntry) {
         this.props.navigator.push({
             'screen': 'TransactionDetail',
             passProps: {
-                uuid: uuid
+                primaryJournalEntry: journalEntry,
+                account: this.props.account
             }
         });
     }
@@ -50,7 +52,7 @@ export class Account extends Component {
         return (
             <Container>
                 <Header>
-                    <Text>{this.props.accountName}</Text>
+                    <Text>{this.props.account.name}</Text>
                 </Header>
                 <Grid>
                     <Row style={styles.height}>
@@ -66,9 +68,9 @@ export class Account extends Component {
                                             </ListItem>
                                             {this.props.journalEntries.map((journalEntry, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}}
-                                                          onPress={() => this.displayTransaction(this.props.journalEntry.uuid)}>
+                                                          onPress={() => this.displayTransaction(journalEntry)}>
                                                         <Left>
-                                                            <Text>{journalEntry.generalLedger.name}</Text>
+                                                            <Text>{journalEntry.name}</Text>
                                                         </Left>
                                                         <Right>
                                                             <Text>{journalEntry.amount}</Text>
@@ -97,8 +99,7 @@ export class Account extends Component {
     }
 
     componentWillMount() {
-        this.props.journalEntryActions.list();
-        // this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.accountUuid);
+        this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.account.uuid);
     }
 }
 
@@ -106,7 +107,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Account)
 
 function mapStateToProps(state, ownProps) {
     return {
-        journalEntry: state.journalEntryReducer.journalEntry,
         journalEntries: state.journalEntryReducer.journalEntries,
         error: state.generalLedgerReducer.error
     };

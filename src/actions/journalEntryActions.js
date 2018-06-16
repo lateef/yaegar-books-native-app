@@ -1,21 +1,37 @@
 import JournalEntryQueries from '../models/queries/JournalEntryQueries';
 import GeneralLedgerQueries from "../models/queries/GeneralLedgerQueries";
 
+export function updateName(name) {
+    return function (dispatch) {
+        dispatch({
+            type: 'UPDATE_JOURNAL_ENTRY_NAME',
+            payload: name
+        });
+    }
+}
+
 export function updateTransactionDateTime(date) {
     return function (dispatch) {
         dispatch({
-            type: 'UPDATE_TRANSACTION_DATETIME',
+            type: 'UPDATE_JOURNAL_ENTRY_TRANSACTION_DATETIME',
             payload: date
         });
     }
 }
 
-export function updateGeneralLedger(generalLedger) {
+export function updateGeneralLedger(generalLedger, side) {
     return function (dispatch) {
-        dispatch({
-            type: 'UPDATE_GENERAL_LEDGER',
-            payload: generalLedger
-        });
+        if (side === 'primary') {
+            dispatch({
+                type: 'UPDATE_PRIMARY_GENERAL_LEDGER',
+                payload: generalLedger
+            });
+        } else if (side === 'secondary') {
+            dispatch({
+                type: 'UPDATE_SECONDARY_GENERAL_LEDGER',
+                payload: generalLedger
+            });
+        }
     }
 }
 
@@ -28,23 +44,37 @@ export function updateAmount(amount) {
     }
 }
 
-export function updateJournalEntrySide(amount) {
+export function updateJournalEntrySide(amount, side) {
     return function (dispatch) {
-        dispatch({
-            type: 'UPDATE_JOURNAL_ENTRY_SIDE',
-            payload: amount
-        });
+        if (side === 'primary') {
+            dispatch({
+                type: 'UPDATE_PRIMARY_JOURNAL_ENTRY_SIDE',
+                payload: amount
+            });
+        } else if (side === 'secondary') {
+            dispatch({
+                type: 'UPDATE_SECONDARY_JOURNAL_ENTRY_SIDE',
+                payload: amount
+            });
+        }
     }
 }
 
-export function save(journalEntry) {
+export function save(journalEntry, side) {
     return function (dispatch) {
         journalEntry = new JournalEntryQueries().create(journalEntry);
 
-        dispatch({
-            type: 'SAVE_JOURNAL_ENTRY',
-            payload: journalEntry
-        });
+        if (side === 'primary') {
+            dispatch({
+                type: 'SAVE_PRIMARY_JOURNAL_ENTRY',
+                payload: journalEntry
+            });
+        } else if (side === 'secondary') {
+            dispatch({
+                type: 'SAVE_SECONDARY_JOURNAL_ENTRY',
+                payload: journalEntry
+            });
+        }
     }
 }
 
