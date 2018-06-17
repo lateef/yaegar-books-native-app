@@ -70,15 +70,14 @@ export class Account extends Component {
                         <View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
                             <Row>
                                 <Col>
-                                    {Platform.OS === "android" ? <Row size={1}>
-                                    </Row> : <View/>}
                                     <Row size={9}>
                                         <List style={{flex: 1}}>
                                             <ListItem itemDivider>
                                                 <Text>Income/Expenses</Text>
                                             </ListItem>
                                             {this.props.journalEntries.map((journalEntry, i) =>
-                                                <ListItem key={i} style={{alignItems: 'center'}}>
+                                                <ListItem key={i} style={{alignItems: 'center'}}
+                                                          onPress={() => this.displayTransaction(journalEntry)}>
                                                     <Left>
                                                         <Text>{journalEntry.name}</Text>
                                                     </Left>
