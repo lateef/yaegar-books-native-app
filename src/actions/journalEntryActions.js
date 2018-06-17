@@ -62,7 +62,7 @@ export function updateJournalEntrySide(amount, side) {
 
 export function save(journalEntry, side) {
     return function (dispatch) {
-        journalEntry = new JournalEntryQueries().create(journalEntry);
+        new JournalEntryQueries().create(journalEntry);
 
         if (side === 'primary') {
             dispatch({

@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import DatePicker from 'react-native-datepicker';
-import moment from 'moment';
 
 import {
     Button,
@@ -98,10 +97,7 @@ export class AddTransaction extends Component {
                                         <Col>
                                             <DatePicker
                                                 style={{width: 300}}
-                                                date={this.props.primaryJournalEntry &&
-                                                this.props.primaryJournalEntry.transactionDatetime ?
-                                                    this.props.primaryJournalEntry.transactionDatetime :
-                                                    moment().format('MMMM DD YYYY')}
+                                                date={this.props.primaryJournalEntry.transactionDatetime}
                                                 mode="date"
                                                 placeholder="select date"
                                                 format="MMMM DD YYYY"
@@ -164,6 +160,7 @@ export class AddTransaction extends Component {
         this.props.journalEntryActions.updateGeneralLedger(generalLedger, 'primary');
         this.props.journalEntryActions.updateGeneralLedger(this.props.account, 'secondary');
         this.props.journalEntryActions.updateAmount(null);
+        this.props.journalEntryActions.updateTransactionDateTime(new Date());
 
         const incomeRevenue = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Income/Revenue";

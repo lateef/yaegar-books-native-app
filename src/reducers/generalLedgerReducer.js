@@ -1,8 +1,10 @@
+import uuid from "uuid/v4";
+
 export default function reducer(state = {
     generalLedger: {
+        uuid: uuid(),
         name: '',
         type: '',
-        uuid: '',
         code: null,
         description: '',
         parentUuid: '',

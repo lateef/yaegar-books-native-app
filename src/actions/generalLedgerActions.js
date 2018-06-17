@@ -38,7 +38,7 @@ export function updateClassifier(classifier) {
 
 export function save(generalLedger) {
     return function (dispatch) {
-        generalLedger = new GeneralLedgerQueries().create(generalLedger, false);
+        new GeneralLedgerQueries().create(generalLedger, false);
 
         dispatch({
             type: 'SAVE_GENERAL_LEDGERS',

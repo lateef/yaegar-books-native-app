@@ -1,5 +1,4 @@
 import Realm from 'realm';
-import uuid from 'uuid/v4';
 import Transactions from '../Transactions';
 import ChartOfAccounts from '../ChartOfAccounts';
 
@@ -12,7 +11,7 @@ export default class JournalEntryQueries {
                 const generalLedger = realm.objectForPrimaryKey('ChartOfAccounts', journalEntry.generalLedger.uuid);
                 return realm.create('Transactions',
                     {
-                        uuid: uuid(),
+                        uuid: journalEntry.uuid,
                         name: journalEntry.name,
                         generalLedger: generalLedger,
                         amount: journalEntry.amount,
