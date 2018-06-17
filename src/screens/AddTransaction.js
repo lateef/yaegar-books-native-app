@@ -63,7 +63,7 @@ export class AddTransaction extends Component {
         }
         this.props.journalEntryActions.save(this.props.primaryJournalEntry, 'primary');
         this.props.journalEntryActions.save(this.props.secondaryJournalEntry, 'secondary');
-        this.props.navigator.resetTo({
+        this.props.navigator.pop({
             screen: 'Account'
         });
     };
