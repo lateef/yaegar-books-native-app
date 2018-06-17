@@ -35,7 +35,7 @@ export class TransactionDetail extends Component {
         return (
             <Container>
                 <Header>
-                    <Text>{this.props.primaryJournalEntry.name}</Text>
+                    {/*<Text>{this.props.primaryJournalEntry.name}</Text>*/}
                 </Header>
                 <Content>
                     <Grid>

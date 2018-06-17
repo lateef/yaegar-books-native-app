@@ -28,6 +28,17 @@ export class Account extends Component {
         screenBackgroundColor: 'white'
     };
 
+    constructor(props) {
+        super(props);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event) {
+        if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
+            this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.account.uuid);
+        }
+    }
+
     addTransaction(transactionType) {
         this.props.navigator.push({
             'screen': 'AddTransaction',
@@ -67,14 +78,13 @@ export class Account extends Component {
                                                 <Text>Income/Expenses</Text>
                                             </ListItem>
                                             {this.props.journalEntries.map((journalEntry, i) =>
-                                                <ListItem key={i} style={{alignItems: 'center'}}
-                                                          onPress={() => this.displayTransaction(journalEntry)}>
-                                                        <Left>
-                                                            <Text>{journalEntry.name}</Text>
-                                                        </Left>
-                                                        <Right>
-                                                            <Text>{journalEntry.amount}</Text>
-                                                        </Right>
+                                                <ListItem key={i} style={{alignItems: 'center'}}>
+                                                    <Left>
+                                                        <Text>{journalEntry.name}</Text>
+                                                    </Left>
+                                                    <Right>
+                                                        <Text>{journalEntry.amount}</Text>
+                                                    </Right>
                                                 </ListItem>)}
                                         </List>
                                     </Row>

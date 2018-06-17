@@ -41,10 +41,6 @@ export default class JournalEntryQueries {
         return Realm.open({
             schema: [Transactions, ChartOfAccounts], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            // const transactions = realm.objects('Transactions');
-            // const transactions1 = realm.objects('Transactions').map(x => Object.assign({}, x));
-            // const result = transactions.filtered('generalLedger.uuid = $0', uuid)
-            // const result1 = result.map(x => Object.assign({}, x));
             return realm.objects('Transactions').filtered('generalLedger.uuid = $0', uuid).map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);
