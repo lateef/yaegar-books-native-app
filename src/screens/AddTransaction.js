@@ -98,7 +98,8 @@ export class AddTransaction extends Component {
                                         <Col>
                                             <DatePicker
                                                 style={{width: 300}}
-                                                date={this.props.primaryJournalEntry ?
+                                                date={this.props.primaryJournalEntry &&
+                                                this.props.primaryJournalEntry.transactionDatetime ?
                                                     this.props.primaryJournalEntry.transactionDatetime :
                                                     moment().format('MMMM DD YYYY')}
                                                 mode="date"
@@ -130,7 +131,7 @@ export class AddTransaction extends Component {
                                             mode="dropdown"
                                             selectedValue={this.props.primaryJournalEntry ?
                                                 this.props.primaryJournalEntry.generalLedger.uuid :
-                                            'noUuid'}
+                                                'noUuid'}
                                             onValueChange={this.handleGeneralLedgerChange.bind(this)}
                                         >
                                             {this.props.generalLedgers.map((generalLedger, i) =>
