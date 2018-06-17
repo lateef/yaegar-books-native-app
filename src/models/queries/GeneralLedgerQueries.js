@@ -1,5 +1,4 @@
 import Realm from 'realm';
-import uuid from 'uuid/v4';
 import ChartOfAccounts from '../ChartOfAccounts';
 import Transactions from '../Transactions';
 import DATA from '../../baseChartOfAccounts';
@@ -29,7 +28,7 @@ export default class GeneralLedgerQueries {
                 const date = new Date();
                 return realm.create('ChartOfAccounts',
                     {
-                        uuid: (init) ? generalLedger.uuid : uuid(),
+                        uuid: generalLedger.uuid,
                         code: code,
                         name: generalLedger.name,
                         description: generalLedger.description,

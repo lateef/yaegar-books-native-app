@@ -1,6 +1,8 @@
+import uuid from "uuid/v4";
+
 export default function reducer(state = {
     primaryJournalEntry: {
-        uuid: '',
+        uuid: uuid(),
         name: '',
         transactionDatetime: new Date(),
         generalLedger: {name: 'Select Category', uuid: 'noUuid'},
@@ -8,7 +10,7 @@ export default function reducer(state = {
         ownerUuid: 'GUEST'
     },
     secondaryJournalEntry: {
-        uuid: '',
+        uuid: uuid(),
         transactionDatetime: new Date(),
         generalLedger: null,
         amount: null,
