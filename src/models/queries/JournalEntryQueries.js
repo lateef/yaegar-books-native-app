@@ -46,6 +46,15 @@ export default class JournalEntryQueries {
         });
     }
 
+    sumAmountByGeneralLedgerUuid(uuid) {
+        return Realm.open({
+            schema: [Transactions, ChartOfAccounts], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            return realm.objects('Transactions').filtered('generalLedger.uuid = $0', uuid).sum('amount');
+        }).catch(error => {
+            console.error(error);
+        });
+    }
     // count() {
     //     return Realm.open({
     //         schema: [Transactions], deleteRealmIfMigrationNeeded: true

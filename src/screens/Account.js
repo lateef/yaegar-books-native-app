@@ -48,11 +48,17 @@ export class Account extends Component {
         });
     }
 
-    displayTransaction(journalEntry) {
+    displayTransaction(primaryJournalEntry) {
+        const journalEntry = {
+            uuid: primaryJournalEntry.uuid,
+            name: primaryJournalEntry.name,
+            amount: primaryJournalEntry.amount
+        };
+
         this.props.navigator.push({
             'screen': 'TransactionDetail',
             passProps: {
-                primaryJournalEntry: journalEntry,
+                journalEntry: journalEntry,
                 account: this.props.account
             }
         });
@@ -74,14 +80,14 @@ export class Account extends Component {
                                             <ListItem itemDivider>
                                                 <Text>Income/Expenses</Text>
                                             </ListItem>
-                                            {this.props.journalEntries.map((journalEntry, i) =>
+                                            {this.props.journalEntries.map((primaryJournalEntry, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}}
-                                                          onPress={() => this.displayTransaction(journalEntry)}>
+                                                          onPress={() => this.displayTransaction(primaryJournalEntry)}>
                                                     <Left>
-                                                        <Text>{journalEntry.name}</Text>
+                                                        <Text>{primaryJournalEntry.name}</Text>
                                                     </Left>
                                                     <Right>
-                                                        <Text>{journalEntry.amount}</Text>
+                                                        <Text>{primaryJournalEntry.amount}</Text>
                                                     </Right>
                                                 </ListItem>)}
                                         </List>

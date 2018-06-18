@@ -119,6 +119,16 @@ export function listByGeneralLedgerUuid(uuid) {
     }
 }
 
+export function sumAmountByGeneralLedgerUuid(uuid) {
+    return async function (dispatch) {
+        const sum = await new JournalEntryQueries().sumAmountByGeneralLedgerUuid(uuid);
+        dispatch({
+            type: 'SUM_JOURNAL_ENTRIES_BY_GENERAL_LEDGER_AMOUNT',
+            payload: {uuid: uuid, sum: sum}
+        });
+    }
+}
+
 export function findByUuid(uuid) {
     return async function (dispatch) {
         const journalEntry = await new GeneralLedgerQueries().findByUuid(uuid);

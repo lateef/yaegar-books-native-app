@@ -2,9 +2,25 @@ import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Button, Container, Content, Icon, Left, Body, List, ListItem, View, Grid, Col, Row, Text} from 'native-base';
+import {
+    Button,
+    Container,
+    Content,
+    Icon,
+    Left,
+    Body,
+    Right,
+    List,
+    ListItem,
+    View,
+    Grid,
+    Col,
+    Row,
+    Text
+} from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
+import * as journalEntryAction from '../actions/journalEntryActions';
 import DATA from '../baseChartOfAccounts';
 
 import {iconsMap} from '../util/app-icons';
@@ -104,18 +120,23 @@ export class Dashboard extends React.Component {
                                                           onPress={() => this.displayAccount(generalLedger)}>
                                                     <Left>
                                                         {generalLedger.classifier === "Bank" ?
-                                                            <Icon type="FontAwesome" style={{fontSize: 20}} name="university"/>
+                                                            <Icon type="FontAwesome" style={{fontSize: 20}}
+                                                                  name="university"/>
                                                             : <Text/>}
                                                         {generalLedger.classifier === "Credit" ?
-                                                            <Icon type="FontAwesome" style={{fontSize: 20}} name="credit-card"/>
+                                                            <Icon type="FontAwesome" style={{fontSize: 20}}
+                                                                  name="credit-card"/>
                                                             : <Text/>}
                                                         {generalLedger.classifier === "Cash" ?
                                                             <Icon name="cash" style={{fontSize: 25}}/>
                                                             : <Text/>}
                                                     </Left>
                                                     <Body>
-                                                        <Text>{generalLedger.name}</Text>
+                                                    <Text>{generalLedger.name}</Text>
                                                     </Body>
+                                                    <Right>
+                                                        <Text>{generalLedger.total}</Text>
+                                                    </Right>
                                                 </ListItem>)}
                                         </List>
                                     </Row>
@@ -153,11 +174,14 @@ export class Dashboard extends React.Component {
         );
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Current assets";
         })[0];
-        this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_ACCOUNTS', currentAsset.uuid);
+        await this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_ACCOUNTS', currentAsset.uuid);
+        this.props.generalLedgers.map((generalLedger) => {
+            this.props.journalEntryActions.sumAmountByGeneralLedgerUuid(generalLedger.uuid)
+        });
     }
 }
 
@@ -173,7 +197,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch)
+        generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch),
+        journalEntryActions: bindActionCreators(journalEntryAction, dispatch)
     };
 }
 

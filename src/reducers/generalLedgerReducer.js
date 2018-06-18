@@ -4,6 +4,7 @@ export default function reducer(state = {
     generalLedger: {
         uuid: uuid(),
         name: '',
+        total: 0.00,
         type: '',
         code: null,
         description: '',
@@ -37,6 +38,15 @@ export default function reducer(state = {
         case 'LIST_GENERAL_LEDGERS_CATEGORIES': {
             const generalLedgers = action.payload.filter(x => x !== null && x !== undefined);
             return {...state, categories: generalLedgers, error: null}
+        }
+        case 'SUM_JOURNAL_ENTRIES_BY_GENERAL_LEDGER_AMOUNT': {
+            const generalLedgers = state.accounts.map(x => {
+                if (x.uuid === action.payload.uuid) {
+                    x.total = action.payload.sum;
+                }
+                return x;
+            });
+            return {...state, accounts: generalLedgers, error: null}
         }
         default:
             return state
