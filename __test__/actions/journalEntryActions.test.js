@@ -19,6 +19,28 @@ describe('Journal entry action', () => {
         expect(store.getActions()).toEqual(expectedActions);
     });
 
+    it('should return an update primary uuid action', () => {
+        const uuid = {uuid: "uuid"};
+        const expectedActions = [{type: 'UPDATE_JOURNAL_ENTRY_PRIMARY_UUID', payload: uuid}];
+        const action = actions.updateUuid(uuid, 'primary');
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it('should return an update secondary uuid action', () => {
+        const uuid = {uuid: "uuid"};
+        const expectedActions = [{type: 'UPDATE_JOURNAL_ENTRY_SECONDARY_UUID', payload: uuid}];
+        const action = actions.updateUuid(uuid, 'secondary');
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
+
     it('should return an update primary general ledger action', () => {
         const generalLedger = {name: "Salary"};
         const expectedActions = [{type: 'UPDATE_PRIMARY_GENERAL_LEDGER', payload: generalLedger}];

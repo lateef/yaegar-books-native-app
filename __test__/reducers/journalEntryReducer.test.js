@@ -8,11 +8,25 @@ describe('Journal entry reducer', () => {
     //             uuid: '',
     //             transactionDatetime: new Date(),  /*variable date breaking test*/
     //             generalLedger: {name: 'Select Category', uuid: 'noUuid'},
-    //             amount: 0,
+    //             amount: null,
     //             ownerUuid: 'GUEST'
     //         }
     //     });
     // });
+
+    it('should handle UPDATE_JOURNAL_ENTRY_PRIMARY_UUID', () => {
+        const action = {type: 'UPDATE_JOURNAL_ENTRY_PRIMARY_UUID', payload: 'uuid'};
+
+        expect(reducer([], action)).toEqual({error: null, primaryJournalEntry: {uuid: "uuid"}}
+        );
+    });
+
+    it('should handle UPDATE_JOURNAL_ENTRY_SECONDARY_UUID', () => {
+        const action = {type: 'UPDATE_JOURNAL_ENTRY_SECONDARY_UUID', payload: 'uuid'};
+
+        expect(reducer([], action)).toEqual({error: null,secondaryJournalEntry: {uuid: "uuid"}}
+        );
+    });
 
     it('should handle UPDATE_JOURNAL_ENTRY_TRANSACTION_DATETIME', () => {
         const date = new Date();

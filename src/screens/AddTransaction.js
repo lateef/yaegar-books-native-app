@@ -159,6 +159,8 @@ export class AddTransaction extends Component {
         const generalLedger = this.props.generalLedgers.filter(generalLedger => generalLedger.uuid === 'noUuid')[0];
         this.props.journalEntryActions.updateGeneralLedger(generalLedger, 'primary');
         this.props.journalEntryActions.updateGeneralLedger(this.props.account, 'secondary');
+        this.props.journalEntryActions.updateUuid(null, 'primary');
+        this.props.journalEntryActions.updateUuid(null, 'secondary');
         this.props.journalEntryActions.updateAmount(null);
         this.props.journalEntryActions.updateTransactionDateTime(new Date());
 
