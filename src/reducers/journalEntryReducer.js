@@ -1,8 +1,6 @@
-import uuid from "uuid/v4";
-
 export default function reducer(state = {
     primaryJournalEntry: {
-        uuid: uuid(),
+        uuid: '',
         name: '',
         transactionDatetime: new Date(),
         generalLedger: {name: 'Select Category', uuid: 'noUuid'},
@@ -10,7 +8,7 @@ export default function reducer(state = {
         ownerUuid: 'GUEST'
     },
     secondaryJournalEntry: {
-        uuid: uuid(),
+        uuid: '',
         transactionDatetime: new Date(),
         generalLedger: null,
         amount: null,
@@ -20,6 +18,20 @@ export default function reducer(state = {
     error: null
 }, action) {
     switch (action.type) {
+        case 'UPDATE_JOURNAL_ENTRY_PRIMARY_UUID': {
+            return {
+                ...state,
+                primaryJournalEntry: {...state.primaryJournalEntry, uuid: action.payload},
+                error: null
+            }
+        }
+        case 'UPDATE_JOURNAL_ENTRY_SECONDARY_UUID': {
+            return {
+                ...state,
+                secondaryJournalEntry: {...state.secondaryJournalEntry, uuid: action.payload},
+                error: null
+            }
+        }
         case 'UPDATE_JOURNAL_ENTRY_NAME': {
             return {
                 ...state,

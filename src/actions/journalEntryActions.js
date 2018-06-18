@@ -1,5 +1,23 @@
+import uuid from "uuid/v4";
+
 import JournalEntryQueries from '../models/queries/JournalEntryQueries';
 import GeneralLedgerQueries from "../models/queries/GeneralLedgerQueries";
+
+export function updateUuid(uuid, side) {
+    return function (dispatch) {
+        if (side === 'primary') {
+            dispatch({
+                type: 'UPDATE_JOURNAL_ENTRY_PRIMARY_UUID',
+                payload: uuid
+            });
+        } else if (side === 'secondary') {
+            dispatch({
+                type: 'UPDATE_JOURNAL_ENTRY_SECONDARY_UUID',
+                payload: uuid
+            });
+        }
+    }
+}
 
 export function updateName(name) {
     return function (dispatch) {
@@ -62,6 +80,9 @@ export function updateJournalEntrySide(amount, side) {
 
 export function save(journalEntry, side) {
     return function (dispatch) {
+        if (!journalEntry.uuid) {
+            journalEntry.uuid = uuid();
+        }
         new JournalEntryQueries().create(journalEntry);
 
         if (side === 'primary') {

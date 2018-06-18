@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Dimensions, Platform, StyleSheet} from 'react-native';
+import {Dimensions, Platform, ScrollView, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import ActionButton from 'react-native-action-button';
 
@@ -14,7 +14,6 @@ import {
     Col,
     Row,
     Icon,
-    View,
     Right,
     Left
 } from 'native-base';
@@ -67,7 +66,7 @@ export class Account extends Component {
                 </Header>
                 <Grid>
                     <Row style={styles.height}>
-                        <View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
+                        <ScrollView style={{flex: 1, backgroundColor: '#f3f3f3'}}>
                             <Row>
                                 <Col>
                                     <Row size={9}>
@@ -89,18 +88,18 @@ export class Account extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                            {/* Rest of the app comes ABOVE the action button component !*/}
-                            <ActionButton buttonColor="#3498db">
-                                <ActionButton.Item buttonColor='#1abc9c' title="INCOME"
-                                                   onPress={() => this.addTransaction('Income')}>
-                                    <Icon type="FontAwesome" name="angle-double-down" style={styles.actionButtonIcon}/>
-                                </ActionButton.Item>
-                                <ActionButton.Item buttonColor='#E74C3C' title="EXPENSE"
-                                                   onPress={() => this.addTransaction('Expense')}>
-                                    <Icon type="FontAwesome" name="angle-double-up" style={styles.actionButtonIcon}/>
-                                </ActionButton.Item>
-                            </ActionButton>
-                        </View>
+                        </ScrollView>
+                        {/* Rest of the app comes ABOVE the action button component !*/}
+                        <ActionButton buttonColor="#3498db">
+                            <ActionButton.Item buttonColor='#1abc9c' title="INCOME"
+                                               onPress={() => this.addTransaction('Income')}>
+                                <Icon type="FontAwesome" name="angle-double-down" style={styles.actionButtonIcon}/>
+                            </ActionButton.Item>
+                            <ActionButton.Item buttonColor='#E74C3C' title="EXPENSE"
+                                               onPress={() => this.addTransaction('Expense')}>
+                                <Icon type="FontAwesome" name="angle-double-up" style={styles.actionButtonIcon}/>
+                            </ActionButton.Item>
+                        </ActionButton>
                     </Row>
                 </Grid>
             </Container>
