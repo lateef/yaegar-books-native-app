@@ -11,6 +11,13 @@ describe('General ledger reducer', () => {
     //         });
     // });
 
+    it('should handle UPDATE_GENERAL_LEDGERS_UUID', () => {
+        const action = {type: 'UPDATE_GENERAL_LEDGERS_UUID', payload: 'uuid'};
+
+        expect(reducer([], action)).toEqual({error: null, generalLedger: {uuid: "uuid"}}
+        );
+    });
+
     it('should handle UPDATE_GENERAL_LEDGERS_NAME', () => {
         const action = {type: 'UPDATE_GENERAL_LEDGERS_NAME', payload: 'My Bank'};
 

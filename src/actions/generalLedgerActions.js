@@ -1,4 +1,15 @@
+import uuid from "uuid/v4";
+
 import GeneralLedgerQueries from '../models/queries/GeneralLedgerQueries';
+
+export function renewUuid() {
+    return function (dispatch) {
+        dispatch({
+            type: 'UPDATE_GENERAL_LEDGERS_UUID',
+            payload: uuid()
+        });
+    }
+}
 
 export function updateName(name) {
     return function (dispatch) {

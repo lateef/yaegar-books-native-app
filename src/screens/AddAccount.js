@@ -95,6 +95,10 @@ export class AddAccount extends Component {
             </Container>
         )
     }
+
+    componentWillMount() {
+        this.props.generalLedgerActions.renewUuid();
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddAccount)

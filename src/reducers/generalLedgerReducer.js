@@ -18,6 +18,9 @@ export default function reducer(state = {
     error: null
 }, action) {
     switch (action.type) {
+        case 'UPDATE_GENERAL_LEDGERS_UUID': {
+            return {...state, generalLedger: {...state.generalLedger, uuid: action.payload}, error: null}
+        }
         case 'SAVE_GENERAL_LEDGERS': {
             return {...state, generalLedger: action.payload, error: null}
         }
