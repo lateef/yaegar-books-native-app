@@ -8,7 +8,7 @@ Transactions.schema = {
         id: 'int?',
         uuid: 'string',
         name: 'string',
-        generalLedger: 'ChartOfAccounts',
+        generalLedger: 'GeneralLedgers',
         amount: {type:'double', default: 0.00},
         seriesUuid: 'string?',
         journalEntrySide: 'string', //DEBIT OR CREDIT ONLY

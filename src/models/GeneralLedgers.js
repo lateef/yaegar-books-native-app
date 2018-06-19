@@ -1,8 +1,8 @@
-export default class ChartOfAccounts {
+export default class GeneralLedgers {
 }
 
-ChartOfAccounts.schema = {
-    name: 'ChartOfAccounts',
+GeneralLedgers.schema = {
+    name: 'GeneralLedgers',
     primaryKey: 'uuid',
     properties: {
         id: 'int?',

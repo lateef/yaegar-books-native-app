@@ -78,7 +78,6 @@ export class Account extends Component {
                                     <Row size={9}>
                                         <List style={{flex: 1}}>
                                             <ListItem itemDivider>
-                                                <Text>Income/Expenses</Text>
                                             </ListItem>
                                             {this.props.journalEntries.map((primaryJournalEntry, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}}
