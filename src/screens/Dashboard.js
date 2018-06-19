@@ -87,6 +87,8 @@ export class Dashboard extends React.Component {
             });
         } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
+        } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
+            this.initDashboard().then(() => {});
         }
     }
 
@@ -174,7 +176,11 @@ export class Dashboard extends React.Component {
         );
     }
 
-    async componentWillMount() {
+    componentWillMount() {
+       this.initDashboard().then(() => {});
+    }
+
+    async initDashboard() {
         const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Current assets";
         })[0];
