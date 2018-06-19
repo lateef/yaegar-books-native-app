@@ -86,9 +86,9 @@ describe('Journal entry reducer', () => {
     });
 
     it('should handle LIST_JOURNAL_ENTRIES', () => {
-        const action = {type: 'LIST_JOURNAL_ENTRIES', payload: [{journalEntrySide: 'DEBIT'}, null]};
+        const action = {type: 'LIST_JOURNAL_ENTRIES', payload: [{journalEntrySide: 'DEBIT', amount: 0}, null]};
 
-        expect(reducer([], action)).toEqual({error: null, journalEntries: [{journalEntrySide: 'DEBIT'}]}
+        expect(reducer([], action)).toEqual({error: null, journalEntries: [{journalEntrySide: 'DEBIT', amount: "0.00"}]}
         );
     });
 
