@@ -20,8 +20,8 @@ async function initDatabase() {
     const ledger = await new GeneralLedgerQueries().list();
 
     if (ledger.length === 0) {
-        DATA.chartOfAccounts.forEach(function (generalLedger) {
-            new GeneralLedgerQueries().create(generalLedger, true);
+        DATA.chartOfAccounts.forEach(async function (generalLedger) {
+            await new GeneralLedgerQueries().create(generalLedger, true);
         });
     }
 }
