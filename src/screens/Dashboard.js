@@ -37,15 +37,15 @@ export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.props.navigator.setButtons({
-            // leftButtons: [
-            //     {
-            //         id: 'sideMenu'
-            //     },
-            //     {
-            //         icon: iconsMap['ios-menu'],
-            //         id: 'menuIcon'
-            //     }
-            // ],
+            leftButtons: [
+                {
+                    id: 'sideMenu'
+                },
+                {
+                    icon: iconsMap['ios-menu'],
+                    id: 'menuIcon'
+                }
+            ],
             rightButtons: [
                 {
                     icon: iconsMap['ios-add'],
@@ -118,28 +118,33 @@ export class Dashboard extends React.Component {
                                                 <Text>Accounts</Text>
                                             </ListItem>
                                             {this.props.generalLedgers.map((generalLedger, i) =>
-                                                <ListItem key={i} style={{alignItems: 'center'}} icon
-                                                          onPress={() => this.displayAccount(generalLedger)}>
-                                                    <Left>
-                                                        {generalLedger.classifier === "Bank" ?
-                                                            <Icon type="FontAwesome" style={{fontSize: 20}}
-                                                                  name="university"/>
-                                                            : <Text/>}
-                                                        {generalLedger.classifier === "Credit" ?
-                                                            <Icon type="FontAwesome" style={{fontSize: 20}}
-                                                                  name="credit-card"/>
-                                                            : <Text/>}
-                                                        {generalLedger.classifier === "Cash" ?
-                                                            <Icon name="cash" style={{fontSize: 25}}/>
-                                                            : <Text/>}
-                                                    </Left>
-                                                    <Body>
-                                                    <Text>{generalLedger.name}</Text>
-                                                    </Body>
-                                                    <Right>
-                                                        <Text>{generalLedger.total}</Text>
-                                                    </Right>
-                                                </ListItem>)}
+                                                <View key={i}>
+                                                    <ListItem style={{alignItems: 'center'}} icon
+                                                              onPress={() => this.displayAccount(generalLedger)}>
+                                                        <Left>
+                                                            {generalLedger.classifier === "Bank" ?
+                                                                <Icon type="FontAwesome" style={{fontSize: 20}}
+                                                                      name="university"/>
+                                                                : <Text/>}
+                                                            {generalLedger.classifier === "Credit" ?
+                                                                <Icon type="FontAwesome" style={{fontSize: 20}}
+                                                                      name="credit-card"/>
+                                                                : <Text/>}
+                                                            {generalLedger.classifier === "Cash" ?
+                                                                <Icon name="cash" style={{fontSize: 25}}/>
+                                                                : <Text/>}
+                                                        </Left>
+                                                        <Body>
+                                                        <Text>{generalLedger.name}</Text>
+                                                        </Body>
+                                                        <Right>
+                                                            <Text>{generalLedger.total}</Text>
+                                                        </Right>
+                                                    </ListItem>
+                                                    <ListItem itemDivider>
+                                                        <Text/>
+                                                    </ListItem>
+                                                </View>)}
                                         </List>
                                     </Row>
                                 </Col>
@@ -177,7 +182,7 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-       this.initDashboard().then(() => {});
+        this.initDashboard().then(() => {});
     }
 
     async initDashboard() {

@@ -33,6 +33,12 @@ export default class App extends React.Component {
                         screen: {
                             label: 'Dashboard',
                             screen: 'Dashboard'
+                        },
+                        drawer: {
+                            left: {
+                                screen: 'Drawer'
+                            },
+                            disableOpenGesture: true
                         }
                     });
             }
