@@ -31,6 +31,7 @@ export default class GeneralLedgerQueries {
                         uuid: generalLedger.uuid,
                         code: code,
                         name: generalLedger.name,
+                        total: parseFloat(generalLedger.total),
                         description: generalLedger.description,
                         classifier: generalLedger.classifier,
                         reportSortOrder: generalLedger.reportSortOrder,

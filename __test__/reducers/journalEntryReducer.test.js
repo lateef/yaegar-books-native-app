@@ -53,7 +53,7 @@ describe('Journal entry reducer', () => {
     it('should handle UPDATE_JOURNAL_ENTRY_AMOUNT', () => {
         const action = {type: 'UPDATE_JOURNAL_ENTRY_AMOUNT', payload: 20.0};
 
-        expect(reducer([], action)).toEqual({error: null, primaryJournalEntry: {amount: 20.00}, secondaryJournalEntry: {amount: 20.00}}
+        expect(reducer([], action)).toEqual({error: null, primaryJournalEntry: {amount: "20.00"}, secondaryJournalEntry: {amount: "20.00"}}
         );
     });
 

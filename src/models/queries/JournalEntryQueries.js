@@ -14,7 +14,7 @@ export default class JournalEntryQueries {
                         uuid: journalEntry.uuid,
                         name: journalEntry.name,
                         generalLedger: generalLedger,
-                        amount: journalEntry.amount,
+                        amount: parseFloat(journalEntry.amount),
                         seriesUuid: journalEntry.seriesUuid,
                         journalEntrySide: journalEntry.journalEntrySide,
                         transactionDatetime: journalEntry.transactionDatetime,

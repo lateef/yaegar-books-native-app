@@ -1,3 +1,5 @@
+import roundTo from '../../src/util/NumberFormat';
+
 export default function reducer(state = {
     primaryJournalEntry: {
         uuid: '',
@@ -57,8 +59,8 @@ export default function reducer(state = {
         case 'UPDATE_JOURNAL_ENTRY_AMOUNT': {
             return {
                 ...state,
-                primaryJournalEntry: {...state.primaryJournalEntry, amount: action.payload},
-                secondaryJournalEntry: {...state.secondaryJournalEntry, amount: action.payload},
+                primaryJournalEntry: {...state.primaryJournalEntry, amount: roundTo(action.payload, 2)},
+                secondaryJournalEntry: {...state.secondaryJournalEntry, amount: roundTo(action.payload, 2)},
                 error: null
             }
         }
@@ -75,7 +77,12 @@ export default function reducer(state = {
             return {...state, secondaryJournalEntry: action.payload, error: null}
         }
         case 'LIST_JOURNAL_ENTRIES': {
-            const journalEntries = action.payload.filter(x => x !== null && x !== undefined);
+            const journalEntries = action.payload
+                .filter(x => x !== null && x !== undefined)
+                .map(x => {
+                    x.amount = roundTo(x.amount, 2);
+                    return x;
+                });
             return {...state, journalEntries: journalEntries, error: null}
         }
         case 'GET_JOURNAL_UUID': {

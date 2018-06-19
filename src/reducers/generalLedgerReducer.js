@@ -1,5 +1,7 @@
 import uuid from "uuid/v4";
 
+import roundTo from '../../src/util/NumberFormat';
+
 export default function reducer(state = {
     generalLedger: {
         uuid: uuid(),
@@ -42,7 +44,7 @@ export default function reducer(state = {
         case 'SUM_JOURNAL_ENTRIES_BY_GENERAL_LEDGER_AMOUNT': {
             const generalLedgers = state.accounts.map(x => {
                 if (x.uuid === action.payload.uuid) {
-                    x.total = action.payload.sum;
+                    x.total = roundTo(action.payload.sum, 2);
                 }
                 return x;
             });
