@@ -48,7 +48,6 @@
     "react-native": "~0.55.4",
     "react-native-action-button": "^2.8.4",
     "react-native-datepicker": "^1.7.2",
-    "react-native-local-auth": "^1.5.0",
     "react-native-navigation": "^1.1.462",
     "react-native-vector-icons": "^4.6.0",
     "react-redux": "^5.0.7",
