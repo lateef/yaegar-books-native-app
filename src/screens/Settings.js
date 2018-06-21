@@ -45,7 +45,7 @@ export class Settings extends Component {
                                         <ListItem icon>
                                             <Left/>
                                             <Body>
-                                                <Text>Pass code</Text>
+                                            <Text>Pass code</Text>
                                             </Body>
                                             <Right>
                                                 <Switch value={false}/>
@@ -59,27 +59,25 @@ export class Settings extends Component {
                     </Grid>
                 </Content>
             </Container>
-    )
+        )
     }
-    }
+}
 
-    export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)
 
-    function mapStateToProps(state, ownProps) {
-        return {
-    };
-    }
+function mapStateToProps(state, ownProps) {
+    return {};
+}
 
-    function mapDispatchToProps(dispatch) {
-        return {
-    };
-    }
+function mapDispatchToProps(dispatch) {
+    return {};
+}
 
-    const styles = StyleSheet.create({
-        container: {
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     }
-    });
+});
