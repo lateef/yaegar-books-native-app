@@ -6,8 +6,11 @@ import ActionButton from 'react-native-action-button';
 
 import {
     Container,
+    Content,
     Header,
     Text,
+    Body,
+    Title,
     Grid,
     List,
     ListItem,
@@ -68,11 +71,15 @@ export class Account extends Component {
         return (
             <Container>
                 <Header>
-                    <Text>{this.props.account.name}</Text>
+                    <Left/>
+                    <Body>
+                    <Title>{this.props.account.name}</Title>
+                    </Body>
+                    <Right />
                 </Header>
                 <Grid>
                     <Row style={styles.height}>
-                        <ScrollView style={{flex: 1, backgroundColor: '#f3f3f3'}}>
+                        <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
                             <Row>
                                 <Col>
                                     <Row size={9}>
@@ -93,7 +100,7 @@ export class Account extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                        </ScrollView>
+                        </Content>
                         {/* Rest of the app comes ABOVE the action button component !*/}
                         <ActionButton buttonColor="#3498db">
                             <ActionButton.Item buttonColor='#1abc9c' title="INCOME"

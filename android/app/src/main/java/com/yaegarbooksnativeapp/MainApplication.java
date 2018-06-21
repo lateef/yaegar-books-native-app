@@ -3,6 +3,7 @@ package com.yaegarbooksnativeapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.tradle.react.LocalAuthPackage;
 import io.realm.react.RealmReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +27,7 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LocalAuthPackage(),
             new RealmReactPackage(),
             new VectorIconsPackage()
       );
@@ -57,6 +59,7 @@ public class MainApplication extends NavigationApplication {
     // Add additional packages you require here
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
+            new LocalAuthPackage(),
             new RealmReactPackage(),
             new VectorIconsPackage()
     );

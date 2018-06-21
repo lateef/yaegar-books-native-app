@@ -104,12 +104,11 @@ export class Dashboard extends React.Component {
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
-                    <Grid>
-                        {this.props.generalLedgers.length > 0
-                            ?
-                            <Row>
-                                <Col>
+                <Grid>
+                    {this.props.generalLedgers.length > 0 ?
+                        <Row>
+                            <Col>
+                                <Content contentContainerStyle={{flex: 1}} padder>
                                     {Platform.OS === "android" ? <Row size={1}>
                                     </Row> : <View/>}
                                     <Row size={9}>
@@ -147,36 +146,36 @@ export class Dashboard extends React.Component {
                                                 </View>)}
                                         </List>
                                     </Row>
-                                </Col>
-                            </Row>
-                            :
-                            <Row>
-                                <Col>
-                                    {Platform.OS === "android" ? <Row size={1}>
-                                    </Row> : <View/>}
-                                    <Row size={1}>
-                                        <View style={styles.container}>
-                                            <Icon type="FontAwesome" name="university"/>
-                                            <Text testID="dashboardTitle">
-                                                Add an account
-                                            </Text>
-                                        </View>
-                                    </Row>
-                                    <Row size={1}/>
-                                    <Row size={1}>
-                                        <Col size={3}/>
-                                        <Col size={2}>
-                                            <Button onPress={() => this.showLightBox()}>
-                                                <Text>New Account</Text>
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                    <Row size={7}>
-                                    </Row>
-                                </Col>
-                            </Row>}
-                    </Grid>
-                </Content>
+                                </Content>
+                            </Col>
+                        </Row>
+                        :
+                        <Row>
+                            <Col>
+                                {Platform.OS === "android" ? <Row size={1}>
+                                </Row> : <View/>}
+                                <Row size={1}>
+                                    <View style={styles.container}>
+                                        <Icon type="FontAwesome" name="university"/>
+                                        <Text testID="dashboardTitle">
+                                            Add an account
+                                        </Text>
+                                    </View>
+                                </Row>
+                                <Row size={1}/>
+                                <Row size={1}>
+                                    <Col size={3}/>
+                                    <Col size={2}>
+                                        <Button onPress={() => this.showLightBox()}>
+                                            <Text>New Account</Text>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <Row size={7}>
+                                </Row>
+                            </Col>
+                        </Row>}
+                </Grid>
             </Container>
         );
     }

@@ -1,4 +1,6 @@
 rootProject.name = 'yaegarbooksnativeapp'
+include ':react-native-local-auth'
+project(':react-native-local-auth').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-local-auth/android')
 include ':realm'
 project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/android')
 include ':react-native-vector-icons'
