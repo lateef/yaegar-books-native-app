@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Dimensions, Platform, StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import DatePicker from 'react-native-datepicker';
 
@@ -17,7 +17,10 @@ import {
     Item,
     Input,
     Picker,
-    Right
+    Left,
+    Body,
+    Right,
+    Title
 } from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
@@ -71,7 +74,11 @@ export class AddTransaction extends Component {
         return (
             <Container>
                 <Header>
-                    <Text>Add {this.props.transactionType}</Text>
+                    <Left/>
+                    <Body>
+                        <Title>Add {this.props.transactionType}</Title>
+                    </Body>
+                    <Right/>
                 </Header>
                 <Content>
                     <Grid>

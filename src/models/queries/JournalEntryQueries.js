@@ -36,11 +36,14 @@ export default class JournalEntryQueries {
         });
     }
 
-    listByGeneralLedgerUuid(uuid) {
+    listByGeneralLedgerUuid(uuid, orderBy) {
         return Realm.open({
             schema: [Transactions, GeneralLedgers], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            return realm.objects('Transactions').filtered('generalLedger.uuid = $0', uuid).map(x => Object.assign({}, x));
+            return realm.objects('Transactions')
+                .filtered('generalLedger.uuid = $0', uuid)
+                .sorted(orderBy, 'true')
+                .map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);
         });

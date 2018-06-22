@@ -37,7 +37,7 @@ export class Account extends Component {
 
     onNavigatorEvent(event) {
         if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.account.uuid);
+            this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.account.uuid, 'transactionDatetime');
         }
     }
 
@@ -55,7 +55,8 @@ export class Account extends Component {
         const journalEntry = {
             uuid: primaryJournalEntry.uuid,
             name: primaryJournalEntry.name,
-            amount: primaryJournalEntry.amount
+            amount: primaryJournalEntry.amount,
+            transactionDatetime: primaryJournalEntry.transactionDatetime
         };
 
         this.props.navigator.push({
@@ -84,8 +85,6 @@ export class Account extends Component {
                                 <Col>
                                     <Row size={9}>
                                         <List style={{flex: 1}}>
-                                            <ListItem itemDivider>
-                                            </ListItem>
                                             {this.props.journalEntries.map((primaryJournalEntry, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}}
                                                           onPress={() => this.displayTransaction(primaryJournalEntry)}>
@@ -119,7 +118,7 @@ export class Account extends Component {
     }
 
     componentWillMount() {
-        this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.account.uuid);
+        this.props.journalEntryActions.listByGeneralLedgerUuid(this.props.account.uuid, 'transactionDatetime');
     }
 }
 

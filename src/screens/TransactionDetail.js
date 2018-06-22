@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Dimensions, Platform, StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
-import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
-
 import {
-    Button,
     Container,
     Content,
     Header,
@@ -15,13 +12,12 @@ import {
     Grid,
     Col,
     Row,
-    Item,
-    Input,
-    Picker,
-    Right
+    Left,
+    Right,
+    Body,
+    Title
 } from 'native-base';
 
-import * as generalLedgerAction from '../actions/generalLedgerActions';
 import * as journalEntryAction from '../actions/journalEntryActions';
 
 export class TransactionDetail extends Component {
@@ -35,13 +31,23 @@ export class TransactionDetail extends Component {
         return (
             <Container>
                 <Header>
-                    <Text>{this.props.journalEntry.name}</Text>
+                    <Left/>
+                    <Body>
+                        <Title>{this.props.journalEntry.name}</Title>
+                    </Body>
+                    <Right />
                 </Header>
-                <Content>
+                <Content contentContainerStyle={{flex: 1}} padder>
                     <Grid>
                         <Row>
                             <Col>
                                 <Form style={styles.container}>
+                                    <Row size={1}>
+                                        <Text>
+                                            {moment(this.props.journalEntry.transactionDatetime)
+                                                .format("ddd, MMM Do YYYY, h:mm a")}
+                                                </Text>
+                                    </Row>
                                     <Row size={1}>
                                         <Text>Amount: {this.props.journalEntry.amount}</Text>
                                     </Row>

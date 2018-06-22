@@ -109,9 +109,9 @@ export function list() {
     }
 }
 
-export function listByGeneralLedgerUuid(uuid) {
+export function listByGeneralLedgerUuid(uuid, orderBy) {
     return async function (dispatch) {
-        const journalEntries = await new JournalEntryQueries().listByGeneralLedgerUuid(uuid);
+        const journalEntries = await new JournalEntryQueries().listByGeneralLedgerUuid(uuid, orderBy);
         dispatch({
             type: 'LIST_JOURNAL_ENTRIES',
             payload: journalEntries
