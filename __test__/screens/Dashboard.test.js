@@ -16,6 +16,9 @@ const store = mockStore({
         },
         accounts: [],
         categories: []
+    },
+    userReducer: {
+        user: {}
     }
 });
 

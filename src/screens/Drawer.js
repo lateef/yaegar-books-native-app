@@ -75,7 +75,7 @@ export class Drawer extends Component {
                                 <Icon ios="ios-cog" android="md-cog"/>
                             </Left>
                             <Body>
-                            <Text>Settings</Text>
+                                <Text>Settings</Text>
                             </Body>
                             <Right>
                                 <Icon name="arrow-forward"/>

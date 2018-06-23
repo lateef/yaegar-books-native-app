@@ -79,8 +79,8 @@ export class Account extends Component {
                     <Right />
                 </Header>
                 <Grid>
-                    <Row style={styles.height}>
-                        <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
+                    <Row>
+                        <Content padder>
                             <Row>
                                 <Col>
                                     <Row size={9}>

@@ -21,6 +21,7 @@ import {
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 import * as journalEntryAction from '../actions/journalEntryActions';
+import * as userAction from '../actions/userActions';
 import DATA from '../baseChartOfAccounts';
 
 import {iconsMap} from '../util/app-icons';
@@ -83,18 +84,19 @@ export class Dashboard extends React.Component {
             this.toggleDrawer();
         } else if ('DeepLink' === event.type) {
             this.props.navigator.resetTo({
-                'screen': event.link
+                screen: event.link
             });
         } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.initDashboard().then(() => {});
+            this.initDashboard().then(() => {
+            });
         }
     }
 
     displayAccount(generalLedger) {
         this.props.navigator.push({
-            'screen': 'Account',
+            screen: 'Account',
             passProps: {
                 account: generalLedger
             }
@@ -105,82 +107,89 @@ export class Dashboard extends React.Component {
         return (
             <Container>
                 <Grid>
-                    {this.props.generalLedgers.length > 0 ?
-                        <Row>
-                            <Col>
-                                <Content contentContainerStyle={{flex: 1}} padder>
-                                    {Platform.OS === "android" ? <Row size={1}>
-                                    </Row> : <View/>}
-                                    <Row size={9}>
-                                        <List style={{flex: 1}}>
-                                            <ListItem itemDivider>
-                                                <Text>Accounts</Text>
-                                            </ListItem>
-                                            {this.props.generalLedgers.map((generalLedger, i) =>
-                                                <View key={i}>
-                                                    <ListItem style={{alignItems: 'center'}} icon
-                                                              onPress={() => this.displayAccount(generalLedger)}>
-                                                        <Left>
-                                                            {generalLedger.classifier === "Bank" ?
-                                                                <Icon type="FontAwesome" style={{fontSize: 20}}
-                                                                      name="university"/>
-                                                                : <Text/>}
-                                                            {generalLedger.classifier === "Credit" ?
-                                                                <Icon type="FontAwesome" style={{fontSize: 20}}
-                                                                      name="credit-card"/>
-                                                                : <Text/>}
-                                                            {generalLedger.classifier === "Cash" ?
-                                                                <Icon name="cash" style={{fontSize: 25}}/>
-                                                                : <Text/>}
-                                                        </Left>
-                                                        <Body>
-                                                        <Text>{generalLedger.name}</Text>
-                                                        </Body>
-                                                        <Right>
-                                                            <Text>{generalLedger.total}</Text>
-                                                        </Right>
-                                                    </ListItem>
+                    {Platform.OS === "android" ? <Row size={1}>
+                    </Row> : <View/>}
+                    <Row size={19}>
+                        <Content padder>
+                            <View>
+                                {this.props.generalLedgers.length > 0 ?
+                                    <Row>
+                                        <Col>
+                                            <Row size={9}>
+                                                <List style={{flex: 1}}>
                                                     <ListItem itemDivider>
-                                                        <Text/>
+                                                        <Text>Accounts</Text>
                                                     </ListItem>
-                                                </View>)}
-                                        </List>
+                                                    {this.props.generalLedgers.map((generalLedger, i) =>
+                                                        <View key={i}>
+                                                            <ListItem style={{alignItems: 'center'}} icon
+                                                                      onPress={() => this.displayAccount(generalLedger)}>
+                                                                <Left>
+                                                                    {generalLedger.classifier === "Bank" ?
+                                                                        <Icon type="FontAwesome" style={{fontSize: 20}}
+                                                                              name="university"/>
+                                                                        : <Text/>}
+                                                                    {generalLedger.classifier === "Credit" ?
+                                                                        <Icon type="FontAwesome" style={{fontSize: 20}}
+                                                                              name="credit-card"/>
+                                                                        : <Text/>}
+                                                                    {generalLedger.classifier === "Cash" ?
+                                                                        <Icon name="cash" style={{fontSize: 25}}/>
+                                                                        : <Text/>}
+                                                                </Left>
+                                                                <Body>
+                                                                <Text>{generalLedger.name}</Text>
+                                                                </Body>
+                                                                <Right>
+                                                                    <Text>{generalLedger.total}</Text>
+                                                                </Right>
+                                                            </ListItem>
+                                                            <ListItem itemDivider>
+                                                                <Text/>
+                                                            </ListItem>
+                                                        </View>)}
+                                                </List>
+                                            </Row>
+                                        </Col>
                                     </Row>
-                                </Content>
-                            </Col>
-                        </Row>
-                        :
-                        <Row>
-                            <Col>
-                                {Platform.OS === "android" ? <Row size={1}>
-                                </Row> : <View/>}
-                                <Row size={1}>
-                                    <View style={styles.container}>
-                                        <Icon type="FontAwesome" name="university"/>
-                                        <Text testID="dashboardTitle">
-                                            Add an account
-                                        </Text>
-                                    </View>
-                                </Row>
-                                <Row size={1}/>
-                                <Row size={1}>
-                                    <Col size={3}/>
-                                    <Col size={2}>
-                                        <Button onPress={() => this.showLightBox()}>
-                                            <Text>New Account</Text>
-                                        </Button>
-                                    </Col>
-                                </Row>
-                                <Row size={7}>
-                                </Row>
-                            </Col>
-                        </Row>}
+                                    :
+                                    <Row>
+                                        <Col>
+                                            <Row size={1}>
+                                                <View style={styles.container}>
+                                                    <Icon type="FontAwesome" name="university"/>
+                                                    <Text testID="dashboardTitle">
+                                                        Add an account
+                                                    </Text>
+                                                </View>
+                                            </Row>
+                                            <Row size={1}/>
+                                            <Row size={1}>
+                                                <Col size={3}/>
+                                                <Col size={2}>
+                                                    <Button onPress={() => this.showLightBox()}>
+                                                        <Text>New Account</Text>
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                            <Row size={7}>
+                                            </Row>
+                                        </Col>
+                                    </Row>}
+                            </View>
+                        </Content>
+                    </Row>
                 </Grid>
             </Container>
         );
     }
 
     componentWillMount() {
+        if (this.props.user.passCodeMatch) {
+            this.props.navigator.showModal({
+                screen: 'PassCode'
+            });
+        }
         this.initDashboard().then(() => {});
     }
 
@@ -201,6 +210,7 @@ function mapStateToProps(state, ownProps) {
     return {
         generalLedger: state.generalLedgerReducer.generalLedger,
         generalLedgers: state.generalLedgerReducer.accounts,
+        user: state.userReducer.user,
         error: state.generalLedgerReducer.error
     };
 }
@@ -208,7 +218,8 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch),
-        journalEntryActions: bindActionCreators(journalEntryAction, dispatch)
+        journalEntryActions: bindActionCreators(journalEntryAction, dispatch),
+        userActions: bindActionCreators(userAction, dispatch)
     };
 }
 

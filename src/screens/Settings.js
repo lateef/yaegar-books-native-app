@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import {
     Container,
     Content,
+    Title,
     Text,
     Grid,
     Left,
@@ -18,6 +19,8 @@ import {
     ListItem
 } from 'native-base';
 
+import * as userAction from '../actions/userActions';
+
 export class Settings extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
@@ -29,15 +32,29 @@ export class Settings extends Component {
         super(props);
     }
 
+    handlePassCode(passCode) {
+        if (passCode) {
+            this.props.userActions.updatePassCode(null);
+            this.props.navigator.showModal({
+                screen: 'PassCode',
+                passProps: {
+                    from: 'Settings'
+                }
+            });
+        } else {
+            this.props.userActions.updatePassCode(null, true);
+        }
+    }
+
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
+                <Content padder>
                     <Grid>
-                        <Row style={{height: 750}}>
+                        <Row>
                             <Form style={styles.container}>
                                 <Row size={1}>
-                                    <Text>Settings</Text>
+                                    <Title style={{color: 'black'}}>Settings</Title>
                                 </Row>
                                 <Row size={9}>
                                     <List style={{flex: 1}}>
@@ -48,7 +65,8 @@ export class Settings extends Component {
                                             <Text>Pass code</Text>
                                             </Body>
                                             <Right>
-                                                <Switch value={false}/>
+                                                <Switch value={this.props.user.passCodeMatch}
+                                                        onValueChange={(passCode) => this.handlePassCode(passCode)}/>
                                             </Right>
                                         </ListItem>
                                         <ListItem itemDivider/>
@@ -66,11 +84,15 @@ export class Settings extends Component {
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        user: state.userReducer.user,
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        userActions: bindActionCreators(userAction, dispatch)
+    };
 }
 
 const styles = StyleSheet.create({
