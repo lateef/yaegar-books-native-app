@@ -28,7 +28,14 @@ export default class App extends React.Component {
         persistStore(store, null, () => {
             registerScreens(store, Provider);
             switch (navigation) {
-                default:
+                case 'passcode':
+                    Navigation.startSingleScreenApp({
+                        screen: {
+                            screen: 'PassCode'
+                        }
+                    });
+                    return;
+                case 'dashboard':
                     Navigation.startSingleScreenApp({
                         screen: {
                             label: 'Dashboard',
@@ -41,7 +48,15 @@ export default class App extends React.Component {
                             disableOpenGesture: true
                         }
                     });
+                    return;
+                default:
+                    Navigation.startSingleScreenApp({
+                        screen: {
+                            label: 'SplashScreen',
+                            screen: 'SplashScreen'
+                        }
+                    });
             }
-        })
+        });
     }
 }

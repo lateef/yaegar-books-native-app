@@ -13,6 +13,7 @@ import {
 } from 'native-base';
 
 import * as userAction from '../actions/userActions';
+import * as appAction from '../actions/appActions';
 
 export class PassCode extends Component {
     static navigatorStyle = {
@@ -59,7 +60,7 @@ export class PassCode extends Component {
         } else {
             await this.props.userActions.grantAccess(value1);
             if (this.props.user.accessGranted) {
-                this.props.navigator.dismissAllModals({});
+                this.props.appActions.onStart();
             } else {
                 Alert.alert('Passcode', 'Wrong passcode',
                     [{
@@ -123,6 +124,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        appActions: bindActionCreators(appAction, dispatch),
         userActions: bindActionCreators(userAction, dispatch)
     };
 }

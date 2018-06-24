@@ -89,8 +89,7 @@ export class Dashboard extends React.Component {
         } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.initDashboard().then(() => {
-            });
+            this.initDashboard().then(() => {});
         }
     }
 
@@ -185,11 +184,6 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.user.passCodeMatch) {
-            this.props.navigator.showModal({
-                screen: 'PassCode'
-            });
-        }
         this.initDashboard().then(() => {});
     }
 

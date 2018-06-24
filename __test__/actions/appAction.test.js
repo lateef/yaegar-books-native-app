@@ -17,4 +17,14 @@ describe('App action', () => {
 
         expect(store.getActions()).toEqual(expectedActions);
     });
+
+    it('should create an action on passcode', () => {
+        const expectedActions = [{type: 'NAVIGATION_CHANGE', payload: 'passcode'}];
+        const action = actions.onPasscodeRequired();
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
 });

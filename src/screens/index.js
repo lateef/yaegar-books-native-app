@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 
+import SplashScreen from './SplashScreen';
 import Dashboard from './Dashboard';
 import AccountTypeSelection from './lightboxes/AccountTypeSelection';
 import AddAccount from './AddAccount';
@@ -11,6 +12,7 @@ import Settings from './Settings';
 import PassCode from './PassCode';
 
 export function registerScreens(store, Provider) {
+    Navigation.registerComponent('SplashScreen', () => SplashScreen, store, Provider);
     Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
     Navigation.registerComponent('AccountTypeSelection', () => AccountTypeSelection, store, Provider);
     Navigation.registerComponent('AddAccountType', () => AddAccount, store, Provider);

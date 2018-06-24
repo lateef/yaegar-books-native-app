@@ -16,6 +16,18 @@ export function onInit() {
     }
 }
 
+export function onStart() {
+    return function (dispatch) {
+        dispatch(changeNavigation('dashboard'));
+    }
+}
+
+export function onPasscodeRequired() {
+    return function (dispatch) {
+        dispatch(changeNavigation('passcode'));
+    }
+}
+
 async function initDatabase() {
     const ledger = await new GeneralLedgerQueries().list();
 
