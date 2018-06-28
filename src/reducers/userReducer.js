@@ -1,5 +1,5 @@
 export default function reducer(state = {
-    user: {passCode: null, passCodeMatch: false, accessGranted: false},
+    user: {passCode: null, passCodeMatch: false, accessGranted: false, phones: [{code: null, number: null}]},
     error: null
 }, action) {
     switch (action.type) {

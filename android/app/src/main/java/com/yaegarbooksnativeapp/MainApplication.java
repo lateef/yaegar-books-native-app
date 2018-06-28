@@ -3,6 +3,7 @@ package com.yaegarbooksnativeapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfingerprint.FingerprintAuthPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import io.realm.react.RealmReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FingerprintAuthPackage(),
             new RNSensitiveInfoPackage(),
             new RealmReactPackage(),
             new VectorIconsPackage()
@@ -59,6 +61,7 @@ public class MainApplication extends NavigationApplication {
     // Add additional packages you require here
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
+            new FingerprintAuthPackage(),
             new RNSensitiveInfoPackage(),
             new RealmReactPackage(),
             new VectorIconsPackage()

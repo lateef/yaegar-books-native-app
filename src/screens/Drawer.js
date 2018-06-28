@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon} from 'native-base';
+import {Button, Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon} from 'native-base';
 
 import {rootNavigator} from './Dashboard';
 
@@ -39,6 +39,20 @@ export class Drawer extends Component {
         }
     };
 
+    handleSignUp() {
+        this.toggleDrawer();
+        if (Platform.OS === 'android') {
+            this.props.navigator.push({
+                screen: 'SignUp'
+            });
+        }
+        if (Platform.OS === 'ios') {
+            rootNavigator.push({
+                screen: 'SignUp'
+            });
+        }
+    }
+
     // handleLogout = async () => {
     //     await this.props.userActions.logout();
     //     this.toggleDrawer();
@@ -56,12 +70,14 @@ export class Drawer extends Component {
             <Container>
                 <Header>
                     <Left style={{flex: 1}}>
-                        <Icon ios="ios-contact" android="md-contact"/>
+                        <Icon name="ios-contact" style={{fontSize: 36}}/>
                     </Left>
                     <Body style={{flex: 4}}>
-                    {/*<Text>{this.props.user.email}</Text>*/}
                     </Body>
-                    <Right style={{flex: 1}}>
+                    <Right style={{flex: 4}}>
+                        <Button transparent >
+                            <Text style={{color: 'black'}}>Sign Up</Text>
+                        </Button>
                     </Right>
                 </Header>
                 <Content contentContainerStyle={{flex: 1, backgroundColor: '#fff'}}>
@@ -69,13 +85,26 @@ export class Drawer extends Component {
                         <ListItem itemDivider>
                             <Text/>
                         </ListItem>
-                        <ListItem id="settings"
-                                  icon button onPress={() => {this.handleSettings()}}>
+                        <ListItem id="signUp" icon button onPress={() => {this.handleSignUp()}}>
+                            <Left>
+                                <Icon name="ios-person-add" style={{fontSize: 36}}/>
+                            </Left>
+                            <Body>
+                            <Text>Sign Up</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="arrow-forward"/>
+                            </Right>
+                        </ListItem>
+                        <ListItem itemDivider>
+                            <Text/>
+                        </ListItem>
+                        <ListItem id="settings" icon button onPress={() => {this.handleSettings()}}>
                             <Left>
                                 <Icon ios="ios-cog" android="md-cog"/>
                             </Left>
                             <Body>
-                                <Text>Settings</Text>
+                            <Text>Settings</Text>
                             </Body>
                             <Right>
                                 <Icon name="arrow-forward"/>

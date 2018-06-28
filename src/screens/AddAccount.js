@@ -60,11 +60,10 @@ export class AddAccount extends Component {
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
-                                        <Item
-                                              error={this.props.error !== null}>
+                                        <Item floatingLabel error={this.props.error !== null}>
                                             <Label>{this.props.accountType}</Label>
-                                            <Input testID="addAccountNameInput" id="nameInput" onChangeText={(name) => {
-                                                this.handleNameChangeText(name)}}  autoCapitalize="words"/>
+                                            <Input id="nameInput" autoCapitalize="words" value={this.props.generalLedger.name}
+                                                   onChangeText={(name) => this.handleNameChangeText(name)}/>
                                         </Item>
                                     </Col>
                                 </Row>

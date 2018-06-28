@@ -10,6 +10,7 @@ import TransactionDetail from './TransactionDetail';
 import Drawer from './Drawer';
 import Settings from './Settings';
 import PassCode from './PassCode';
+import SignUp from './SignUp';
 
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('SplashScreen', () => SplashScreen, store, Provider);
@@ -22,4 +23,5 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('Drawer', () => Drawer, store, Provider);
     Navigation.registerComponent('Settings', () => Settings, store, Provider);
     Navigation.registerComponent('PassCode', () => PassCode, store, Provider);
+    Navigation.registerComponent('SignUp', () => SignUp, store, Provider);
 }

@@ -62,7 +62,7 @@ export class Settings extends Component {
                                         <ListItem icon>
                                             <Left/>
                                             <Body>
-                                            <Text>Pass code</Text>
+                                            <Text>Turn {this.props.user.passCodeMatch ? 'off' : 'on'} pass code</Text>
                                             </Body>
                                             <Right>
                                                 <Switch value={this.props.user.passCodeMatch}

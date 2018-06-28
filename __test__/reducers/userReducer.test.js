@@ -7,7 +7,8 @@ describe('User reducer', () => {
             user: {
                 passCode: null,
                 passCodeMatch: false,
-                accessGranted: false
+                accessGranted: false,
+                phones: [{code: null, number: null}]
             }
         });
     });
