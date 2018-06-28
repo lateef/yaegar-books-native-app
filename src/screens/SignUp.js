@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import PhoneInput from 'react-native-phone-input';
 
@@ -32,7 +32,7 @@ export class SignUp extends Component {
     render() {
         return (
             <Container>
-                <Content contentContainerStyle={styles.container} padder>
+                <Content padder>
                     <Grid>
                         <Row>
                             <Form style={styles.container}>
@@ -53,8 +53,7 @@ export class SignUp extends Component {
                                                     initialCountry={'none'}
                                                     allowZeroAfterCountryCode={false}
                                                     textProps={{placeholder: '+123 Enter your phone number'}}
-                                                    onChangePhoneNumber={() => {
-                                                    }}/>
+                                                    onChangePhoneNumber={() => {}}/>
                                     </Col>
                                 </Row>
                                 <Row size={2}>
@@ -63,12 +62,10 @@ export class SignUp extends Component {
                                             <Label>Password</Label>
                                             <Input id="passwordInput"
                                                    secureTextEntry={true}
-                                                   onChangeText={(name) => {
-                                                   }}/>
+                                                   onChangeText={() => {}}/>
                                         </Item>
                                     </Col>
                                 </Row>
-                                <Row size={1}/>
                                 <Row size={1}>
                                     <Col>
                                         <Body size={1}>
@@ -76,8 +73,7 @@ export class SignUp extends Component {
                                             <Button id="continueButton"
                                                     disabled={this.props.error !== null}
                                                     rounded
-                                                    onPress={() => {
-                                                    }}>
+                                                    onPress={() => {}}>
                                                 <Text>Register</Text>
                                             </Button> : <Text/>}
                                         </Body>
@@ -112,6 +108,7 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: Dimensions.get('window').height,
         backgroundColor: '#fff',
         justifyContent: 'center'
     },

@@ -27,7 +27,7 @@ export class AddAccount extends Component {
         screenBackgroundColor: 'white'
     };
 
-    handleNameChangeText = (name) => {
+    handleNameChange = (name) => {
         this.props.generalLedgerActions.updateName(name.trim());
     };
 
@@ -63,7 +63,7 @@ export class AddAccount extends Component {
                                         <Item floatingLabel error={this.props.error !== null}>
                                             <Label>{this.props.accountType}</Label>
                                             <Input id="nameInput" autoCapitalize="words" value={this.props.generalLedger.name}
-                                                   onChangeText={(name) => this.handleNameChangeText(name)}/>
+                                                   onChangeText={(name) => this.handleNameChange(name)}/>
                                         </Item>
                                     </Col>
                                 </Row>
@@ -97,6 +97,7 @@ export class AddAccount extends Component {
 
     componentWillMount() {
         this.props.generalLedgerActions.renewUuid();
+        this.props.generalLedgerActions.updateName('');
     }
 }
 
