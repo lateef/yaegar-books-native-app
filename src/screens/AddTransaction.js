@@ -70,13 +70,23 @@ export class AddTransaction extends Component {
         });
     };
 
+    handleAddCategory() {
+        this.props.navigator.push({
+            screen: 'Categories',
+            passProps: {
+                transactionType: this.props.transactionType,
+                account: this.props.account
+            }
+        });
+    }
+
     render() {
         return (
             <Container>
                 <Header>
                     <Left/>
                     <Body>
-                        <Title>Add {this.props.transactionType}</Title>
+                    <Title>Add {this.props.transactionType}</Title>
                     </Body>
                     <Right/>
                 </Header>
@@ -85,21 +95,6 @@ export class AddTransaction extends Component {
                         <Row>
                             <Col>
                                 <Form style={styles.container}>
-                                    <Row size={1}>
-                                        <Right>
-                                            <Button id="saveTransactionButton"
-                                                    disabled={
-                                                        this.props.primaryJournalEntry &&
-                                                        (this.props.primaryJournalEntry.generalLedger.uuid === 'noUuid'
-                                                            || !this.props.primaryJournalEntry.amount)
-                                                    }
-                                                    rounded
-                                                    onPress={() => this.handlePress(this.props.transactionType)}>
-                                                <Text>Save</Text>
-                                            </Button>
-                                        </Right>
-                                    </Row>
-                                    <Row size={1}/>
                                     <Row size={2}>
                                         <Col>
                                             <DatePicker
@@ -127,7 +122,6 @@ export class AddTransaction extends Component {
                                             />
                                         </Col>
                                     </Row>
-                                    <Row size={1}/>
                                     <Row size={1}>
                                         <Picker
                                             iosHeader="Category"
@@ -143,13 +137,29 @@ export class AddTransaction extends Component {
                                             )}
                                         </Picker>
                                     </Row>
-                                    <Row size={1}/>
                                     <Row size={1}>
                                         <Col>
                                             <Item>
                                                 <Input placeholder='Amount' keyboardType={'numeric'}
                                                        onChangeText={(amount) => this.handleAmountChange(amount)}/>
                                             </Item>
+                                        </Col>
+                                    </Row>
+                                    <Row size={1}/>
+                                    <Row size={1}>
+                                        <Col>
+                                            <Body>
+                                            <Button id="saveTransactionButton"
+                                                    disabled={
+                                                        this.props.primaryJournalEntry &&
+                                                        (this.props.primaryJournalEntry.generalLedger.uuid === 'noUuid'
+                                                            || !this.props.primaryJournalEntry.amount)
+                                                    }
+                                                    rounded
+                                                    onPress={() => this.handlePress(this.props.transactionType)}>
+                                                <Text>Save</Text>
+                                            </Button>
+                                            </Body>
                                         </Col>
                                     </Row>
                                     <Row size={10}/>
@@ -174,15 +184,22 @@ export class AddTransaction extends Component {
         const incomeRevenue = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Income/Revenue";
         })[0];
+        const nonOperatingIncome = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Non-operating income";
+        })[0];
 
         const operatingExpenses = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Operating expenses";
         })[0];
 
+        const nonOperatingExpenses = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Non-operating expenses";
+        })[0];
+
         if ('Income' === this.props.transactionType) {
-            this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_CATEGORIES', incomeRevenue.uuid);
+            this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_CATEGORIES', [incomeRevenue.uuid, nonOperatingIncome.uuid]);
         } else if ('Expense' === this.props.transactionType) {
-            this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_CATEGORIES', operatingExpenses.uuid);
+            this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_CATEGORIES', [operatingExpenses.uuid, nonOperatingExpenses.uuid]);
         }
     }
 }

@@ -68,9 +68,9 @@ export function list() {
     }
 }
 
-export function listByParentUuid(type, parentUuid) {
+export function listByParentUuids(type, parentUuids) {
     return async function (dispatch) {
-        const chartOfAccounts = await new GeneralLedgerQueries().listByParentUuid(parentUuid);
+        const chartOfAccounts = await new GeneralLedgerQueries().listByParentUuid(parentUuids);
         dispatch({
             type: type,
             payload: chartOfAccounts

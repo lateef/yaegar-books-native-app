@@ -56,11 +56,13 @@ export default class GeneralLedgerQueries {
         });
     }
 
-    listByParentUuid(parentUuid) {
+    listByParentUuid(parentUuids) {
         return Realm.open({
             schema: [GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            return realm.objects('GeneralLedgers').filtered('parentUuid = $0', parentUuid).map(x => Object.assign({}, x));
+            return realm.objects('GeneralLedgers')
+            .filtered(parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR '))
+            .map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);
         });

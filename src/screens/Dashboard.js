@@ -191,7 +191,7 @@ export class Dashboard extends React.Component {
         const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Current assets";
         })[0];
-        await this.props.generalLedgerActions.listByParentUuid('LIST_GENERAL_LEDGERS_ACCOUNTS', currentAsset.uuid);
+        await this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_ACCOUNTS', [currentAsset.uuid]);
         this.props.generalLedgers.map((generalLedger) => {
             this.props.journalEntryActions.sumAmountByGeneralLedgerUuid(generalLedger.uuid)
         });
