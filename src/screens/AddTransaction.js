@@ -70,16 +70,6 @@ export class AddTransaction extends Component {
         });
     };
 
-    handleAddCategory() {
-        this.props.navigator.push({
-            screen: 'Categories',
-            passProps: {
-                transactionType: this.props.transactionType,
-                account: this.props.account
-            }
-        });
-    }
-
     render() {
         return (
             <Container>

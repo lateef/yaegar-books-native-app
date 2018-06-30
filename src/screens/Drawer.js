@@ -25,6 +25,20 @@ export class Drawer extends Component {
         });
     };
 
+    handleSignUp() {
+        this.toggleDrawer();
+        if (Platform.OS === 'android') {
+            this.props.navigator.push({
+                screen: 'SignUp'
+            });
+        }
+        if (Platform.OS === 'ios') {
+            rootNavigator.push({
+                screen: 'SignUp'
+            });
+        }
+    }
+
     handleSettings = () => {
         this.toggleDrawer();
         if (Platform.OS === 'android') {
@@ -39,19 +53,19 @@ export class Drawer extends Component {
         }
     };
 
-    handleSignUp() {
+    handleCategories = () => {
         this.toggleDrawer();
         if (Platform.OS === 'android') {
             this.props.navigator.push({
-                screen: 'SignUp'
+                screen: 'Categories'
             });
         }
         if (Platform.OS === 'ios') {
             rootNavigator.push({
-                screen: 'SignUp'
+                screen: 'Categories'
             });
         }
-    }
+    };
 
     // handleLogout = async () => {
     //     await this.props.userActions.logout();
@@ -105,6 +119,20 @@ export class Drawer extends Component {
                             </Left>
                             <Body>
                             <Text>Settings</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="arrow-forward"/>
+                            </Right>
+                        </ListItem>
+                        <ListItem itemDivider>
+                            <Text/>
+                        </ListItem>
+                        <ListItem id="categories" icon button onPress={() => {this.handleCategories()}}>
+                            <Left>
+                                <Icon type="FontAwesome" name='object-group' style={{fontSize: 20}}/>
+                            </Left>
+                            <Body>
+                            <Text>Categories</Text>
                             </Body>
                             <Right>
                                 <Icon name="arrow-forward"/>

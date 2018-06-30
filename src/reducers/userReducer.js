@@ -1,5 +1,5 @@
 export default function reducer(state = {
-    user: {passCode: null, passCodeMatch: false, accessGranted: false, phones: [{code: null, number: null}]},
+    user: {passCode: null, passCodeMatch: false, accessGranted: false, phones: [], password: '', passwordAgain: ''},
     error: null
 }, action) {
     switch (action.type) {
@@ -11,6 +11,25 @@ export default function reducer(state = {
         }
         case 'UPDATE_ACCESS_GRANTED': {
             return {...state, user: {...state.user, accessGranted: action.payload}, error: null}
+        }
+        case 'UPDATE_PHONE': {
+            state.user.phones.splice(0, 1, action.payload);
+            return {...state, user: {...state.user, phones: state.user.phones}, error: null}
+        }
+        case 'SET_PASSWORD': {
+            return {...state, user: {...state.user, password: action.payload, passwordMatched: false}, error: null}
+        }
+        case 'SET_PASSWORD_AGAIN': {
+            return {...state, user: {...state.user, passwordAgain: action.payload, passwordMatched: false}, error: null}
+        }
+        case 'PASSWORD_NOT_VALID': {
+            return {...state, user: {...state.user, password: action.payload, passwordMatched: false}}
+        }
+        case 'PASSWORD_NOT_MATCHED': {
+            return {...state, user: {...state.user, passwordAgain: action.payload, passwordMatched: false}}
+        }
+        case 'PASSWORD_MATCHED': {
+            return {...state, user: {...state.user, passwordMatched: true}}
         }
         default:
             return state

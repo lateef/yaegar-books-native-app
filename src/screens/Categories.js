@@ -20,6 +20,7 @@ import {
 } from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
+import DATA from "../baseChartOfAccounts";
 
 export class Categories extends Component {
     static navigatorStyle = {
@@ -34,7 +35,7 @@ export class Categories extends Component {
                 <Header>
                     <Left/>
                     <Body>
-                    <Title>{this.props.transactionType}</Title>
+                    <Title>Categories</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -63,7 +64,23 @@ export class Categories extends Component {
     }
 
     componentWillMount() {
-        this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_ACCOUNTS', [this.props.account.uuid]);
+        const incomeRevenue = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Income/Revenue";
+        })[0];
+        const nonOperatingIncome = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Non-operating income";
+        })[0];
+
+        const operatingExpenses = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Operating expenses";
+        })[0];
+
+        const nonOperatingExpenses = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === "Non-operating expenses";
+        })[0];
+
+        this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_CATEGORIES',
+            [incomeRevenue.uuid, nonOperatingIncome.uuid, operatingExpenses.uuid, nonOperatingExpenses.uuid]);
     }
 }
 

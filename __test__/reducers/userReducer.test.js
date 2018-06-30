@@ -8,7 +8,9 @@ describe('User reducer', () => {
                 passCode: null,
                 passCodeMatch: false,
                 accessGranted: false,
-                phones: [{code: null, number: null}]
+                phones: [],
+                password: "",
+                passwordAgain: ""
             }
         });
     });
@@ -29,5 +31,46 @@ describe('User reducer', () => {
         const action = {type: 'UPDATE_ACCESS_GRANTED', payload: true};
 
         expect(reducer([], action)).toEqual({error: null, user: {accessGranted: true}});
+    });
+
+    it('should handle UPDATE_PHONE', () => {
+        const action = {type: 'UPDATE_PHONE', payload: {code: 234, number:808080}};
+
+        expect(reducer({user: {phones: []}}, action)).toEqual({error: null, user: {phones: [{code: 234, number: 808080}]}});
+    });
+
+    it('should return ok if SET_PASSWORD', () => {
+        const action = {type: 'SET_PASSWORD', payload: 'pass'};
+        const expectedState = {error: null, user: {password: "pass", passwordMatched: false}};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return ok if SET_PASSWORD_AGAIN', () => {
+        const action = {type: 'SET_PASSWORD_AGAIN', payload: 'password'};
+        const expectedState = {error: null, user: {passwordAgain: "password", passwordMatched: false}};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return ok if PASSWORD_NOT_VALID', () => {
+        const action = {type: 'PASSWORD_NOT_VALID', payload: 'pass'};
+        const expectedState = {user: {password: "pass", passwordMatched: false}};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return ok if PASSWORD_NOT_MATCHED', () => {
+        const action = {type: 'PASSWORD_NOT_MATCHED', payload: 'pass'};
+        const expectedState = {user: {passwordAgain: "pass", passwordMatched: false}};
+
+        expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should return ok if PASSWORD_MATCHED', () => {
+        const action = {type: 'PASSWORD_MATCHED', payload: 'pass'};
+        const expectedState = {user: {passwordMatched: true}};
+
+        expect(reducer([], action)).toEqual(expectedState);
     });
 });

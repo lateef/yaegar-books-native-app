@@ -76,7 +76,6 @@ export class AddAccount extends Component {
                                         <Row size={1}>
                                             {this.props.generalLedger && this.props.generalLedger.name.length > 0 ?
                                                 <Button id="continueButton"
-                                                        testID="addAccountContinueButton"
                                                         disabled={this.props.error !== null}
                                                         rounded
                                                         onPress={() => this.handlePress(this.props.accountType)}>
