@@ -50,6 +50,12 @@ export class SignUp extends Component {
         this.props.userActions.validatePassword(this.props.user.password, passwordAgain);
     };
 
+    register = () => {
+        this.props.navigator.push({
+            screen: 'SignUpComplete'
+        });
+    };
+
     render() {
         return (
             <Container>
@@ -69,7 +75,7 @@ export class SignUp extends Component {
                                     </Text>
                                     </Body>
                                 </Row>
-                                <Row size={2}>
+                                <Row size={1}>
                                     <Col>
                                         <Label>Phone Number</Label>
                                         <PhoneInput ref={ref => {this.phone = ref;}}
@@ -117,16 +123,14 @@ export class SignUp extends Component {
                                                     disabled={
                                                         this.props.error !== null ||
                                                         !this.props.user.passwordMatched ||
-                                                        !this.phone.isValidNumber()}
+                                                        !this.props.user.phones[0].number}
                                                     rounded
-                                                    onPress={() => {}}>
+                                                    onPress={() => this.register()}>
                                                 <Text>Register</Text>
                                             </Button> : <Text/>}
                                         </Body>
                                     </Col>
                                 </Row>
-
-
                                 <Row size={1}>
                                     <Col style={styles.container}>
                                         <Row size={1}>
@@ -135,7 +139,7 @@ export class SignUp extends Component {
                                         </Row>
                                     </Col>
                                 </Row>
-                                <Row size={7}>
+                                <Row size={4}>
                                 </Row>
                             </Form>
                         </Row>
@@ -146,6 +150,7 @@ export class SignUp extends Component {
     }
 
     componentWillMount() {
+        this.props.userActions.updatePhone({});
         this.props.userActions.setPassword("");
         this.props.userActions.setPasswordAgain("");
     }
