@@ -16,7 +16,7 @@ describe('User reducer', () => {
     });
 
     it('should handle GET_USER_ACCOUNT', () => {
-        const action = {type: 'GET_USER_ACCOUNT', payload: 'uuid'};
+        const action = {type: 'GET_USER_ACCOUNT', payload: {uuid: 'uuid'}};
 
         expect(reducer([], action)).toEqual({error: null, user: {uuid: 'uuid'}});
     });
