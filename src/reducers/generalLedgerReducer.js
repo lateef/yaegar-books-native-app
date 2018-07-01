@@ -11,7 +11,7 @@ export default function reducer(state = {
         code: null,
         description: '',
         parentUuid: '',
-        ownerUuid: 'GUEST'
+        ownerUuid: null
     },
     accounts: [],
     categories: [],
@@ -29,6 +29,9 @@ export default function reducer(state = {
         }
         case 'UPDATE_GENERAL_LEDGERS_TYPE': {
             return {...state, generalLedger: {...state.generalLedger, type: action.payload}, error: null}
+        }
+        case 'UPDATE_GENERAL_LEDGERS_OWNER_UUID': {
+            return {...state, generalLedger: {...state.generalLedger, ownerUuid: action.payload}, error: null}
         }
         case 'UPDATE_GENERAL_LEDGERS_PARENT_UUID': {
             return {...state, generalLedger: {...state.generalLedger, parentUuid: action.payload}, error: null}

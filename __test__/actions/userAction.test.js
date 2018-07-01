@@ -31,6 +31,16 @@ describe('User action', () => {
 
     });
 
+    // it('should return get user account action', () => {
+    //     const expectedActions = [{"type": "GET_USER_ACCOUNT", "payload": 'uuid'}];
+    //     const action = actions.findByUuid('uuid');
+    //     const store = mockStore({}, action);
+    //
+    //     store.dispatch(action);
+    //
+    //     expect(store.getActions()).toEqual(expectedActions);
+    // });
+
     it('should return update passcode action', () => {
         const expectedActions = [{"type": "UPDATE_PASSCODE", "payload": 1234}];
         const action = actions.updatePassCode(1234, false);

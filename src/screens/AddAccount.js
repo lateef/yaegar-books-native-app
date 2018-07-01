@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet} from 'react-native';
+import {Keyboard, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 
 import {
@@ -28,7 +28,7 @@ export class AddAccount extends Component {
     };
 
     handleNameChange = (name) => {
-        this.props.generalLedgerActions.updateName(name.trim());
+        this.props.generalLedgerActions.updateName(name);
     };
 
     handlePress = async (accountType) => {
@@ -36,8 +36,10 @@ export class AddAccount extends Component {
             return ledgerEntry.name === "Current assets";
         })[0];
         await this.props.generalLedgerActions.updateType(accountType.trim());
+        await this.props.generalLedgerActions.updateOwnerUuid(this.props.user.uuid);
         await this.props.generalLedgerActions.updateParentUuid(currentAsset.uuid);
         await this.props.generalLedgerActions.updateClassifier(this.props.accountType);
+        Keyboard.dismiss();
         this.props.generalLedgerActions.save(this.props.generalLedger);
         this.props.navigator.resetTo({
             screen: 'Dashboard'
@@ -56,7 +58,7 @@ export class AddAccount extends Component {
                                     <Text testID="addAccountTitle" style={{fontSize: 30}}>Add Account</Text>
                                 </Row>
                                 <Row size={1}>
-                                    <Text testID="addAccountHeading">Enter {this.props.accountType} name</Text>
+                                    <Text testID="addAccountHeading">Enter {this.props.accountType} Name</Text>
                                 </Row>
                                 <Row size={2}>
                                     <Col style={{padding: 10}}>
@@ -104,6 +106,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddAccount)
 
 function mapStateToProps(state, ownProps) {
     return {
+        user: state.userReducer.user,
         generalLedger: state.generalLedgerReducer.generalLedger,
         error: state.generalLedgerReducer.error
     };

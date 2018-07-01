@@ -1,7 +1,36 @@
 import SInfo from 'react-native-sensitive-info';
 import validator from 'validator';
+import UserAccountQueries from "../models/queries/UserAccountQueries";
 
 const options = {sharedPreferencesName: 'mySharedPrefs', keychainService: 'myKeychain'};
+
+export async function initUser(uuid) {
+    const userAccounts = await new UserAccountQueries().list();
+
+    if (userAccounts.length === 0) {
+        const userAccount = {
+            uuid: uuid,
+            default: true
+        };
+        await new UserAccountQueries().create(userAccount);
+    }
+}
+
+export function findByUuid(uuid) {//return default user if no argument is passed
+    return async function (dispatch) {
+        let userAccount = null;
+        if (uuid) {
+            userAccount = await new UserAccountQueries().findByUuid(uuid);
+        } else {
+            const userAccounts = await new UserAccountQueries().list();
+            userAccount = userAccounts.filter(userAccount => userAccount.default === true)[0];
+        }
+        dispatch({
+            type: 'GET_USER_ACCOUNT',
+            payload: userAccount
+        });
+    }
+}
 
 export function updatePassCode(passCode, save) {
     if (passCode !== null) {
@@ -31,7 +60,6 @@ export function updatePassCode(passCode, save) {
 }
 
 export function grantAccess(passCode) {
-
     return async function (dispatch) {
         return await SInfo.getItem('passCode', options)
             .then((value) => {

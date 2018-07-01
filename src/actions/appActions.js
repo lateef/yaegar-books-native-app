@@ -1,5 +1,6 @@
-import GeneralLedgerQueries from '../models/queries/GeneralLedgerQueries';
-import DATA from '../baseChartOfAccounts';
+import uuid from "uuid/v4";
+import * as userAction from './userActions';
+import * as generalLedgerAction from './generalLedgerActions';
 
 function changeNavigation(root) {
     return {
@@ -9,9 +10,11 @@ function changeNavigation(root) {
 }
 
 export function onInit() {
-    initDatabase().then(x => {
-    });
     return function (dispatch) {
+        const userUuid = uuid();
+        userAction.initUser(userUuid).then(() => {
+            generalLedgerAction.initGeneralLedger(userUuid).then(() => {});
+        });
         dispatch(changeNavigation('init'));
     }
 }
@@ -25,15 +28,5 @@ export function onStart() {
 export function onPasscodeRequired() {
     return function (dispatch) {
         dispatch(changeNavigation('passcode'));
-    }
-}
-
-async function initDatabase() {
-    const ledger = await new GeneralLedgerQueries().list();
-
-    if (ledger.length === 0) {
-        DATA.chartOfAccounts.forEach(async function (generalLedger) {
-            await new GeneralLedgerQueries().create(generalLedger, true);
-        });
     }
 }

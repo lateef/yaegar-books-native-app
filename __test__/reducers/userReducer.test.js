@@ -15,6 +15,12 @@ describe('User reducer', () => {
         });
     });
 
+    it('should handle GET_USER_ACCOUNT', () => {
+        const action = {type: 'GET_USER_ACCOUNT', payload: 'uuid'};
+
+        expect(reducer([], action)).toEqual({error: null, user: {uuid: 'uuid'}});
+    });
+
     it('should handle UPDATE_PASSCODE', () => {
         const action = {type: 'UPDATE_PASSCODE', payload: 'passcode'};
 

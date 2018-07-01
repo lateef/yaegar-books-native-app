@@ -75,7 +75,7 @@ export class SignUp extends Component {
                                     </Text>
                                     </Body>
                                 </Row>
-                                <Row size={1}>
+                                <Row size={2}>
                                     <Col>
                                         <Label>Phone Number</Label>
                                         <PhoneInput ref={ref => {this.phone = ref;}}

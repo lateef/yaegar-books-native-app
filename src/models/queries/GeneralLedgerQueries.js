@@ -2,6 +2,7 @@ import Realm from 'realm';
 import GeneralLedgers from '../GeneralLedgers';
 import Transactions from '../Transactions';
 import DATA from '../../baseChartOfAccounts';
+import UserAccounts from "../UserAccounts";
 
 export default class GeneralLedgerQueries {
     constructor() {
@@ -14,7 +15,7 @@ export default class GeneralLedgerQueries {
 
     create(generalLedger, init) {
         Realm.open({
-            schema: [GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [UserAccounts, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             const maxCode = realm
                 .objects(GeneralLedgers)
@@ -28,9 +29,10 @@ export default class GeneralLedgerQueries {
                 const date = new Date();
                 return realm.create('GeneralLedgers',
                     {
+                        userAccountUuid_uuid: generalLedger.ownerUuid + '+' + generalLedger.uuid,
                         uuid: generalLedger.uuid,
                         code: code,
-                        name: generalLedger.name,
+                        name: generalLedger.name.trim(),
                         total: generalLedger.total ? parseFloat(generalLedger.total) : 0,
                         description: generalLedger.description,
                         classifier: generalLedger.classifier,
@@ -48,7 +50,7 @@ export default class GeneralLedgerQueries {
 
     list() {
         return Realm.open({
-            schema: [GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [UserAccounts, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('GeneralLedgers').map(x => Object.assign({}, x));
         }).catch(error => {
@@ -58,11 +60,11 @@ export default class GeneralLedgerQueries {
 
     listByParentUuid(parentUuids) {
         return Realm.open({
-            schema: [GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [UserAccounts, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('GeneralLedgers')
-            .filtered(parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR '))
-            .map(x => Object.assign({}, x));
+                .filtered(parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR '))
+                .map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);
         });
@@ -70,7 +72,7 @@ export default class GeneralLedgerQueries {
 
     count() {
         return Realm.open({
-            schema: [GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [UserAccounts, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('GeneralLedgers').length;
         }).catch(error => {
@@ -80,7 +82,7 @@ export default class GeneralLedgerQueries {
 
     findByUuid(uuid) {
         return Realm.open({
-            schema: [GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [UserAccounts, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objectForPrimaryKey('GeneralLedgers', uuid);
         }).catch(error => {

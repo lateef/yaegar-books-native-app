@@ -1,6 +1,18 @@
 import uuid from "uuid/v4";
 
 import GeneralLedgerQueries from '../models/queries/GeneralLedgerQueries';
+import DATA from "../baseChartOfAccounts";
+
+export async function initGeneralLedger(uuid) {
+    const ledgers = await new GeneralLedgerQueries().list();
+
+    if (ledgers.length === 0) {
+        DATA.chartOfAccounts.forEach(async function (generalLedger) {
+            generalLedger.ownerUuid = uuid;
+            await new GeneralLedgerQueries().create(generalLedger, true);
+        });
+    }
+}
 
 export function renewUuid() {
     return function (dispatch) {
@@ -25,6 +37,15 @@ export function updateType(type) {
         dispatch({
             type: 'UPDATE_GENERAL_LEDGERS_TYPE',
             payload: type
+        });
+    }
+}
+
+export function updateOwnerUuid(ownerUuid) {
+    return function (dispatch) {
+        dispatch({
+            type: 'UPDATE_GENERAL_LEDGERS_OWNER_UUID',
+            payload: ownerUuid
         });
     }
 }

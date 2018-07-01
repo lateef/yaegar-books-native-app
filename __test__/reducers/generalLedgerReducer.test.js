@@ -32,6 +32,13 @@ describe('General ledger reducer', () => {
         );
     });
 
+    it('should handle UPDATE_GENERAL_LEDGERS_OWNER_UUID', () => {
+        const action = {type: 'UPDATE_GENERAL_LEDGERS_OWNER_UUID', payload: 'uuid'};
+
+        expect(reducer([], action)).toEqual({error: null, generalLedger: {ownerUuid: "uuid"}}
+        );
+    });
+
     it('should handle UPDATE_GENERAL_LEDGERS_PARENT_UUID', () => {
         const action = {type: 'UPDATE_GENERAL_LEDGERS_PARENT_UUID', payload: 'uuid'};
 
