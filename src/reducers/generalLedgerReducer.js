@@ -30,6 +30,9 @@ export default function reducer(state = {
         case 'UPDATE_GENERAL_LEDGERS_TYPE': {
             return {...state, generalLedger: {...state.generalLedger, type: action.payload}, error: null}
         }
+        case 'UPDATE_GENERAL_LEDGERS_USER_ACCOUNT': {
+            return {...state, generalLedger: {...state.generalLedger, userAccount: action.payload}, error: null}
+        }
         case 'UPDATE_GENERAL_LEDGERS_OWNER_UUID': {
             return {...state, generalLedger: {...state.generalLedger, ownerUuid: action.payload}, error: null}
         }

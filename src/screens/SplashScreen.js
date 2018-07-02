@@ -34,8 +34,9 @@ export class SplashScreen extends Component {
         );
     }
 
-    componentDidMount() {
-        this.props.userActions.findByUuid();
+    async componentDidMount() {
+        await this.props.userActions.findByUuid();
+        this.props.userActions.updateUserAccount(this.props.user);
         if (this.props.user.passCodeMatch) {
             this.props.appActions.onPasscodeRequired();
         } else {

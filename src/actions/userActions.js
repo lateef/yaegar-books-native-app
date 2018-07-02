@@ -12,7 +12,20 @@ export async function initUser(uuid) {
             uuid: uuid,
             default: true
         };
-        await new UserAccountQueries().create(userAccount);
+        await saveUser(userAccount, false);
+    }
+}
+
+export function updateUserAccount(userAccount) {
+    return function (dispatch) {
+        dispatch({type: 'UPDATE_USER_ACCOUNT', payload: userAccount});
+    }
+}
+
+export function save(userAccount, update) {
+    return async function (dispatch) {
+        await saveUser(userAccount, update);
+        dispatch({type: 'GET_USER', payload: userAccount});
     }
 }
 
@@ -26,7 +39,7 @@ export function findByUuid(uuid) {//return default user if no argument is passed
             userAccount = userAccounts.filter(userAccount => userAccount.default === true)[0];
         }
         dispatch({
-            type: 'GET_USER_ACCOUNT',
+            type: 'GET_USER',
             payload: userAccount
         });
     }
@@ -104,6 +117,12 @@ export function validatePassword(password1, password2) {
     }
 }
 
+export function completeRegistration(smsCode) {
+    return async function (smsCode) {
+        return true;
+    }
+}
+
 function confirmPassword(password1, password2, dispatch) {
     if (!passesPasswordTest(password2)) {
         return;
@@ -113,6 +132,10 @@ function confirmPassword(password1, password2, dispatch) {
     } else {
         dispatch({type: 'PASSWORD_MATCHED', payload: password1});
     }
+}
+
+function saveUser(userAccount, update) {
+    new UserAccountQueries().save(userAccount, update);
 }
 
 function passesPasswordTest(password) {

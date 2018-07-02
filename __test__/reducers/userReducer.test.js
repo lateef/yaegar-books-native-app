@@ -15,10 +15,16 @@ describe('User reducer', () => {
         });
     });
 
-    it('should handle GET_USER_ACCOUNT', () => {
-        const action = {type: 'GET_USER_ACCOUNT', payload: {uuid: 'uuid'}};
+    it('should handle GET_USER', () => {
+        const action = {type: 'GET_USER', payload: {uuid: 'uuid'}};
 
         expect(reducer([], action)).toEqual({error: null, user: {uuid: 'uuid'}});
+    });
+
+    it('should handle UPDATE_USER_ACCOUNT', () => {
+        const action = {type: 'UPDATE_USER_ACCOUNT', payload: {uuid: 'uuid'}};
+
+        expect(reducer([], action)).toEqual({error: null, userAccount: {uuid: 'uuid'}});
     });
 
     it('should handle UPDATE_PASSCODE', () => {

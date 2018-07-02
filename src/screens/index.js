@@ -2,6 +2,7 @@ import {Navigation} from 'react-native-navigation';
 
 import SplashScreen from './SplashScreen';
 import Dashboard from './Dashboard';
+import UserAccount from './UserAccount';
 import AccountTypeSelection from './lightboxes/AccountTypeSelection';
 import AddAccount from './AddAccount';
 import Account from './Account';
@@ -17,6 +18,7 @@ import SignUpComplete from './SignUpComplete';
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('SplashScreen', () => SplashScreen, store, Provider);
     Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
+    Navigation.registerComponent('UserAccount', () => UserAccount, store, Provider);
     Navigation.registerComponent('AccountTypeSelection', () => AccountTypeSelection, store, Provider);
     Navigation.registerComponent('AddAccountType', () => AddAccount, store, Provider);
     Navigation.registerComponent('Account', () => Account, store, Provider);

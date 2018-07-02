@@ -3,8 +3,11 @@ export default function reducer(state = {
     error: null
 }, action) {
     switch (action.type) {
-        case 'GET_USER_ACCOUNT': {
+        case 'GET_USER': {
             return {...state, user: {...action.payload}, error: null}
+        }
+        case 'UPDATE_USER_ACCOUNT': {
+            return {...state, userAccount: {...action.payload}, error: null}
         }
         case 'UPDATE_PASSCODE': {
             return {...state, user: {...state.user, passCode: action.payload}, error: null}

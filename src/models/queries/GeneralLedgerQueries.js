@@ -27,12 +27,13 @@ export default class GeneralLedgerQueries {
 
             return realm.write(() => {
                 const date = new Date();
+                const userAccount = realm.objectForPrimaryKey('UserAccounts', generalLedger.userAccount.uuid);
                 return realm.create('GeneralLedgers',
                     {
-                        userAccountUuid_uuid: generalLedger.ownerUuid + '+' + generalLedger.uuid,
                         uuid: generalLedger.uuid,
                         code: code,
                         name: generalLedger.name.trim(),
+                        userAccount: userAccount,
                         total: generalLedger.total ? parseFloat(generalLedger.total) : 0,
                         description: generalLedger.description,
                         classifier: generalLedger.classifier,

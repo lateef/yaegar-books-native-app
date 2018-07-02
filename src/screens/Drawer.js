@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {Button, Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon} from 'native-base';
+import {Button, Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon, View} from 'native-base';
 
 import {rootNavigator} from './Dashboard';
 
@@ -89,27 +89,32 @@ export class Drawer extends Component {
                     <Body style={{flex: 4}}>
                     </Body>
                     <Right style={{flex: 4}}>
-                        <Button transparent >
-                            <Text style={{color: 'black'}}>Sign Up</Text>
+                        <Button transparent>
+                            {this.props.user.registered ? <View/> :
+                                <Text style={{color: 'black'}} onPress={() => {this.handleSignUp()}}>
+                                    Sign Up
+                                </Text>}
                         </Button>
                     </Right>
                 </Header>
                 <Content contentContainerStyle={{flex: 1, backgroundColor: '#fff'}}>
                     <List>
-                        <ListItem itemDivider>
-                            <Text/>
-                        </ListItem>
-                        <ListItem id="signUp" icon button onPress={() => {this.handleSignUp()}}>
-                            <Left>
-                                <Icon name="ios-person-add" style={{fontSize: 36}}/>
-                            </Left>
-                            <Body>
-                            <Text>Sign Up</Text>
-                            </Body>
-                            <Right>
-                                <Icon name="arrow-forward"/>
-                            </Right>
-                        </ListItem>
+                        {this.props.user.registered ? <View/> : <View>
+                            <ListItem itemDivider>
+                                <Text/>
+                            </ListItem>
+                            <ListItem id="signUp" icon button onPress={() => {this.handleSignUp()}}>
+                                <Left>
+                                    <Icon name="ios-person-add" style={{fontSize: 36}}/>
+                                </Left>
+                                <Body>
+                                <Text>Sign Up</Text>
+                                </Body>
+                                <Right>
+                                    <Icon name="arrow-forward"/>
+                                </Right>
+                            </ListItem>
+                        </View>}
                         <ListItem itemDivider>
                             <Text/>
                         </ListItem>
@@ -142,18 +147,18 @@ export class Drawer extends Component {
                             <Text/>
                         </ListItem>
                         {/*<ListItem id="signOut"*/}
-                            {/*icon button onPress={() => {*/}
-                            {/*this.handleLogout()*/}
+                        {/*icon button onPress={() => {*/}
+                        {/*this.handleLogout()*/}
                         {/*}}>*/}
-                            {/*<Left>*/}
-                                {/*<Icon ios="ios-log-out" android="md-log-out"/>*/}
-                            {/*</Left>*/}
-                            {/*<Body>*/}
-                            {/*<Text>Sign Out</Text>*/}
-                            {/*</Body>*/}
-                            {/*<Right>*/}
-                                {/*<Icon name="arrow-forward"/>*/}
-                            {/*</Right>*/}
+                        {/*<Left>*/}
+                        {/*<Icon ios="ios-log-out" android="md-log-out"/>*/}
+                        {/*</Left>*/}
+                        {/*<Body>*/}
+                        {/*<Text>Sign Out</Text>*/}
+                        {/*</Body>*/}
+                        {/*<Right>*/}
+                        {/*<Icon name="arrow-forward"/>*/}
+                        {/*</Right>*/}
                         {/*</ListItem>*/}
                     </List>
                 </Content>
@@ -166,12 +171,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Drawer)
 
 function mapStateToProps(state, ownProps) {
     return {
+        user: state.userReducer.user,
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-    };
+    return {};
 }
 
 const styles = StyleSheet.create({

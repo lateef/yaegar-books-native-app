@@ -31,8 +31,8 @@ describe('User action', () => {
 
     });
 
-    // it('should return get user account action', () => {
-    //     const expectedActions = [{"type": "GET_USER_ACCOUNT", "payload": 'uuid'}];
+    // it('should return get user action', () => {
+    //     const expectedActions = [{"type": "GET_USER", "payload": 'uuid'}];
     //     const action = actions.findByUuid('uuid');
     //     const store = mockStore({}, action);
     //
@@ -41,8 +41,20 @@ describe('User action', () => {
     //     expect(store.getActions()).toEqual(expectedActions);
     // });
 
+    it('should return update userAccount action', () => {
+
+        const userAccount = {uuid: 'uuid'};
+        const expectedActions = [{type: "UPDATE_USER_ACCOUNT", payload: userAccount}];
+        const action = actions.updateUserAccount(userAccount);
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
+
     it('should return update passcode action', () => {
-        const expectedActions = [{"type": "UPDATE_PASSCODE", "payload": 1234}];
+        const expectedActions = [{type: "UPDATE_PASSCODE", payload: 1234}];
         const action = actions.updatePassCode(1234, false);
         const store = mockStore({}, action);
 

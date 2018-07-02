@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {Alert, Dimensions, StyleSheet} from 'react-native';
 
 import {
     Container,
@@ -13,8 +14,10 @@ import {
     Label,
     Input
 } from 'native-base';
+import {bindActionCreators} from "redux";
+import * as userAction from "../actions/userActions";
 
-export default class SignUpComplete extends Component {
+export class SignUpComplete extends Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -27,9 +30,26 @@ export default class SignUpComplete extends Component {
         console.log(this.smsCode)
     };
 
-    handlePress = () => {
-        this.props.navigator.resetTo({
-            screen: 'Dashboard'
+    handlePress = (smsCode) => {
+        this.props.userActions.completeRegistration(smsCode).then(successful => {
+            if (successful) {
+                this.props.userActions.save({uuid: this.props.user.uuid, registered: true}, true);
+                Alert.alert('SMS Code', 'Registration complete',
+                    [{
+                        text: 'OK', onPress: () => {
+                            this.props.navigator.resetTo({
+                                screen: 'Dashboard'
+                            });
+                        }
+                    }]
+                );
+            } else {
+                Alert.alert('SMS Code', 'Invalid SMS code',
+                    [{
+                        text: 'OK', onPress: () => {}
+                    }]
+                );
+            }
         });
     };
 
@@ -41,7 +61,7 @@ export default class SignUpComplete extends Component {
                         <Row style={{padding: 10}}>
                             <Col style={styles.container}>
                                 <Row size={1}>
-                                    <Text style={{fontSize: 30}}>Sign Up SMS Sent</Text>
+                                    <Text style={{fontSize: 30}}>Enter SMS code</Text>
                                 </Row>
                                 <Row size={1}>
                                     <Text>
@@ -61,7 +81,7 @@ export default class SignUpComplete extends Component {
                                 </Row>
                                 <Row size={1}>
                                     <Button id="submitButton"
-                                            // disabled={!this.smsCode && this.smsCode.length < 4}
+                                        // disabled={!this.smsCode && this.smsCode.length < 4}
                                             rounded onPress={() => this.handlePress()}>
                                         <Text>Submit</Text>
                                     </Button>
@@ -74,6 +94,21 @@ export default class SignUpComplete extends Component {
             </Container>
         )
     }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpComplete)
+
+function mapStateToProps(state, ownProps) {
+    return {
+        user: state.userReducer.user,
+        error: state.userReducer.error
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        userActions: bindActionCreators(userAction, dispatch)
+    };
 }
 
 const styles = StyleSheet.create({

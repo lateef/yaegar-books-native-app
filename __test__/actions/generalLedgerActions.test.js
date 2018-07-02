@@ -32,6 +32,17 @@ describe('General ledger action', () => {
         // expect(store.getActions()).toEqual(expectedActions);
     });
 
+    it('should return an update user account action', () => {
+        const userAccount = {uuid: 'uuid'};
+        const expectedActions = [{type: 'UPDATE_GENERAL_LEDGERS_USER_ACCOUNT', payload: userAccount}];
+        const action = actions.updateUserAccount(userAccount);
+        const store = mockStore({}, action);
+
+        store.dispatch(action);
+
+        expect(store.getActions()).toEqual(expectedActions);
+    });
+
     it('should return an update owner uuid action', () => {
         const uuid = 'uuid';
         const expectedActions = [{type: 'UPDATE_GENERAL_LEDGERS_OWNER_UUID', payload: uuid}];

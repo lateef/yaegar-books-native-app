@@ -8,19 +8,18 @@ export default class UserAccountQueries {
         console.log(Realm.defaultPath);
     }
 
-    create(userAccount) {
+    save(userAccount, update) {
         Realm.open({
             schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.write(() => {
                 const date = new Date();
+                userAccount.updatedTimestamp = date;
+                if (!update) {
+                    userAccount.createdTimestamp = date;
+                }
                 return realm.create('UserAccounts',
-                    {
-                        uuid: userAccount.uuid,
-                        default: userAccount.default,
-                        createdTimestamp: date,
-                        updatedTimestamp: date
-                    });
+                    userAccount, update);
             });
         }).catch(error => {
             console.error(error);

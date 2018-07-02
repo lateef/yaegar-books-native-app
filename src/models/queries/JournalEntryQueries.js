@@ -9,7 +9,7 @@ export default class JournalEntryQueries {
             schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.write(() => {
-                const generalLedger = realm.objectForPrimaryKey('GeneralLedgers', journalEntry.generalLedger.userAccountUuid_uuid);
+                const generalLedger = realm.objectForPrimaryKey('GeneralLedgers', journalEntry.generalLedger.uuid);
                 return realm.create('Transactions',
                     {
                         uuid: journalEntry.uuid,
