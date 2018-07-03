@@ -10,7 +10,9 @@ describe('User reducer', () => {
                 accessGranted: false,
                 phones: [],
                 password: "",
-                passwordAgain: ""
+                passwordAgain: "",
+                personalUserAccounts: [],
+                businessUserAccounts: []
             }
         });
     });
@@ -84,5 +86,17 @@ describe('User reducer', () => {
         const expectedState = {user: {passwordMatched: true}};
 
         expect(reducer([], action)).toEqual(expectedState);
+    });
+
+    it('should handle LIST_PERSONAL_USER_ACCOUNTS', () => {
+        const action = {type: 'LIST_PERSONAL_USER_ACCOUNTS', payload: [{uuid: 'uuid'}]};
+
+        expect(reducer({user: {personalUserAccounts: []}}, action)).toEqual({error: null, user: {personalUserAccounts: [{uuid: 'uuid'}]}});
+    });
+
+    it('should handle LIST_BUSINESS_USER_ACCOUNTS', () => {
+        const action = {type: 'LIST_BUSINESS_USER_ACCOUNTS', payload: [{uuid: 'uuid'}]};
+
+        expect(reducer({user: {businessUserAccounts: []}}, action)).toEqual({error: null, user: {businessUserAccounts: [{uuid: 'uuid'}]}});
     });
 });

@@ -14,6 +14,7 @@ import Settings from './Settings';
 import PassCode from './PassCode';
 import SignUp from './SignUp';
 import SignUpComplete from './SignUpComplete';
+import Subscription from './Subscription';
 
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('SplashScreen', () => SplashScreen, store, Provider);
@@ -30,4 +31,5 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('PassCode', () => PassCode, store, Provider);
     Navigation.registerComponent('SignUp', () => SignUp, store, Provider);
     Navigation.registerComponent('SignUpComplete', () => SignUpComplete, store, Provider);
+    Navigation.registerComponent('Subscription', () => Subscription, store, Provider);
 }

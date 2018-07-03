@@ -46,6 +46,18 @@ export default class UserAccountQueries {
         });
     }
 
+    listByAccountType(isBusiness) {
+        return Realm.open({
+            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            return realm.objects('UserAccounts')
+                .filtered('isBusiness = $0', isBusiness)
+                .map(x => Object.assign({}, x));
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+
     // listByParentUuid(parentUuids) {
     //     return Realm.open({
     //         schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true

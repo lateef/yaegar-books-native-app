@@ -1,5 +1,13 @@
 export default function reducer(state = {
-    user: {passCode: null, passCodeMatch: false, accessGranted: false, phones: [], password: '', passwordAgain: ''},
+    user: {passCode: null,
+        passCodeMatch: false,
+        accessGranted: false,
+        phones: [],
+        password: '',
+        passwordAgain: '',
+        personalUserAccounts: [],
+        businessUserAccounts: []
+    },
     error: null
 }, action) {
     switch (action.type) {
@@ -8,6 +16,12 @@ export default function reducer(state = {
         }
         case 'UPDATE_USER_ACCOUNT': {
             return {...state, userAccount: {...action.payload}, error: null}
+        }
+        case 'LIST_PERSONAL_USER_ACCOUNTS': {
+            return {...state, user: {...state.user, personalUserAccounts: action.payload}, error: null}
+        }
+        case 'LIST_BUSINESS_USER_ACCOUNTS': {
+            return {...state, user: {...state.user, businessUserAccounts: action.payload}, error: null}
         }
         case 'UPDATE_PASSCODE': {
             return {...state, user: {...state.user, passCode: action.payload}, error: null}

@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {Button, Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon, View} from 'native-base';
 
 import {rootNavigator} from './Dashboard';
+import {Subscription} from "./Subscription";
 
 export class Drawer extends Component {
     static navigatorStyle = {
@@ -35,6 +36,20 @@ export class Drawer extends Component {
         if (Platform.OS === 'ios') {
             rootNavigator.push({
                 screen: 'SignUp'
+            });
+        }
+    }
+
+    handlePayment() {
+        this.toggleDrawer();
+        if (Platform.OS === 'android') {
+            this.props.navigator.push({
+                screen: 'Subscription'
+            });
+        }
+        if (Platform.OS === 'ios') {
+            rootNavigator.push({
+                screen: 'Subscription'
             });
         }
     }
@@ -115,20 +130,22 @@ export class Drawer extends Component {
                                 </Right>
                             </ListItem>
                         </View>}
-                        <ListItem itemDivider>
-                            <Text/>
-                        </ListItem>
-                        <ListItem id="settings" icon button onPress={() => {this.handleSettings()}}>
-                            <Left>
-                                <Icon ios="ios-cog" android="md-cog"/>
-                            </Left>
-                            <Body>
-                            <Text>Settings</Text>
-                            </Body>
-                            <Right>
-                                <Icon name="arrow-forward"/>
-                            </Right>
-                        </ListItem>
+                        {this.props.user.registered ? <View>
+                            <ListItem itemDivider>
+                                <Text/>
+                            </ListItem>
+                            <ListItem id="signUp" icon button onPress={() => {this.handlePayment()}}>
+                                <Left>
+                                    <Icon  type="FontAwesome" name="credit-card" style={{fontSize: 20}}/>
+                                </Left>
+                                <Body>
+                                <Text>Subscription</Text>
+                                </Body>
+                                <Right>
+                                    <Icon name="arrow-forward"/>
+                                </Right>
+                            </ListItem>
+                        </View> : <View/>}
                         <ListItem itemDivider>
                             <Text/>
                         </ListItem>
@@ -138,6 +155,20 @@ export class Drawer extends Component {
                             </Left>
                             <Body>
                             <Text>Categories</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="arrow-forward"/>
+                            </Right>
+                        </ListItem>
+                        <ListItem itemDivider>
+                            <Text/>
+                        </ListItem>
+                        <ListItem id="settings" icon button onPress={() => {this.handleSettings()}}>
+                            <Left>
+                                <Icon ios="ios-cog" android="md-cog"/>
+                            </Left>
+                            <Body>
+                            <Text>Settings</Text>
                             </Body>
                             <Right>
                                 <Icon name="arrow-forward"/>

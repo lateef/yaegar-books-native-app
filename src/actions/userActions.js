@@ -10,7 +10,8 @@ export async function initUser(uuid) {
     if (userAccounts.length === 0) {
         const userAccount = {
             uuid: uuid,
-            default: true
+            default: true,
+            name: 'My Personal Account'
         };
         await saveUser(userAccount, false);
     }
@@ -120,6 +121,13 @@ export function validatePassword(password1, password2) {
 export function completeRegistration(smsCode) {
     return async function (smsCode) {
         return true;
+    }
+}
+
+export function listUserAccounts(dispatchType, isBusiness) {
+    return async function (dispatch) {
+        const userAccounts = await new UserAccountQueries().listByAccountType(isBusiness);
+        dispatch({type: dispatchType, payload: userAccounts});
     }
 }
 

@@ -43,7 +43,7 @@ export default class JournalEntryQueries {
         }).then(realm => {
             return realm.objects('Transactions')
                 .filtered('generalLedger.uuid = $0', uuid)
-                .sorted(orderBy, 'true')
+                .sorted(orderBy, true)
                 .map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);

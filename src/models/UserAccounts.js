@@ -7,6 +7,7 @@ UserAccounts.schema = {
     properties: {
         id: 'int?',
         uuid: 'string',
+        name: 'string',
         default: {type: 'bool', default: false},
         registered: {type: 'bool', default: false},
         isBusiness: {type: 'bool', default: false},
