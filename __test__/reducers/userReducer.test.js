@@ -11,8 +11,8 @@ describe('User reducer', () => {
                 phones: [],
                 password: "",
                 passwordAgain: "",
-                personalUserAccounts: [],
-                businessUserAccounts: []
+                personalProfiles: [],
+                businessProfiles: []
             }
         });
     });
@@ -91,12 +91,12 @@ describe('User reducer', () => {
     it('should handle LIST_PERSONAL_PROFILES', () => {
         const action = {type: 'LIST_PERSONAL_PROFILES', payload: [{uuid: 'uuid'}]};
 
-        expect(reducer({user: {personalUserAccounts: []}}, action)).toEqual({error: null, user: {personalUserAccounts: [{uuid: 'uuid'}]}});
+        expect(reducer({user: {personalProfiles: []}}, action)).toEqual({error: null, user: {personalProfiles: [{uuid: 'uuid'}]}});
     });
 
     it('should handle LIST_BUSINESS_PROFILES', () => {
         const action = {type: 'LIST_BUSINESS_PROFILES', payload: [{uuid: 'uuid'}]};
 
-        expect(reducer({user: {businessUserAccounts: []}}, action)).toEqual({error: null, user: {businessUserAccounts: [{uuid: 'uuid'}]}});
+        expect(reducer({user: {businessProfiles: []}}, action)).toEqual({error: null, user: {businessProfiles: [{uuid: 'uuid'}]}});
     });
 });

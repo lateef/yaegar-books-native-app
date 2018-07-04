@@ -18,7 +18,10 @@ const store = mockStore({
         categories: []
     },
     userReducer: {
-        user: {}
+        user: {
+            personalProfiles: [],
+            businessProfiles: []
+        }
     }
 });
 
