@@ -23,10 +23,10 @@ describe('User reducer', () => {
         expect(reducer([], action)).toEqual({error: null, user: {uuid: 'uuid'}});
     });
 
-    it('should handle UPDATE_USER_ACCOUNT', () => {
-        const action = {type: 'UPDATE_USER_ACCOUNT', payload: {uuid: 'uuid'}};
+    it('should handle UPDATE_PROFILE', () => {
+        const action = {type: 'UPDATE_PROFILE', payload: {uuid: 'uuid'}};
 
-        expect(reducer([], action)).toEqual({error: null, userAccount: {uuid: 'uuid'}});
+        expect(reducer([], action)).toEqual({error: null, profile: {uuid: 'uuid'}});
     });
 
     it('should handle UPDATE_PASSCODE', () => {
@@ -88,14 +88,14 @@ describe('User reducer', () => {
         expect(reducer([], action)).toEqual(expectedState);
     });
 
-    it('should handle LIST_PERSONAL_USER_ACCOUNTS', () => {
-        const action = {type: 'LIST_PERSONAL_USER_ACCOUNTS', payload: [{uuid: 'uuid'}]};
+    it('should handle LIST_PERSONAL_PROFILES', () => {
+        const action = {type: 'LIST_PERSONAL_PROFILES', payload: [{uuid: 'uuid'}]};
 
         expect(reducer({user: {personalUserAccounts: []}}, action)).toEqual({error: null, user: {personalUserAccounts: [{uuid: 'uuid'}]}});
     });
 
-    it('should handle LIST_BUSINESS_USER_ACCOUNTS', () => {
-        const action = {type: 'LIST_BUSINESS_USER_ACCOUNTS', payload: [{uuid: 'uuid'}]};
+    it('should handle LIST_BUSINESS_PROFILES', () => {
+        const action = {type: 'LIST_BUSINESS_PROFILES', payload: [{uuid: 'uuid'}]};
 
         expect(reducer({user: {businessUserAccounts: []}}, action)).toEqual({error: null, user: {businessUserAccounts: [{uuid: 'uuid'}]}});
     });

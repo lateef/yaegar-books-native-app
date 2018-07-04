@@ -1,25 +1,25 @@
 import Realm from 'realm';
-import UserAccounts from '../UserAccounts';
+import Profile from '../Profile';
 import GeneralLedgers from "../GeneralLedgers";
 import Transactions from "../Transactions";
 
-export default class UserAccountQueries {
+export default class ProfileQueries {
     constructor() {
         console.log(Realm.defaultPath);
     }
 
-    save(userAccount, update) {
+    save(profile, update) {
         Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.write(() => {
                 const date = new Date();
-                userAccount.updatedTimestamp = date;
+                profile.updatedTimestamp = date;
                 if (!update) {
-                    userAccount.createdTimestamp = date;
+                    profile.createdTimestamp = date;
                 }
-                return realm.create('UserAccounts',
-                    userAccount, update);
+                return realm.create('Profile',
+                    profile, update);
             });
         }).catch(error => {
             console.error(error);
@@ -28,9 +28,9 @@ export default class UserAccountQueries {
 
     findByUuid(uuid) {
         return Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            return realm.objectForPrimaryKey('UserAccounts', uuid);
+            return realm.objectForPrimaryKey('Profile', uuid);
         }).catch(error => {
             console.error(error);
         });
@@ -38,9 +38,9 @@ export default class UserAccountQueries {
 
     list() {
         return Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            return realm.objects('UserAccounts').map(x => Object.assign({}, x));
+            return realm.objects('Profile').map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);
         });
@@ -48,9 +48,9 @@ export default class UserAccountQueries {
 
     listByAccountType(isBusiness) {
         return Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            return realm.objects('UserAccounts')
+            return realm.objects('Profile')
                 .filtered('isBusiness = $0', isBusiness)
                 .map(x => Object.assign({}, x));
         }).catch(error => {
@@ -60,7 +60,7 @@ export default class UserAccountQueries {
 
     // listByParentUuid(parentUuids) {
     //     return Realm.open({
-    //         schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+    //         schema: [Profile,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
     //     }).then(realm => {
     //         return realm.objects('UserSettings')
     //         .filtered(parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR '))
@@ -72,7 +72,7 @@ export default class UserAccountQueries {
     //
     // count() {
     //     return Realm.open({
-    //         schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+    //         schema: [Profile,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
     //     }).then(realm => {
     //         return realm.objects('UserSettings').length;
     //     }).catch(error => {

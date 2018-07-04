@@ -28,7 +28,7 @@ import {iconsMap} from '../util/app-icons';
 
 export let rootNavigator = null;
 
-export class UserAccount extends React.Component {
+export class Profile extends React.Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -38,15 +38,6 @@ export class UserAccount extends React.Component {
     constructor(props) {
         super(props);
         this.props.navigator.setButtons({
-            leftButtons: [
-                {
-                    id: 'sideMenu'
-                },
-                {
-                    icon: iconsMap['ios-menu'],
-                    id: 'menuIcon'
-                }
-            ],
             rightButtons: [
                 {
                     icon: iconsMap['ios-add'],
@@ -57,13 +48,6 @@ export class UserAccount extends React.Component {
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         rootNavigator = this.props.navigator;
     }
-
-    toggleDrawer = () => {
-        this.props.navigator.toggleDrawer({
-            side: 'left',
-            animated: true
-        });
-    };
 
     showLightBox = () => {
         this.props.navigator.showLightBox({
@@ -80,13 +64,7 @@ export class UserAccount extends React.Component {
     };
 
     onNavigatorEvent(event) {
-        if ('NavBarButtonPress' === event.type && 'menuIcon' === event.id && Platform.OS === 'ios') {
-            this.toggleDrawer();
-        } else if ('DeepLink' === event.type) {
-            this.props.navigator.resetTo({
-                screen: event.link
-            });
-        } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
+        if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
             this.initDashboard().then(() => {});
@@ -198,7 +176,7 @@ export class UserAccount extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 
 function mapStateToProps(state, ownProps) {
     return {

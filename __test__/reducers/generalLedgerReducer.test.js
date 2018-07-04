@@ -32,10 +32,10 @@ describe('General ledger reducer', () => {
         );
     });
 
-    it('should handle UPDATE_GENERAL_LEDGERS_USER_ACCOUNT', () => {
-        const action = {type: 'UPDATE_GENERAL_LEDGERS_USER_ACCOUNT', payload: {uuid: 'uuid'}};
+    it('should handle UPDATE_GENERAL_LEDGERS_PROFILE', () => {
+        const action = {type: 'UPDATE_GENERAL_LEDGERS_PROFILE', payload: {uuid: 'uuid'}};
 
-        expect(reducer([], action)).toEqual({error: null, generalLedger: {userAccount: {uuid: 'uuid'}}}
+        expect(reducer([], action)).toEqual({error: null, generalLedger: {profile: {uuid: 'uuid'}}}
         );
     });
 

@@ -41,11 +41,11 @@ describe('User action', () => {
     //     expect(store.getActions()).toEqual(expectedActions);
     // });
 
-    it('should return update userAccount action', () => {
+    it('should return update profile action', () => {
 
-        const userAccount = {uuid: 'uuid'};
-        const expectedActions = [{type: "UPDATE_USER_ACCOUNT", payload: userAccount}];
-        const action = actions.updateUserAccount(userAccount);
+        const profile = {uuid: 'uuid'};
+        const expectedActions = [{type: "UPDATE_PROFILE", payload: profile}];
+        const action = actions.updateProfile(profile);
         const store = mockStore({}, action);
 
         store.dispatch(action);
@@ -162,8 +162,8 @@ describe('User action', () => {
     });
 
     // it('should return list accounts action', () => {
-    //     const expectedActions = [{type: "LIST_PERSONAL_USER_ACCOUNTS", payload: {}}];
-    //     const action = actions.listUserAccounts('LIST_PERSONAL_USER_ACCOUNTS', false);
+    //     const expectedActions = [{type: "LIST_PERSONAL_PROFILES", payload: {}}];
+    //     const action = actions.listProfiles('LIST_PERSONAL_PROFILES', false);
     //     const store = mockStore({}, action);
     //
     //     store.dispatch(action);

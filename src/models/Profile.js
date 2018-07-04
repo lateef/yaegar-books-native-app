@@ -1,8 +1,8 @@
-export default class UserAccounts {
+export default class Profile {
 }
 
-UserAccounts.schema = {
-    name: 'UserAccounts',
+Profile.schema = {
+    name: 'Profile',
     primaryKey: 'uuid',
     properties: {
         id: 'int?',

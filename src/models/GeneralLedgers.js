@@ -10,7 +10,7 @@ GeneralLedgers.schema = {
         code: 'int',
         total: {type: 'double', default: 0.00},
         name: 'string',
-        userAccount: 'UserAccounts',
+        profile: 'Profile',
         description: 'string?',
         classifier: {type: 'string', optional: true},
         reportSortOrder: {type: 'int', optional: true},

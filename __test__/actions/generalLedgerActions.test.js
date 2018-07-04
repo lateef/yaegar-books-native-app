@@ -32,10 +32,10 @@ describe('General ledger action', () => {
         // expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it('should return an update user account action', () => {
-        const userAccount = {uuid: 'uuid'};
-        const expectedActions = [{type: 'UPDATE_GENERAL_LEDGERS_USER_ACCOUNT', payload: userAccount}];
-        const action = actions.updateUserAccount(userAccount);
+    it('should return an update profile action', () => {
+        const profile = {uuid: 'uuid'};
+        const expectedActions = [{type: 'UPDATE_GENERAL_LEDGERS_PROFILE', payload: profile}];
+        const action = actions.updateProfile(profile);
         const store = mockStore({}, action);
 
         store.dispatch(action);

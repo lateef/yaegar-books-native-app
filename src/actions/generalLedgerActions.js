@@ -9,7 +9,7 @@ export async function initGeneralLedger(uuid) {
     if (ledgers.length === 0) {
         DATA.chartOfAccounts.forEach(async function (generalLedger) {
             generalLedger.ownerUuid = uuid;
-            generalLedger.userAccount = {uuid: uuid};
+            generalLedger.profile = {uuid: uuid};
             await new GeneralLedgerQueries().create(generalLedger, true);
         });
     }
@@ -42,11 +42,11 @@ export function updateType(type) {
     }
 }
 
-export function updateUserAccount(userAccount) {
+export function updateProfile(profile) {
     return function (dispatch) {
         dispatch({
-            type: 'UPDATE_GENERAL_LEDGERS_USER_ACCOUNT',
-            payload: userAccount
+            type: 'UPDATE_GENERAL_LEDGERS_PROFILE',
+            payload: profile
         });
     }
 }

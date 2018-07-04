@@ -11,9 +11,9 @@ function changeNavigation(root) {
 
 export function onInit() {
     return function (dispatch) {
-        const userAccountUuid = uuid();
-        userAction.initUser(userAccountUuid).then(() => {
-            generalLedgerAction.initGeneralLedger(userAccountUuid).then(() => {});
+        const profileUuid = uuid();
+        userAction.initUser(profileUuid).then(() => {
+            generalLedgerAction.initGeneralLedger(profileUuid).then(() => {});
         });
         dispatch(changeNavigation('init'));
     }

@@ -3,13 +3,11 @@ import {Platform, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {
-    Button,
     Container,
     Content,
-    Icon,
-    Left,
     Body,
     Right,
+    Icon,
     List,
     ListItem,
     View,
@@ -22,7 +20,6 @@ import {
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 import * as journalEntryAction from '../actions/journalEntryActions';
 import * as userAction from '../actions/userActions';
-import DATA from '../baseChartOfAccounts';
 
 import {iconsMap} from '../util/app-icons';
 
@@ -45,12 +42,6 @@ export class Dashboard extends React.Component {
                 {
                     icon: iconsMap['ios-menu'],
                     id: 'menuIcon'
-                }
-            ],
-            rightButtons: [
-                {
-                    icon: iconsMap['ios-add'],
-                    id: 'addAccount'
                 }
             ]
         });
@@ -86,18 +77,14 @@ export class Dashboard extends React.Component {
             this.props.navigator.resetTo({
                 screen: event.link
             });
-        } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
-            this.showLightBox();
-        } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.initDashboard().then(() => {});
         }
     }
 
-    displayAccount(generalLedger) {
+    displayProfile(profile, screen) {
         this.props.navigator.push({
-            screen: 'Account',
+            screen: screen,
             passProps: {
-                account: generalLedger
+                profile: profile
             }
         });
     }
@@ -109,92 +96,58 @@ export class Dashboard extends React.Component {
                     {Platform.OS === "android" ? <Row size={1}>
                     </Row> : <View/>}
                     <Row size={19}>
-                        <Content padder>
-                            <View>
-                                {this.props.generalLedgers.length > 0 ?
-                                    <Row>
-                                        <Col>
-                                            <Row size={9}>
-                                                <List style={{flex: 1}}>
-                                                    <ListItem itemDivider>
-                                                        <Text>Accounts</Text>
-                                                    </ListItem>
-                                                    {this.props.generalLedgers.map((generalLedger, i) =>
-                                                        <View key={i}>
-                                                            <ListItem style={{alignItems: 'center'}} icon
-                                                                      onPress={() => this.displayAccount(generalLedger)}>
-                                                                <Left>
-                                                                    {generalLedger.classifier === "Bank" ?
-                                                                        <Icon type="FontAwesome" style={{fontSize: 20}}
-                                                                              name="university"/>
-                                                                        : <Text/>}
-                                                                    {generalLedger.classifier === "Credit" ?
-                                                                        <Icon type="FontAwesome" style={{fontSize: 20}}
-                                                                              name="credit-card"/>
-                                                                        : <Text/>}
-                                                                    {generalLedger.classifier === "Cash" ?
-                                                                        <Icon name="cash" style={{fontSize: 25}}/>
-                                                                        : <Text/>}
-                                                                </Left>
-                                                                <Body>
-                                                                <Text>{generalLedger.name}</Text>
-                                                                </Body>
-                                                                <Right>
-                                                                    <Text>{generalLedger.total}</Text>
-                                                                </Right>
-                                                            </ListItem>
-                                                            <ListItem itemDivider>
-                                                                <Text/>
-                                                            </ListItem>
-                                                        </View>)}
-                                                </List>
-                                            </Row>
-                                        </Col>
+                        <Content contentContainerStyle={{flex: 1}} padder>
+                            <Row>
+                                <Col style={styles.container}>
+                                    <Row size={2}>
+                                        <List style={{flex: 1}}>
+                                            <ListItem itemDivider>
+                                                <Text>Personal</Text>
+                                            </ListItem>
+                                            {this.props.user.personalProfiles.map((personalProfile, i) =>
+                                                <ListItem key={i} style={{alignItems: 'center'}}
+                                                          onPress={() => this.displayProfile(personalProfile, 'PersonalProfile')}>
+                                                    <Body>
+                                                        <Text>{personalProfile.name}</Text>
+                                                    </Body>
+                                                    <Right>
+                                                        <Icon name="arrow-forward"/>
+                                                    </Right>
+                                                </ListItem>)}
+                                        </List>
                                     </Row>
-                                    :
-                                    <Row>
-                                        <Col>
-                                            <Row size={1}>
-                                                <View style={styles.container}>
-                                                    <Icon type="FontAwesome" name="university"/>
-                                                    <Text testID="dashboardTitle">
-                                                        Add an account
-                                                    </Text>
-                                                </View>
-                                            </Row>
-                                            <Row size={1}/>
-                                            <Row size={1}>
-                                                <Col size={3}/>
-                                                <Col size={2}>
-                                                    <Button onPress={() => this.showLightBox()}>
-                                                        <Text>New Account</Text>
-                                                    </Button>
-                                                </Col>
-                                            </Row>
-                                            <Row size={7}>
-                                            </Row>
-                                        </Col>
-                                    </Row>}
-                            </View>
+                                    <Row size={2}>
+                                        {this.props.user.businessProfiles.length > 0 ?
+                                            <List style={{flex: 1}}>
+                                                <ListItem itemDivider>
+                                                    <Text>Business</Text>
+                                                </ListItem>
+                                                {this.props.user.businessProfiles.map((businessProfile, i) =>
+                                                    <ListItem key={i} style={{alignItems: 'center'}}
+                                                              onPress={() => {
+                                                              }}>
+                                                        <Body>
+                                                        <Text>{businessProfile.name}</Text>
+                                                        </Body>
+                                                        <Right>
+                                                            <Icon name="arrow-forward"/>
+                                                        </Right>
+                                                    </ListItem>)}
+                                            </List> :
+                                            <View>
+                                                <Body>
+                                                <Text>Add a business account</Text>
+                                                </Body>
+                                            </View>}
+                                    </Row>
+                                    <Row size={4}/>
+                                </Col>
+                            </Row>
                         </Content>
                     </Row>
                 </Grid>
             </Container>
         );
-    }
-
-    componentWillMount() {
-        this.initDashboard().then(() => {});
-    }
-
-    async initDashboard() {
-        const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
-            return ledgerEntry.name === "Current assets";
-        })[0];
-        await this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_ACCOUNTS', [currentAsset.uuid]);
-        this.props.generalLedgers.map((generalLedger) => {
-            this.props.journalEntryActions.sumAmountByGeneralLedgerUuid(generalLedger.uuid)
-        });
     }
 }
 

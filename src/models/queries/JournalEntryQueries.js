@@ -1,12 +1,12 @@
 import Realm from 'realm';
 import Transactions from '../Transactions';
 import GeneralLedgers from '../GeneralLedgers';
-import UserAccounts from "../UserAccounts";
+import Profile from "../Profile";
 
 export default class JournalEntryQueries {
     create(journalEntry) {
         Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.write(() => {
                 const generalLedger = realm.objectForPrimaryKey('GeneralLedgers', journalEntry.generalLedger.uuid);
@@ -29,7 +29,7 @@ export default class JournalEntryQueries {
 
     list() {
         return Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('Transactions').map(x => Object.assign({}, x));
         }).catch(error => {
@@ -39,7 +39,7 @@ export default class JournalEntryQueries {
 
     listByGeneralLedgerUuid(uuid, orderBy) {
         return Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('Transactions')
                 .filtered('generalLedger.uuid = $0', uuid)
@@ -52,16 +52,17 @@ export default class JournalEntryQueries {
 
     sumAmountByGeneralLedgerUuid(uuid) {
         return Realm.open({
-            schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('Transactions').filtered('generalLedger.uuid = $0', uuid).sum('amount');
         }).catch(error => {
             console.error(error);
         });
     }
+
     // count() {
     //     return Realm.open({
-    //         schema: [UserAccounts,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+    //         schema: [Profile,GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
     //     }).then(realm => {
     //         return realm.objects('Transactions').length;
     //     }).catch(error => {

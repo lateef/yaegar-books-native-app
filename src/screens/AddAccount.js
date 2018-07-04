@@ -36,14 +36,13 @@ export class AddAccount extends Component {
             return ledgerEntry.name === "Current assets";
         })[0];
         await this.props.generalLedgerActions.updateType(accountType.trim());
-        await this.props.generalLedgerActions.updateUserAccount(this.props.userAccount);
+        await this.props.generalLedgerActions.updateProfile(this.props.profile);
         await this.props.generalLedgerActions.updateOwnerUuid(this.props.user.uuid);
         await this.props.generalLedgerActions.updateParentUuid(currentAsset.uuid);
         await this.props.generalLedgerActions.updateClassifier(this.props.accountType);
         Keyboard.dismiss();
         this.props.generalLedgerActions.save(this.props.generalLedger);
-        this.props.navigator.resetTo({
-            screen: 'Dashboard'
+        this.props.navigator.pop({
         });
     };
 
@@ -108,7 +107,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddAccount)
 function mapStateToProps(state, ownProps) {
     return {
         user: state.userReducer.user,
-        userAccount: state.userReducer.userAccount,
+        profile: state.userReducer.profile,
         generalLedger: state.generalLedgerReducer.generalLedger,
         error: state.generalLedgerReducer.error
     };

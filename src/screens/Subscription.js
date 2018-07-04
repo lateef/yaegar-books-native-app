@@ -43,7 +43,8 @@ export class Subscription extends Component {
                                             <ListItem key={i} style={{alignItems: 'center'}}
                                                       onPress={() => {}}>
                                                 <Body>
-                                                    <Text>{personalUserAccount.name}</Text>
+                                                    <Text style={{fontWeight: 'bold'}}>{personalUserAccount.name}</Text>
+                                                    <Text>Subscription ends: none</Text>
                                                 </Body>
                                             </ListItem>)}
                                     </List>

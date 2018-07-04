@@ -5,23 +5,33 @@ export default function reducer(state = {
         phones: [],
         password: '',
         passwordAgain: '',
-        personalUserAccounts: [],
-        businessUserAccounts: []
+        personalProfiles: [],
+        businessProfiles: []
     },
     error: null
 }, action) {
     switch (action.type) {
         case 'GET_USER': {
-            return {...state, user: {...action.payload}, error: null}
+            return {...state, user: {...state.user, ...action.payload}, error: null}
         }
-        case 'UPDATE_USER_ACCOUNT': {
-            return {...state, userAccount: {...action.payload}, error: null}
+        case 'UPDATE_PROFILE': {
+            return {...state, profile: {...action.payload}, error: null}
         }
-        case 'LIST_PERSONAL_USER_ACCOUNTS': {
-            return {...state, user: {...state.user, personalUserAccounts: action.payload}, error: null}
+        case 'LIST_PERSONAL_PROFILES': {
+            if (state.user.personalProfiles) {
+                state.user.personalProfiles.splice(0, state.user.personalProfiles.length, action.payload);
+            } else {
+                state.user.personalProfiles = [];
+            }
+            return {...state, user: {...state.user, personalProfiles: action.payload}, error: null}
         }
-        case 'LIST_BUSINESS_USER_ACCOUNTS': {
-            return {...state, user: {...state.user, businessUserAccounts: action.payload}, error: null}
+        case 'LIST_BUSINESS_PROFILES': {
+            if (state.user.businessProfiles) {
+                state.user.businessProfiles.splice(0, state.user.businessProfiles.length, action.payload);
+            } else {
+                state.user.businessProfiles = [];
+            }
+            return {...state, user: {...state.user, businessProfiles: action.payload}, error: null}
         }
         case 'UPDATE_PASSCODE': {
             return {...state, user: {...state.user, passCode: action.payload}, error: null}

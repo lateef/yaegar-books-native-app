@@ -1,47 +1,47 @@
 import SInfo from 'react-native-sensitive-info';
 import validator from 'validator';
-import UserAccountQueries from "../models/queries/UserAccountQueries";
+import ProfileQueries from "../models/queries/ProfileQueries";
 
 const options = {sharedPreferencesName: 'mySharedPrefs', keychainService: 'myKeychain'};
 
 export async function initUser(uuid) {
-    const userAccounts = await new UserAccountQueries().list();
+    const profiles = await new ProfileQueries().list();
 
-    if (userAccounts.length === 0) {
-        const userAccount = {
+    if (profiles.length === 0) {
+        const profile = {
             uuid: uuid,
             default: true,
             name: 'My Personal Account'
         };
-        await saveUser(userAccount, false);
+        await saveProfile(profile, false);
     }
 }
 
-export function updateUserAccount(userAccount) {
+export function updateProfile(profile) {
     return function (dispatch) {
-        dispatch({type: 'UPDATE_USER_ACCOUNT', payload: userAccount});
+        dispatch({type: 'UPDATE_PROFILE', payload: profile});
     }
 }
 
-export function save(userAccount, update) {
+export function save(profile, update) {
     return async function (dispatch) {
-        await saveUser(userAccount, update);
-        dispatch({type: 'GET_USER', payload: userAccount});
+        await saveProfile(profile, update);
+        dispatch({type: 'GET_USER', payload: profile});
     }
 }
 
 export function findByUuid(uuid) {//return default user if no argument is passed
     return async function (dispatch) {
-        let userAccount = null;
+        let profile = null;
         if (uuid) {
-            userAccount = await new UserAccountQueries().findByUuid(uuid);
+            profile = await new ProfileQueries().findByUuid(uuid);
         } else {
-            const userAccounts = await new UserAccountQueries().list();
-            userAccount = userAccounts.filter(userAccount => userAccount.default === true)[0];
+            const profiles = await new ProfileQueries().list();
+            profile = profiles.filter(profile => profile.default === true)[0];
         }
         dispatch({
             type: 'GET_USER',
-            payload: userAccount
+            payload: profile
         });
     }
 }
@@ -124,10 +124,10 @@ export function completeRegistration(smsCode) {
     }
 }
 
-export function listUserAccounts(dispatchType, isBusiness) {
+export function listProfiles(dispatchType, isBusiness) {
     return async function (dispatch) {
-        const userAccounts = await new UserAccountQueries().listByAccountType(isBusiness);
-        dispatch({type: dispatchType, payload: userAccounts});
+        const profiles = await new ProfileQueries().listByAccountType(isBusiness);
+        dispatch({type: dispatchType, payload: profiles});
     }
 }
 
@@ -142,8 +142,8 @@ function confirmPassword(password1, password2, dispatch) {
     }
 }
 
-function saveUser(userAccount, update) {
-    new UserAccountQueries().save(userAccount, update);
+function saveProfile(profile, update) {
+    new ProfileQueries().save(profile, update);
 }
 
 function passesPasswordTest(password) {
