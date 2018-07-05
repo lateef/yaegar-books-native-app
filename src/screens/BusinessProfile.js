@@ -38,15 +38,6 @@ export class BusinessProfile extends React.Component {
     constructor(props) {
         super(props);
         this.props.navigator.setButtons({
-            leftButtons: [
-                {
-                    id: 'sideMenu'
-                },
-                {
-                    icon: iconsMap['ios-menu'],
-                    id: 'menuIcon'
-                }
-            ],
             rightButtons: [
                 {
                     icon: iconsMap['ios-add'],
@@ -57,13 +48,6 @@ export class BusinessProfile extends React.Component {
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         rootNavigator = this.props.navigator;
     }
-
-    toggleDrawer = () => {
-        this.props.navigator.toggleDrawer({
-            side: 'left',
-            animated: true
-        });
-    };
 
     showLightBox = () => {
         this.props.navigator.showLightBox({
@@ -80,16 +64,11 @@ export class BusinessProfile extends React.Component {
     };
 
     onNavigatorEvent(event) {
-        if ('NavBarButtonPress' === event.type && 'menuIcon' === event.id && Platform.OS === 'ios') {
-            this.toggleDrawer();
-        } else if ('DeepLink' === event.type) {
-            this.props.navigator.resetTo({
-                screen: event.link
-            });
-        } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
+        if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.initDashboard().then(() => {});
+            this.initDashboard().then(() => {
+            });
         }
     }
 
@@ -184,14 +163,20 @@ export class BusinessProfile extends React.Component {
     }
 
     componentWillMount() {
-        this.initDashboard().then(() => {});
+        this.props.userActions.updateProfile(this.props.profile);
+        this.initDashboard().then(() => {
+        });
     }
 
     async initDashboard() {
         const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Current assets";
         })[0];
-        await this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_ACCOUNTS', [currentAsset.uuid]);
+        await this.props.generalLedgerActions.listByProfileUuidAndParentUuid(
+            'LIST_GENERAL_LEDGERS_ACCOUNTS',
+            this.props.profile.uuid,
+            [currentAsset.uuid]
+        );
         this.props.generalLedgers.map((generalLedger) => {
             this.props.journalEntryActions.sumAmountByGeneralLedgerUuid(generalLedger.uuid)
         });

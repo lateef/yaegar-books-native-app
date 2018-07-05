@@ -1,6 +1,8 @@
 import SInfo from 'react-native-sensitive-info';
 import validator from 'validator';
 import ProfileQueries from "../models/queries/ProfileQueries";
+import uuid from "uuid/v4";
+import * as generalLedgerAction from "./generalLedgerActions";
 
 const options = {sharedPreferencesName: 'mySharedPrefs', keychainService: 'myKeychain'};
 
@@ -8,12 +10,29 @@ export async function initUser(uuid) {
     const profiles = await new ProfileQueries().list();
 
     if (profiles.length === 0) {
-        const profile = {
-            uuid: uuid,
-            default: true,
-            name: 'My Personal Account'
-        };
-        await saveProfile(profile, false);
+        createProfile(uuid, 'My Personal Account', false, true).then(() => {})
+    }
+}
+
+export async function createProfile(uuid, name, isBusiness, primary) {
+    const profile = {
+        uuid: uuid,
+        name: name,
+        isBusiness: isBusiness,
+        primary: primary,
+    };
+    await saveProfile(profile, false);
+}
+
+export function createBusinessProfile(name, ownerUuid) {
+    return function (dispatch) {
+        const profileUuid = uuid();
+        createProfile(profileUuid, name, true, false).then(() => {
+            generalLedgerAction.initGeneralLedger(ownerUuid, profileUuid).then(async () => {
+                const profiles = await new ProfileQueries().listByAccountType(true);
+                dispatch({type: 'LIST_BUSINESS_PROFILES', payload: profiles});
+            });
+        });
     }
 }
 
@@ -30,14 +49,14 @@ export function save(profile, update) {
     }
 }
 
-export function findByUuid(uuid) {//return default user if no argument is passed
+export function findByUuid(uuid) {//return primary user if no argument is passed
     return async function (dispatch) {
         let profile = null;
         if (uuid) {
             profile = await new ProfileQueries().findByUuid(uuid);
         } else {
             const profiles = await new ProfileQueries().list();
-            profile = profiles.filter(profile => profile.default === true)[0];
+            profile = profiles.filter(profile => profile.primary === true)[0];
         }
         dispatch({
             type: 'GET_USER',

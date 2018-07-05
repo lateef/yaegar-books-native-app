@@ -42,8 +42,7 @@ export class AddAccount extends Component {
         await this.props.generalLedgerActions.updateClassifier(this.props.accountType);
         Keyboard.dismiss();
         this.props.generalLedgerActions.save(this.props.generalLedger);
-        this.props.navigator.pop({
-        });
+        this.props.navigator.pop({});
     };
 
     render() {

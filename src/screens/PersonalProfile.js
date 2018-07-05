@@ -67,7 +67,8 @@ export class Profile extends React.Component {
         if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.initDashboard().then(() => {});
+            this.initDashboard().then(() => {
+            });
         }
     }
 
@@ -162,14 +163,20 @@ export class Profile extends React.Component {
     }
 
     componentWillMount() {
-        this.initDashboard().then(() => {});
+        this.props.userActions.updateProfile(this.props.profile);
+        this.initDashboard().then(() => {
+        });
     }
 
     async initDashboard() {
         const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
             return ledgerEntry.name === "Current assets";
         })[0];
-        await this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_ACCOUNTS', [currentAsset.uuid]);
+        await this.props.generalLedgerActions.listByProfileUuidAndParentUuid(
+            'LIST_GENERAL_LEDGERS_ACCOUNTS',
+            this.props.profile.uuid,
+            [currentAsset.uuid])
+        ;
         this.props.generalLedgers.map((generalLedger) => {
             this.props.journalEntryActions.sumAmountByGeneralLedgerUuid(generalLedger.uuid)
         });

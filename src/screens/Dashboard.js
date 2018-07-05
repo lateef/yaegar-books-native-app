@@ -14,7 +14,8 @@ import {
     Grid,
     Col,
     Row,
-    Text
+    Text,
+    Button
 } from 'native-base';
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
@@ -56,11 +57,11 @@ export class Dashboard extends React.Component {
         });
     };
 
-    showLightBox = () => {
+    showLightBox = (title) => {
         this.props.navigator.showLightBox({
-            screen: 'AccountTypeSelection',
+            screen: 'NameInputBox',
             passProps: {
-                title: 'Choose account type'
+                title: title
             },
             style: {
                 backgroundBlur: 'dark',
@@ -124,8 +125,7 @@ export class Dashboard extends React.Component {
                                                 </ListItem>
                                                 {this.props.user.businessProfiles.map((businessProfile, i) =>
                                                     <ListItem key={i} style={{alignItems: 'center'}}
-                                                              onPress={() => {
-                                                              }}>
+                                                              onPress={() => this.displayProfile(businessProfile, 'BusinessProfile')}>
                                                         <Body>
                                                         <Text>{businessProfile.name}</Text>
                                                         </Body>
@@ -136,7 +136,9 @@ export class Dashboard extends React.Component {
                                             </List> :
                                             <View>
                                                 <Body>
-                                                <Text>Add a business account</Text>
+                                                <Button onPress={() => this.showLightBox('Add a business account')}>
+                                                    <Text>Add a business account</Text>
+                                                </Button>
                                                 </Body>
                                             </View>}
                                     </Row>

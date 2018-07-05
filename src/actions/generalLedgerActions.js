@@ -3,13 +3,13 @@ import uuid from "uuid/v4";
 import GeneralLedgerQueries from '../models/queries/GeneralLedgerQueries';
 import DATA from "../baseChartOfAccounts";
 
-export async function initGeneralLedger(uuid) {
+export async function initGeneralLedger(ownerUuid, profileUuid) {
     const ledgers = await new GeneralLedgerQueries().list();
 
     if (ledgers.length === 0) {
         DATA.chartOfAccounts.forEach(async function (generalLedger) {
-            generalLedger.ownerUuid = uuid;
-            generalLedger.profile = {uuid: uuid};
+            generalLedger.ownerUuid = ownerUuid;
+            generalLedger.profile = {uuid: profileUuid};
             await new GeneralLedgerQueries().create(generalLedger, true);
         });
     }
@@ -102,6 +102,16 @@ export function list() {
 export function listByParentUuids(type, parentUuids) {
     return async function (dispatch) {
         const chartOfAccounts = await new GeneralLedgerQueries().listByParentUuid(parentUuids);
+        dispatch({
+            type: type,
+            payload: chartOfAccounts
+        });
+    }
+}
+
+export function listByProfileUuidAndParentUuid(type, profileUuid, parentUuids) {
+    return async function (dispatch) {
+        const chartOfAccounts = await new GeneralLedgerQueries().listByProfileUuidAndParentUuid(profileUuid, parentUuids);
         dispatch({
             type: type,
             payload: chartOfAccounts

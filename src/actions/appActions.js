@@ -13,7 +13,7 @@ export function onInit() {
     return function (dispatch) {
         const profileUuid = uuid();
         userAction.initUser(profileUuid).then(() => {
-            generalLedgerAction.initGeneralLedger(profileUuid).then(() => {});
+            generalLedgerAction.initGeneralLedger(profileUuid, profileUuid).then(() => {});
         });
         dispatch(changeNavigation('init'));
     }

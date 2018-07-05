@@ -5,6 +5,7 @@ import Dashboard from './Dashboard';
 import PersonalProfile from './PersonalProfile';
 import BusinessProfile from './BusinessProfile';
 import AccountTypeSelection from './lightboxes/AccountTypeSelection';
+import NameInputBox from './lightboxes/NameInputBox';
 import AddAccount from './AddAccount';
 import Account from './Account';
 import AddTransaction from './AddTransaction';
@@ -23,6 +24,7 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('PersonalProfile', () => PersonalProfile, store, Provider);
     Navigation.registerComponent('BusinessProfile', () => BusinessProfile, store, Provider);
     Navigation.registerComponent('AccountTypeSelection', () => AccountTypeSelection, store, Provider);
+    Navigation.registerComponent('NameInputBox', () => NameInputBox, store, Provider);
     Navigation.registerComponent('AddAccountType', () => AddAccount, store, Provider);
     Navigation.registerComponent('Account', () => Account, store, Provider);
     Navigation.registerComponent('AddTransaction', () => AddTransaction, store, Provider);
