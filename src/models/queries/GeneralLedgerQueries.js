@@ -9,21 +9,29 @@ export default class GeneralLedgerQueries {
         console.log(Realm.defaultPath);
     }
 
-    currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
-        return ledgerEntry.name === "Current assets";
-    })[0];
-
     create(generalLedger, init) {
+        const parentGeneralLedger = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.uuid === generalLedger.parentUuid;
+        })[0];
+
         Realm.open({
             schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
-            const maxCode = realm
-                .objects(GeneralLedgers)
-                .filtered('parentUuid = $0', this.currentAsset.uuid)
-                .max("code");
+            let code = generalLedger.code;
+            if (init) {
+                code = generalLedger.code
+            } else if (parentGeneralLedger) {
+                const maxCode = realm
+                    .objects(GeneralLedgers)
+                    .filtered('parentUuid = $0', parentGeneralLedger.uuid)
+                    .max("code");
 
-            const code = (init) ? generalLedger.code : (maxCode) ?
-                maxCode + 1 : this.currentAsset.code + 1;
+                if (maxCode) {
+                    code = maxCode + 1;
+                } else {
+                    code = parentGeneralLedger.code + 1;
+                }
+            }
 
             return realm.write(() => {
                 const date = new Date();
@@ -34,6 +42,7 @@ export default class GeneralLedgerQueries {
                         code: code,
                         name: generalLedger.name.trim(),
                         profile: profile,
+                        type: generalLedger.type,
                         total: generalLedger.total ? parseFloat(generalLedger.total) : 0,
                         description: generalLedger.description,
                         classifier: generalLedger.classifier,

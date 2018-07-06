@@ -31,14 +31,16 @@ export class AddAccount extends Component {
         this.props.generalLedgerActions.updateName(name);
     };
 
-    handlePress = async (accountType) => {
-        const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
-            return ledgerEntry.name === "Current assets";
+    handlePress = async () => {
+        const generalLedgerName = this.props.generalLedgerName;
+        const generalLedgerType = this.props.generalLedgerType;
+        const generalLedger = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === generalLedgerName && ledgerEntry.type === generalLedgerType;
         })[0];
-        await this.props.generalLedgerActions.updateType(accountType.trim());
+        await this.props.generalLedgerActions.updateType(generalLedgerType);
         await this.props.generalLedgerActions.updateProfile(this.props.profile);
         await this.props.generalLedgerActions.updateOwnerUuid(this.props.user.uuid);
-        await this.props.generalLedgerActions.updateParentUuid(currentAsset.uuid);
+        await this.props.generalLedgerActions.updateParentUuid(generalLedger.uuid);
         await this.props.generalLedgerActions.updateClassifier(this.props.accountType);
         Keyboard.dismiss();
         this.props.generalLedgerActions.save(this.props.generalLedger);
@@ -79,7 +81,7 @@ export class AddAccount extends Component {
                                                 <Button id="continueButton"
                                                         disabled={this.props.error !== null}
                                                         rounded
-                                                        onPress={() => this.handlePress(this.props.accountType)}>
+                                                        onPress={() => this.handlePress()}>
                                                     <Text>Add Account</Text>
                                                 </Button> : <Text/>}
                                         </Row>

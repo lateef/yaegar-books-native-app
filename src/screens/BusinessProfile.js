@@ -51,7 +51,7 @@ export class BusinessProfile extends React.Component {
 
     showLightBox = () => {
         this.props.navigator.showLightBox({
-            screen: 'AccountTypeSelection',
+            screen: 'BusinessAccountTypeSelection',
             passProps: {
                 title: 'Choose account type'
             },
@@ -169,13 +169,13 @@ export class BusinessProfile extends React.Component {
     }
 
     async initDashboard() {
-        const currentAsset = DATA.chartOfAccounts.filter(function (ledgerEntry) {
-            return ledgerEntry.name === "Current assets";
+        const generalLedger = DATA.chartOfAccounts.filter(function (ledgerEntry) {
+            return ledgerEntry.name === 'Bank' && ledgerEntry.type === 'business1';
         })[0];
         await this.props.generalLedgerActions.listByProfileUuidAndParentUuid(
             'LIST_GENERAL_LEDGERS_ACCOUNTS',
             this.props.profile.uuid,
-            [currentAsset.uuid]
+            [generalLedger.uuid]
         );
         this.props.generalLedgers.map((generalLedger) => {
             this.props.journalEntryActions.sumAmountByGeneralLedgerUuid(generalLedger.uuid)

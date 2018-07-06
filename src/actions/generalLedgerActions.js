@@ -7,12 +7,24 @@ export async function initGeneralLedger(ownerUuid, profileUuid) {
     const ledgers = await new GeneralLedgerQueries().list();
 
     if (ledgers.length === 0) {
-        DATA.chartOfAccounts.forEach(async function (generalLedger) {
+        DATA.chartOfAccounts
+            .filter(generalLedger => (generalLedger.type === 'master') || (generalLedger.type === 'personal'))
+            .forEach(async function (generalLedger) {
             generalLedger.ownerUuid = ownerUuid;
             generalLedger.profile = {uuid: profileUuid};
             await new GeneralLedgerQueries().create(generalLedger, true);
         });
     }
+}
+
+export async function initBusinessGeneralLedger(ownerUuid, profileUuid) {
+    DATA.chartOfAccounts
+        .filter(generalLedger => generalLedger.type === 'business1')
+        .forEach(async function (generalLedger) {
+            generalLedger.ownerUuid = ownerUuid;
+        generalLedger.profile = {uuid: profileUuid};
+        await new GeneralLedgerQueries().create(generalLedger, true);
+    });
 }
 
 export function renewUuid() {

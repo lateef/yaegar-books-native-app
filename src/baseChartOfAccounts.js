@@ -2,254 +2,708 @@ export default DATA = {
     "chartOfAccounts": [
         {
             "uuid": "4ec43749-b607-4951-9cc6-1e81d657c56c",
-            "code": 100000,
+            "code": 1000000,
             "name": "Income/Revenue",
             "description": "Income from normal business activity",
+            "type": "master",
             "reportSortOrder": 1,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "6c5bd845-93ec-4da8-a4a8-d195f0a96ea0",
-            "code": 200000,
+            "code": 2000000,
             "name": "Non-operating income",
             "description": "Income that isn’t from normal business operations",
+            "type": "master",
             "reportSortOrder": 2,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "8504eaa3-4830-4e70-959a-579b1973341b",
-            "code": 300000,
+            "code": 3000000,
             "name": "Cost of sales",
             "description": "Costs related to sales or services you provide",
+            "type": "master",
             "reportSortOrder": 3,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "a4b153c8-b69b-4243-9778-ed3dc9062d4d",
-            "code": 400000,
+            "code": 4000000,
             "name": "Direct cost",
             "description": "Costs incurred that relate directly to earning Income",
+            "type": "master",
             "reportSortOrder": 4,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
-            "code": 500000,
+            "code": 5000000,
             "name": "Operating expenses",
             "description": "Expenses incurred from the day to day operations of the business",
+            "type": "master",
             "reportSortOrder": 5,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "17dd80d1-6685-4e22-830e-c97f02f8a696",
-            "code": 600000,
+            "code": 6000000,
             "name": "Non-operating expenses",
             "description": "Expenditure that isn’t from normal business operations",
+            "type": "master",
             "reportSortOrder": 6,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "db5d6c60-b174-422b-82b5-663ed0bd8723",
-            "code": 700000,
+            "code": 7000000,
             "name": "Assets",
             "description": "An item purchased and owned that has monetary value",
+            "type": "master",
             "reportSortOrder": 7,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "dcbf0554-8d0a-4706-b98d-9a67359b2abb",
-            "code": 800000,
+            "code": 8000000,
             "name": "Liabilities",
             "description": "A liability is an obligation that arises in the course of doing business to be paid over a period of time",
+            "type": "master",
             "reportSortOrder": 8,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "33ed413b-288b-4218-982c-7d3cd842f3ce",
-            "code": 900000,
+            "code": 9000000,
             "name": "Equity and reserves",
             "description": "Shareholders' funds",
+            "type": "master",
             "reportSortOrder": 9,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "1b7b337b-db56-4974-9a45-55b3022bf85f",
-            "code": 710000,
+            "code": 7100000,
             "name": "Current assets",
             "description": "Current assets",
+            "type": "personal",
             "parentUuid": "db5d6c60-b174-422b-82b5-663ed0bd8723",
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "N"
         },
         {
             "uuid": "a59c1c6f-e58d-47e8-bfe2-1ff6d4dbce70",
-            "code": 100001,
+            "code": 1000001,
             "name": "Salary",
             "description": "Salaries and Wages",
+            "type": "personal",
             "parentUuid": "4ec43749-b607-4951-9cc6-1e81d657c56c",
             "reportSortOrder": 1,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "43d4d661-9f47-4fe9-a12b-35512e00bd51",
-            "code": 200002,
+            "code": 2000002,
             "name": "Other Income",
             "description": "Other Income",
+            "type": "personal",
             "parentUuid": "6c5bd845-93ec-4da8-a4a8-d195f0a96ea0",
             "reportSortOrder": 2,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "a6f47bf0-42fa-4e44-b155-2a889b25b150",
-            "code": 200003,
+            "code": 2000003,
             "name": "Pensions and other benefits",
             "description": "Pensions and other benefits",
+            "type": "personal",
             "parentUuid": "6c5bd845-93ec-4da8-a4a8-d195f0a96ea0",
             "reportSortOrder": 3,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "db96ffc0-3b41-43dd-9ac0-f11be64a3312",
-            "code": 200004,
+            "code": 2000004,
             "name": "Savings",
             "description": "Savings",
+            "type": "personal",
             "parentUuid": "6c5bd845-93ec-4da8-a4a8-d195f0a96ea0",
             "reportSortOrder": 19,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "d1cb1b8c-1729-44be-b019-22356f7e7a75",
-            "code": 500001,
+            "code": 5000001,
             "name": "Accommodation and Housing",
             "description": "Accommodation and Housing",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 4,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "4fd2b266-7abb-4340-991f-113bf425ff68",
-            "code": 500002,
+            "code": 5000002,
             "name": "Personal Insurance",
             "description": "Personal Insurance",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 5,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "5e6c29af-7282-42cc-8f3e-5ab7f429bfc3",
-            "code": 500003,
+            "code": 5000003,
             "name": "Food",
             "description": "Food",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 6,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "2af58408-4857-4f34-8589-d166da6c36df",
-            "code": 500004,
+            "code": 5000004,
             "name": "Utilities",
             "description": "Utilities",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 7,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "bbeb53ce-1d02-46a5-8112-ea4062468276",
-            "code": 500005,
+            "code": 5000005,
             "name": "Transportation",
             "description": "Transportation",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 8,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "80de2c9b-1d24-40f2-bd56-97103d89cfc7",
-            "code": 500006,
+            "code": 5000006,
             "name": "Clothes",
             "description": "Clothes",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 9,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "667fc465-1e36-4e83-b1b8-bc44f3ac98fa",
-            "code": 500007,
+            "code": 5000007,
             "name": "Leisure",
             "description": "Leisure",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 10,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "94164203-b66e-4c22-a7b7-b8ddc6db385e",
-            "code": 500008,
+            "code": 5000008,
             "name": "Professional Development",
             "description": "Professional Development",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 11,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "7c64cda1-8cc1-4270-9160-6a14ce0bf40d",
-            "code": 500009,
+            "code": 5000009,
             "name": "Health",
             "description": "Health",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 12,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "feff0a79-4c23-49da-b2ef-229973358bea",
-            "code": 500010,
+            "code": 5000010,
             "name": "Telecommunication",
             "description": "Telecommunication",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 16,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "b951756e-0113-4245-a133-9941af0ee567",
-            "code": 500011,
+            "code": 5000011,
             "name": "Education",
             "description": "Education",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 17,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "5061c44b-7f2a-4b01-96a4-5086d515d126",
-            "code": 500012,
+            "code": 5000012,
             "name": "Personal Expenses",
             "description": "Personal Expenses",
+            "type": "personal",
             "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
             "reportSortOrder": 18,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "a62c1225-0af1-45ca-bc25-153bccf9d63f",
-            "code": 600001,
+            "code": 6000001,
             "name": "Debts",
             "description": "Debts",
+            "type": "personal",
             "parentUuid": "17dd80d1-6685-4e22-830e-c97f02f8a696",
             "reportSortOrder": 13,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "fbc00fc8-5bf4-4ed2-882e-25358d46a12f",
-            "code": 600002,
+            "code": 6000002,
             "name": "Charitable Donations",
             "description": "Charitable Donations",
+            "type": "personal",
             "parentUuid": "17dd80d1-6685-4e22-830e-c97f02f8a696",
             "reportSortOrder": 14,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         },
         {
             "uuid": "79c54de6-79f2-4fe4-af1e-df56c15e0eac",
-            "code": 600003,
+            "code": 6000003,
             "name": "Emergency Funds",
             "description": "Emergency Funds",
+            "type": "personal",
             "parentUuid": "17dd80d1-6685-4e22-830e-c97f02f8a696",
             "reportSortOrder": 15,
-            "showOnDashboard": "N"
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "2762dd61-ef5f-43f2-8f4c-91c8a395a192",
+            "code": 1000001,
+            "name": "Sales/Income",
+            "description": "Sales/Income",
+            "type": "business1",
+            "parentUuid": "4ec43749-b607-4951-9cc6-1e81d657c56c",
+            "reportSortOrder": 1,
+            "showOnDashboard": "N",
+            "canDelete": "N"
+        },
+        {
+            "uuid": "2e5b6487-cb45-4f2d-94a1-469e5c9730f8",
+            "code": 3000001,
+            "name": "Discounts",
+            "description": "Discounts",
+            "type": "business1",
+            "parentUuid": "8504eaa3-4830-4e70-959a-579b1973341b",
+            "reportSortOrder": 3,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "bf02b91a-d22e-43bb-8e89-94e3a36b9a1d",
+            "code": 2000001,
+            "name": "Other Income",
+            "description": "Other Income",
+            "type": "business1",
+            "parentUuid": "6c5bd845-93ec-4da8-a4a8-d195f0a96ea0",
+            "reportSortOrder": 4,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "80c615f5-897f-4db9-a168-acae4d791cf1",
+            "code": 10000000,
+            "name": "Cost of Other Income",
+            "description": "Cost of Other Income",
+            "type": "business1",
+            "parentUuid": "",
+            "reportSortOrder": 2,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "fbf339fa-0e25-41ea-831e-04cbb5781ed6",
+            "code": 4000001,
+            "name": "Other Staff Cost",
+            "description": "Other Staff Cost",
+            "type": "business1",
+            "parentUuid": "a4b153c8-b69b-4243-9778-ed3dc9062d4d",
+            "reportSortOrder": 5,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "b55fe61a-a2bb-4dde-b78e-6439eb3a5083",
+            "code": 4000002,
+            "name": "Staff Cost",
+            "description": "Staff Cost",
+            "type": "business1",
+            "parentUuid": "a4b153c8-b69b-4243-9778-ed3dc9062d4d",
+            "reportSortOrder": 6,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "30968767-31c0-43db-9dfd-e91c86345220",
+            "code": 6000001,
+            "name": "Depreciation",
+            "description": "Depreciation",
+            "type": "business1",
+            "parentUuid": "17dd80d1-6685-4e22-830e-c97f02f8a696",
+            "reportSortOrder": 12,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "874106cf-0adb-417c-be88-a7415226e5f6",
+            "code": 6000002,
+            "name": "Exceptional Items",
+            "description": "Exceptional Items",
+            "type": "business1",
+            "parentUuid": "17dd80d1-6685-4e22-830e-c97f02f8a696",
+            "reportSortOrder": 27,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "ef33b0b7-abb7-478f-8886-fc0f61c2bd6c",
+            "code": 5000001,
+            "name": "Advertising",
+            "description": "Advertising",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 7,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "b2fbbecd-f67b-48a2-8c62-2f72396bfde5",
+            "code": 5000002,
+            "name": "Bad debts",
+            "description": "Bad debts",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 8,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "ba199708-3328-411a-bc92-95954b9bde6e",
+            "code": 5000003,
+            "name": "Entertaining",
+            "description": "Entertaining",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 9,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "747be3be-a24b-47ff-b46f-84403542b781",
+            "code": 5000004,
+            "name": "Cleaning and Refuse",
+            "description": "Cleaning and Refuse",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 10,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "cdbd7047-8adc-4017-b6c4-121587999c3f",
+            "code": 5000005,
+            "name": "Consumables",
+            "description": "Consumables",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 11,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "9770ed9d-c545-4ae0-b4a8-a903f5c9ab82",
+            "code": 5000006,
+            "name": "Equipment & Facility Hire",
+            "description": "Equipment & Facility Hire",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 13,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "78945797-7ebb-4334-9571-b16b6d663b7f",
+            "code": 5000007,
+            "name": "Heat, Light & Power",
+            "description": "Heat, Light & Power",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 14,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "48fad14e-da66-4a9c-a84b-a426c73163ec",
+            "code": 5000008,
+            "name": "Insurances",
+            "description": "Insurances",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 15,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "57f643f2-4754-4c3a-ab27-88e8c2fcec4f",
+            "code": 5000009,
+            "name": "Information Technology Costs",
+            "description": "Information Technology Costs",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 16,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "06a042ff-e7bd-49c9-8c00-7fe5700056d7",
+            "code": 5000010,
+            "name": "Legal and Professional",
+            "description": "Legal and Professional",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 17,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "136c1698-80a3-4d75-a4c8-edde0f95efdf",
+            "code": 5000011,
+            "name": "Motor & Transport",
+            "description": "Motor & Transport",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 18,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "19874a8e-f532-4218-91f6-5daf045dad27",
+            "code": 5000012,
+            "name": "Postage & Stationery",
+            "description": "Postage & Stationery",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 19,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "9c1ec23a-9722-4a75-9aae-679c4a186635",
+            "code": 5000013,
+            "name": "Rates",
+            "description": "Rates",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 20,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "0def9de9-4c4d-44e4-b2c8-dd60b14ce342",
+            "code": 5000014,
+            "name": "Rent",
+            "description": "Rent",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 21,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "d0715947-2307-4c8b-aa2c-9e3ab187c026",
+            "code": 5000015,
+            "name": "Repairs and Maintenance",
+            "description": "Repairs and Maintenance",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 22,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "c18acd00-bbbe-450d-88ef-cd4d7f8e400c",
+            "code": 5000016,
+            "name": "Security Costs",
+            "description": "Security Costs",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 23,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "a683878e-3635-487e-8643-964352357e1c",
+            "code": 5000017,
+            "name": "Sundries and Bank Charges",
+            "description": "Sundries and Bank Charges",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 24,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "acba6b8a-fa8d-4118-96b0-b0dc3118486e",
+            "code": 5000018,
+            "name": "Telephones",
+            "description": "Telephones",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 25,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "80409d0b-1857-43e7-9351-e0cdcd13ab0e",
+            "code": 5000019,
+            "name": "Travel and Subsistence",
+            "description": "Travel and Subsistence",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 26,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "6fe9bdfd-3f39-45b1-a123-ad99e93db99c",
+            "code": 5000020,
+            "name": "Tax",
+            "description": "Tax",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 28,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "3f2ceb18-8c34-4494-a655-849143dcab3e",
+            "code": 5000021,
+            "name": "Suspense",
+            "description": "Suspense",
+            "type": "business1",
+            "parentUuid": "4e0de115-6eaa-498e-82fa-34d4f87935f9",
+            "reportSortOrder": 29,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "ef3eddf5-ef96-48e3-a50c-904161c60a50",
+            "code": 7000001,
+            "name": "Fixed Assets",
+            "description": "Fixed Assets",
+            "type": "business1",
+            "parentUuid": "db5d6c60-b174-422b-82b5-663ed0bd8723",
+            "reportSortOrder": 31,
+            "showOnDashboard": "N",
+            "canDelete": "N"
+        },
+        {
+            "uuid": "52fafb19-0891-4cf6-9f0e-cb9682458f36",
+            "code": 7000002,
+            "name": "Current Assets",
+            "description": "Current Assets",
+            "type": "business1",
+            "parentUuid": "db5d6c60-b174-422b-82b5-663ed0bd8723",
+            "reportSortOrder": 32,
+            "showOnDashboard": "N",
+            "canDelete": "N"
+        },
+        {
+            "uuid": "e5d2ce48-2b77-4ed5-a20a-2ae5a431e676",
+            "code": 7000003,
+            "name": "Non-current Assets",
+            "description": "Non-current Assets",
+            "type": "business1",
+            "parentUuid": "db5d6c60-b174-422b-82b5-663ed0bd8723",
+            "reportSortOrder": 30,
+            "showOnDashboard": "N",
+            "canDelete": "N"
+        },
+        {
+            "uuid": "8923294d-022c-4ad9-a89f-de9c03965a8f",
+            "code": 7000004,
+            "name": "Bank",
+            "description": "Bank",
+            "type": "business1",
+            "parentUuid": "db5d6c60-b174-422b-82b5-663ed0bd8723",
+            "reportSortOrder": 33,
+            "showOnDashboard": "N",
+            "canDelete": "N"
+        },
+        {
+            "uuid": "2c28eefd-fbd7-4a89-9890-62062fd82aca",
+            "code": 8000001,
+            "name": "Current Liabilities",
+            "description": "Current Liabilities",
+            "type": "business1",
+            "parentUuid": "dcbf0554-8d0a-4706-b98d-9a67359b2abb",
+            "reportSortOrder": 34,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "103c107e-a28a-413b-b6ef-6470edb6044c",
+            "code": 8000002,
+            "name": "Non-current Liabilities",
+            "description": "Non-current Liabilities",
+            "type": "business1",
+            "parentUuid": "dcbf0554-8d0a-4706-b98d-9a67359b2abb",
+            "reportSortOrder": 35,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
+        },
+        {
+            "uuid": "52f0c071-b272-482d-a4bc-6d112e2a0b76",
+            "code": 9000001,
+            "name": "Equity and Reserves",
+            "description": "Equity and Reserves",
+            "type": "business1",
+            "parentUuid": "33ed413b-288b-4218-982c-7d3cd842f3ce",
+            "reportSortOrder": 36,
+            "showOnDashboard": "N",
+            "canDelete": "Y"
         }
     ]
 };

@@ -14,7 +14,7 @@ export async function initUser(uuid) {
     }
 }
 
-export async function createProfile(uuid, name, isBusiness, primary) {
+async function createProfile(uuid, name, isBusiness, primary) {
     const profile = {
         uuid: uuid,
         name: name,
@@ -28,7 +28,7 @@ export function createBusinessProfile(name, ownerUuid) {
     return function (dispatch) {
         const profileUuid = uuid();
         createProfile(profileUuid, name, true, false).then(() => {
-            generalLedgerAction.initGeneralLedger(ownerUuid, profileUuid).then(async () => {
+            generalLedgerAction.initBusinessGeneralLedger(ownerUuid, profileUuid).then(async () => {
                 const profiles = await new ProfileQueries().listByAccountType(true);
                 dispatch({type: 'LIST_BUSINESS_PROFILES', payload: profiles});
             });

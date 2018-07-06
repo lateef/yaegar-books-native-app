@@ -10,6 +10,7 @@ GeneralLedgers.schema = {
         code: 'int',
         total: {type: 'double', default: 0.00},
         name: 'string',
+        type: 'string',
         profile: 'Profile',
         description: 'string?',
         classifier: {type: 'string', optional: true},

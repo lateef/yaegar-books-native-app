@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Button, Dimensions, Platform, StyleSheet, View} from 'react-native';
+import {Button, Dimensions, StyleSheet, View} from 'react-native';
 import {bindActionCreators} from 'redux';
 
 import {

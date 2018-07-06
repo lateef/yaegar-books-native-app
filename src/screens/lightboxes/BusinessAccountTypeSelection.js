@@ -13,7 +13,7 @@ import {
 
 import {rootNavigator} from '../Dashboard';
 
-export class AccountTypeSelection extends React.Component {
+export class BusinessAccountTypeSelection extends React.Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -23,9 +23,11 @@ export class AccountTypeSelection extends React.Component {
     addAccount = (accountType) =>  {
         this.dismissLightBox();
         const pushObject = {
-            screen: 'AddAccountType',
+            screen: 'AddAccount',
             passProps: {
-                accountType: accountType
+                accountType: accountType,
+                generalLedgerName: 'Bank',
+                generalLedgerType: 'business1'
             }
         };
 
@@ -105,7 +107,7 @@ export class AccountTypeSelection extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountTypeSelection)
+export default connect(mapStateToProps, mapDispatchToProps)(BusinessAccountTypeSelection)
 
 function mapStateToProps(state, ownProps) {
     return {
