@@ -18,6 +18,7 @@ import {
     Button
 } from 'native-base';
 
+import * as appAction from "../actions/appActions";
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 import * as journalEntryAction from '../actions/journalEntryActions';
 import * as userAction from '../actions/userActions';
@@ -81,13 +82,9 @@ export class Dashboard extends React.Component {
         }
     }
 
-    displayProfile(profile, screen) {
-        this.props.navigator.push({
-            screen: screen,
-            passProps: {
-                profile: profile
-            }
-        });
+    startTabbedBasedProfile(tab, profile) {
+        this.props.userActions.updateProfile(profile);
+        this.props.appActions.onProfile(tab);
     }
 
     render() {
@@ -107,9 +104,9 @@ export class Dashboard extends React.Component {
                                             </ListItem>
                                             {this.props.user.personalProfiles.map((personalProfile, i) =>
                                                 <ListItem key={i} style={{alignItems: 'center'}}
-                                                          onPress={() => this.displayProfile(personalProfile, 'PersonalProfile')}>
+                                                          onPress={() => this.startTabbedBasedProfile('personalTab', personalProfile)}>
                                                     <Body>
-                                                        <Text>{personalProfile.name}</Text>
+                                                    <Text>{personalProfile.name}</Text>
                                                     </Body>
                                                     <Right>
                                                         <Icon name="arrow-forward"/>
@@ -125,7 +122,7 @@ export class Dashboard extends React.Component {
                                                 </ListItem>
                                                 {this.props.user.businessProfiles.map((businessProfile, i) =>
                                                     <ListItem key={i} style={{alignItems: 'center'}}
-                                                              onPress={() => this.displayProfile(businessProfile, 'BusinessProfile')}>
+                                                              onPress={() => this.startTabbedBasedProfile('businessTab', businessProfile)}>
                                                         <Body>
                                                         <Text>{businessProfile.name}</Text>
                                                         </Body>
@@ -166,6 +163,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        appActions: bindActionCreators(appAction, dispatch),
         generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch),
         journalEntryActions: bindActionCreators(journalEntryAction, dispatch),
         userActions: bindActionCreators(userAction, dispatch)

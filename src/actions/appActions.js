@@ -30,3 +30,9 @@ export function onPasscodeRequired() {
         dispatch(changeNavigation('passcode'));
     }
 }
+
+export function onProfile(tab) {
+    return function (dispatch) {
+        dispatch(changeNavigation(tab));
+    }
+}

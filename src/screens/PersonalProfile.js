@@ -19,6 +19,7 @@ import {
     Text
 } from 'native-base';
 
+import * as appAction from "../actions/appActions";
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 import * as journalEntryAction from '../actions/journalEntryActions';
 import * as userAction from '../actions/userActions';
@@ -28,7 +29,7 @@ import {iconsMap} from '../util/app-icons';
 
 export let rootNavigator = null;
 
-export class Profile extends React.Component {
+export class PersonalProfile extends React.Component {
     static navigatorStyle = {
         topBarElevationShadowEnabled: false,
         navBarTransparent: true,
@@ -38,6 +39,15 @@ export class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.props.navigator.setButtons({
+            leftButtons: [
+                {
+                    id: 'dashboard'
+                },
+                {
+                    icon: iconsMap['ios-grid'],
+                    id: 'menuIcon'
+                }
+            ],
             rightButtons: [
                 {
                     icon: iconsMap['ios-add'],
@@ -64,7 +74,9 @@ export class Profile extends React.Component {
     };
 
     onNavigatorEvent(event) {
-        if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
+        if ('NavBarButtonPress' === event.type && 'menuIcon' === event.id) {
+            this.props.appActions.onStart();
+        } else if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
             this.initDashboard().then(() => {
@@ -167,9 +179,7 @@ export class Profile extends React.Component {
     }
 
     componentWillMount() {
-        this.props.userActions.updateProfile(this.props.profile);
-        this.initDashboard().then(() => {
-        });
+        this.initDashboard().then(() => {});
     }
 
     async initDashboard() {
@@ -186,19 +196,21 @@ export class Profile extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalProfile)
 
 function mapStateToProps(state, ownProps) {
     return {
         generalLedger: state.generalLedgerReducer.generalLedger,
         generalLedgers: state.generalLedgerReducer.accounts,
         user: state.userReducer.user,
+        profile: state.userReducer.profile,
         error: state.generalLedgerReducer.error
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        appActions: bindActionCreators(appAction, dispatch),
         generalLedgerActions: bindActionCreators(generalLedgerAction, dispatch),
         journalEntryActions: bindActionCreators(journalEntryAction, dispatch),
         userActions: bindActionCreators(userAction, dispatch)

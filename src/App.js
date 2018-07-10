@@ -49,6 +49,28 @@ export default class App extends React.Component {
                         }
                     });
                     return;
+                case 'personalTab':
+                    Navigation.startTabBasedApp({
+                        tabs: [
+                            {
+                                label: 'Home',
+                                icon: iconsMap['ios-menu'],
+                                screen: 'PersonalProfile'
+                            }
+                        ]
+                    });
+                    return;
+                case 'businessTab':
+                    Navigation.startTabBasedApp({
+                        tabs: [
+                            {
+                                label: 'Home',
+                                icon: iconsMap['ios-menu'],
+                                screen: 'BusinessProfile'
+                            }
+                        ]
+                    });
+                    return;
                 default:
                     Navigation.startSingleScreenApp({
                         screen: {
