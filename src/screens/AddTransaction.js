@@ -187,9 +187,13 @@ export class AddTransaction extends Component {
         })[0];
 
         if ('Income' === this.props.transactionType) {
-            this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_CATEGORIES', [incomeRevenue.uuid, nonOperatingIncome.uuid]);
+            this.props.generalLedgerActions.listByParentUuidsAndType('LIST_GENERAL_LEDGERS_CATEGORIES',
+                this.props.account.type,
+                [incomeRevenue.uuid, nonOperatingIncome.uuid]);
         } else if ('Expense' === this.props.transactionType) {
-            this.props.generalLedgerActions.listByParentUuids('LIST_GENERAL_LEDGERS_CATEGORIES', [operatingExpenses.uuid, nonOperatingExpenses.uuid]);
+            this.props.generalLedgerActions.listByParentUuidsAndType('LIST_GENERAL_LEDGERS_CATEGORIES',
+                this.props.account.type,
+                [operatingExpenses.uuid, nonOperatingExpenses.uuid]);
         }
     }
 }

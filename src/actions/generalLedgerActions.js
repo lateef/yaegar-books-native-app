@@ -121,6 +121,16 @@ export function listByParentUuids(type, parentUuids) {
     }
 }
 
+export function listByParentUuidsAndType(type, generalLedgerType, parentUuids) {
+    return async function (dispatch) {
+        const chartOfAccounts = await new GeneralLedgerQueries().listByParentUuidAndType(generalLedgerType, parentUuids);
+        dispatch({
+            type: type,
+            payload: chartOfAccounts
+        });
+    }
+}
+
 export function listByProfileUuidAndParentUuid(type, profileUuid, parentUuids) {
     return async function (dispatch) {
         const chartOfAccounts = await new GeneralLedgerQueries().listByProfileUuidAndParentUuid(profileUuid, parentUuids);

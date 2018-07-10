@@ -76,7 +76,11 @@ export class Profile extends React.Component {
         this.props.navigator.push({
             screen: 'Account',
             passProps: {
-                account: generalLedger
+                account: {
+                    uuid: generalLedger.uuid,
+                    name: generalLedger.name,
+                    type: generalLedger.type
+                }
             }
         });
     }

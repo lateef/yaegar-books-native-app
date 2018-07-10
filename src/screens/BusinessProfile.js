@@ -67,8 +67,7 @@ export class BusinessProfile extends React.Component {
         if ('NavBarButtonPress' === event.type && 'addAccount' === event.id) {
             this.showLightBox();
         } else if (event.type === 'ScreenChangedEvent' && event.id === 'willAppear') {
-            this.initDashboard().then(() => {
-            });
+            this.initDashboard().then(() => {});
         }
     }
 
@@ -76,7 +75,11 @@ export class BusinessProfile extends React.Component {
         this.props.navigator.push({
             screen: 'Account',
             passProps: {
-                account: generalLedger
+                account: {
+                    uuid: generalLedger.uuid,
+                    name: generalLedger.name,
+                    type: generalLedger.type
+                }
             }
         });
     }
@@ -164,8 +167,7 @@ export class BusinessProfile extends React.Component {
 
     componentWillMount() {
         this.props.userActions.updateProfile(this.props.profile);
-        this.initDashboard().then(() => {
-        });
+        this.initDashboard().then(() => {});
     }
 
     async initDashboard() {

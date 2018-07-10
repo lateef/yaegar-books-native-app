@@ -80,13 +80,26 @@ export default class GeneralLedgerQueries {
         });
     }
 
+    listByParentUuidAndType(generalLedgerType, parentUuids) {
+        return Realm.open({
+            schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
+        }).then(realm => {
+            return realm.objects('GeneralLedgers')
+                .filtered('(' + parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR ')
+                    + ') AND type == "' + generalLedgerType + '"')
+                .map(x => Object.assign({}, x));
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+
     listByProfileUuidAndParentUuid(profileUuid, parentUuids) {
         return Realm.open({
             schema: [Profile, GeneralLedgers, Transactions], deleteRealmIfMigrationNeeded: true
         }).then(realm => {
             return realm.objects('GeneralLedgers')
-                .filtered(parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR ')
-                    + ' AND profile.uuid == "' + profileUuid + '"')
+                .filtered('(' + parentUuids.map((parentUuid) => 'parentUuid == "' + parentUuid + '"').join(' OR ')
+                    + ') AND profile.uuid == "' + profileUuid + '"')
                 .map(x => Object.assign({}, x));
         }).catch(error => {
             console.error(error);

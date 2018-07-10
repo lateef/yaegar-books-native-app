@@ -76,7 +76,7 @@ export class Account extends Component {
                     <Body>
                     <Title>{this.props.account.name}</Title>
                     </Body>
-                    <Right />
+                    <Right/>
                 </Header>
                 <Grid>
                     <Row>
