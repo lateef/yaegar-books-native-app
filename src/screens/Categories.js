@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Dimensions, Platform, ScrollView, StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 
 import {
@@ -21,6 +21,9 @@ import {
 
 import * as generalLedgerAction from '../actions/generalLedgerActions';
 import DATA from "../baseChartOfAccounts";
+import {iconsMap} from "../util/app-icons";
+
+export let rootNavigator = null;
 
 export class Categories extends Component {
     static navigatorStyle = {
@@ -28,6 +31,26 @@ export class Categories extends Component {
         navBarTransparent: true,
         screenBackgroundColor: 'white'
     };
+
+    constructor(props) {
+        super(props);
+        this.props.navigator.setButtons({
+            rightButtons: [
+                {
+                    icon: iconsMap['ios-add'],
+                    id: 'addCategory'
+                }
+            ]
+        });
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        rootNavigator = this.props.navigator;
+    }
+
+    onNavigatorEvent(event) {
+        if ('NavBarButtonPress' === event.type && 'addCategory' === event.id) {
+            console.log('Hello');
+        }
+    }
 
     render() {
         return (
