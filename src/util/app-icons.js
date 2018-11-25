@@ -5,11 +5,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const navIconSize = (__DEV__ === false && Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(40) : 40; // eslint-disable-line
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
-    'ios-menu': [40],
-    'ios-add' : [40],
+    'ios-menu': [30],
+    'ios-home': [30],
+    'ios-notifications': [30],
+    'ios-arrow-round-back': [30],
+    'ios-log-in': [30],
+    'ios-person-add' : [30],
+    'ios-business' : [30],
+    'ios-add' : [30],
     'ios-search': [30],
     'ios-arrow-round-down': [navIconSize],
-    'ios-close': [40]
+    'ios-close': [30]
 };
 
 const iconsMap = {};

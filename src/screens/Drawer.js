@@ -1,160 +1,166 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Platform, StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {Button, Container, Content, Text, Header, List, ListItem, Left, Body, Right, Icon, View} from 'native-base';
 
-import {rootNavigator} from './Dashboard';
-import {Subscription} from "./Subscription";
+import * as userAction from '../actions/userActions';
+import {goToAddBank, goToAddProduct, goToAuth, toggleDrawer} from "../App";
 
 export class Drawer extends Component {
-    static navigatorStyle = {
-        topBarElevationShadowEnabled: false,
-        navBarTransparent: true,
-        screenBackgroundColor: 'white'
-    };
-
     constructor(props) {
         super(props);
     }
 
-    toggleDrawer = () => {
-        this.props.navigator.toggleDrawer({
-            side: 'left',
-            animated: true,
-            to: 'close'
-        });
+    handleSignUp = () => {
+        toggleDrawer();
+        goToAuth('signUpId');
     };
 
-    handleSignUp() {
-        this.toggleDrawer();
-        if (Platform.OS === 'android') {
-            this.props.navigator.push({
-                screen: 'SignUp'
-            });
-        }
-        if (Platform.OS === 'ios') {
-            rootNavigator.push({
-                screen: 'SignUp'
-            });
-        }
-    }
-
-    handlePayment() {
-        this.toggleDrawer();
-        if (Platform.OS === 'android') {
-            this.props.navigator.push({
-                screen: 'Subscription'
-            });
-        }
-        if (Platform.OS === 'ios') {
-            rootNavigator.push({
-                screen: 'Subscription'
-            });
-        }
-    }
-
-    handleSettings = () => {
-        this.toggleDrawer();
-        if (Platform.OS === 'android') {
-            this.props.navigator.push({
-                screen: 'Settings'
-            });
-        }
-        if (Platform.OS === 'ios') {
-            rootNavigator.push({
-                screen: 'Settings'
-            });
-        }
+    handleSignIn = () => {
+        toggleDrawer();
+        goToAuth('signInId');
     };
 
-    handleCategories = () => {
-        this.toggleDrawer();
-        if (Platform.OS === 'android') {
-            this.props.navigator.push({
-                screen: 'Categories'
-            });
-        }
-        if (Platform.OS === 'ios') {
-            rootNavigator.push({
-                screen: 'Categories'
-            });
-        }
+    handleAddBankAccount = () => {
+        goToAddBank();
     };
 
-    // handleLogout = async () => {
-    //     await this.props.userActions.logout();
-    //     this.toggleDrawer();
-    //     this.navigateToLandingPage();
-    // };
-    //
-    // navigateToLandingPage = () => {
-    //     this.props.navigator.handleDeepLink({
-    //         link: 'Landing'
-    //     });
-    // };
+    handleAddProduct = () => {
+        goToAddProduct();
+    };
+
+    handlePayment = () => {
+        toggleDrawer();
+    };
+
+    handleLogout = async () => {
+        toggleDrawer();
+        await this.props.userActions.logout();
+        goToAuth('signInId');
+    };
+
+    reset = () => {
+        toggleDrawer();
+        Alert.alert('Reset Account', 'This will delete data on phone only',
+            [{
+                text: 'OK', onPress: () => {
+                    this.props.userActions.reset();
+                    goToAuth('signUpId');
+                }
+            },
+                {
+                    text: 'Cancel', onPress: () => {}
+                }
+            ]
+        );
+    };
 
     render() {
         return (
             <Container>
-                <Header>
+                <Header androidStatusBarColor="#161616" iosBarStyle="light-content" style={{backgroundColor: '#161616', justifyContent: 'center', padding: 10}}>
                     <Left style={{flex: 1}}>
-                        <Icon name="ios-contact" style={{fontSize: 36}}/>
+                        <Icon name="ios-contact" style={{
+                            fontSize: 36,
+                            color: 'white'
+                        }}/>
                     </Left>
-                    <Body style={{flex: 4}}>
+                    <Body style={{flex: 1}}>
                     </Body>
-                    <Right style={{flex: 4}}>
+                    <Right style={{flex: 6}}>
                         <Button transparent>
-                            {this.props.user.registered ? <View/> :
-                                <Text style={{color: 'black'}} onPress={() => {this.handleSignUp()}}>
-                                    Sign Up
-                                </Text>}
+
                         </Button>
                     </Right>
                 </Header>
                 <Content contentContainerStyle={{flex: 1, backgroundColor: '#fff'}}>
                     <List>
-                        {this.props.user.registered ? <View/> : <View>
-                            <ListItem itemDivider>
-                                <Text/>
-                            </ListItem>
-                            <ListItem id="signUp" icon button onPress={() => {this.handleSignUp()}}>
-                                <Left>
-                                    <Icon name="ios-person-add" style={{fontSize: 36}}/>
-                                </Left>
-                                <Body>
-                                <Text>Sign Up</Text>
-                                </Body>
-                                <Right>
-                                    <Icon name="arrow-forward"/>
-                                </Right>
-                            </ListItem>
-                        </View>}
-                        {this.props.user.registered ? <View>
-                            <ListItem itemDivider>
-                                <Text/>
-                            </ListItem>
-                            <ListItem id="signUp" icon button onPress={() => {this.handlePayment()}}>
-                                <Left>
-                                    <Icon  type="FontAwesome" name="credit-card" style={{fontSize: 20}}/>
-                                </Left>
-                                <Body>
-                                <Text>Subscription</Text>
-                                </Body>
-                                <Right>
-                                    <Icon name="arrow-forward"/>
-                                </Right>
-                            </ListItem>
-                        </View> : <View/>}
+                        {!this.props.user.isLoggedIn ?
+                            <View>
+                                <ListItem itemDivider>
+                                    <Text/>
+                                </ListItem>
+                                <ListItem id="signUp" icon button onPress={() => {
+                                    this.handleSignUp()
+                                }}>
+                                    <Left>
+                                        <Icon name="ios-person-add" testID="signUpButton" style={{fontSize: 30}}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>Sign Up</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon name="arrow-forward"/>
+                                    </Right>
+                                </ListItem>
+                                <ListItem itemDivider>
+                                    <Text/>
+                                </ListItem>
+                                <ListItem id="signIn" icon button onPress={() => {
+                                    this.handleSignIn()
+                                }}>
+                                    <Left>
+                                        <Icon name="ios-log-in" testID="signInButton" style={{fontSize: 30}}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>Log In</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon name="arrow-forward"/>
+                                    </Right>
+                                </ListItem>
+                            </View>
+                            :
+                            <Text/>}
+                        {this.props.user.isLoggedIn ?
+                            <View>
+                                <ListItem itemDivider>
+                                    <Text/>
+                                </ListItem>
+                                <ListItem id="payment" icon button onPress={() => {
+                                    this.handlePayment()
+                                }}>
+                                    <Left>
+                                        <Icon name="ios-card" style={{fontSize: 28}}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>Payment</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon name="arrow-forward"/>
+                                    </Right>
+                                </ListItem>
+                                <ListItem itemDivider>
+                                    <Text/>
+                                </ListItem>
+                                <ListItem id="logout" icon button onPress={() => {
+                                    this.handleLogout()
+                                }}>
+                                    <Left>
+                                        <Icon name="ios-log-out" style={{fontSize: 28}}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>Logout</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon name="arrow-forward"/>
+                                    </Right>
+                                </ListItem>
+                            </View>
+                            :
+                            <Text/>}
                         <ListItem itemDivider>
                             <Text/>
                         </ListItem>
-                        <ListItem id="categories" icon button onPress={() => {this.handleCategories()}}>
+                        <ListItem id="reset" icon button onPress={() => {
+                            this.reset()
+                        }}>
                             <Left>
-                                <Icon type="FontAwesome" name='object-group' style={{fontSize: 20}}/>
+                                <Icon name="ios-alert" style={{fontSize: 28}}/>
                             </Left>
                             <Body>
-                            <Text>Categories</Text>
+                            <Text>Reset</Text>
                             </Body>
                             <Right>
                                 <Icon name="arrow-forward"/>
@@ -163,34 +169,6 @@ export class Drawer extends Component {
                         <ListItem itemDivider>
                             <Text/>
                         </ListItem>
-                        <ListItem id="settings" icon button onPress={() => {this.handleSettings()}}>
-                            <Left>
-                                <Icon ios="ios-cog" android="md-cog"/>
-                            </Left>
-                            <Body>
-                            <Text>Settings</Text>
-                            </Body>
-                            <Right>
-                                <Icon name="arrow-forward"/>
-                            </Right>
-                        </ListItem>
-                        <ListItem itemDivider>
-                            <Text/>
-                        </ListItem>
-                        {/*<ListItem id="signOut"*/}
-                        {/*icon button onPress={() => {*/}
-                        {/*this.handleLogout()*/}
-                        {/*}}>*/}
-                        {/*<Left>*/}
-                        {/*<Icon ios="ios-log-out" android="md-log-out"/>*/}
-                        {/*</Left>*/}
-                        {/*<Body>*/}
-                        {/*<Text>Sign Out</Text>*/}
-                        {/*</Body>*/}
-                        {/*<Right>*/}
-                        {/*<Icon name="arrow-forward"/>*/}
-                        {/*</Right>*/}
-                        {/*</ListItem>*/}
                     </List>
                 </Content>
             </Container>
@@ -203,11 +181,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(Drawer)
 function mapStateToProps(state, ownProps) {
     return {
         user: state.userReducer.user,
+        error: state.userReducer.user.error
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        userActions: bindActionCreators(userAction, dispatch)
+    };
 }
 
 const styles = StyleSheet.create({

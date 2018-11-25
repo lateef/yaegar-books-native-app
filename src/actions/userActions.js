@@ -1,111 +1,29 @@
-import SInfo from 'react-native-sensitive-info';
 import validator from 'validator';
-import ProfileQueries from "../models/queries/ProfileQueries";
 import uuid from "uuid/v4";
-import * as generalLedgerAction from "./generalLedgerActions";
 
-const options = {sharedPreferencesName: 'mySharedPrefs', keychainService: 'myKeychain'};
+import axios from '../../axios';
+import DeviceStorage from '../storage/DeviceStorage';
 
-export async function initUser(uuid) {
-    const profiles = await new ProfileQueries().list();
-
-    if (profiles.length === 0) {
-        createProfile(uuid, 'My Personal Account', false, true).then(() => {})
-    }
-}
-
-async function createProfile(uuid, name, isBusiness, primary) {
-    const profile = {
-        uuid: uuid,
-        name: name,
-        isBusiness: isBusiness,
-        primary: primary,
-    };
-    await saveProfile(profile, false);
-}
-
-export function createBusinessProfile(name, ownerUuid) {
+export function reset() {
     return function (dispatch) {
-        const profileUuid = uuid();
-        createProfile(profileUuid, name, true, false).then(() => {
-            generalLedgerAction.initBusinessGeneralLedger(ownerUuid, profileUuid).then(async () => {
-                const profiles = await new ProfileQueries().listByAccountType(true);
-                dispatch({type: 'LIST_BUSINESS_PROFILES', payload: profiles});
-            });
-        });
-    }
-}
-
-export function updateProfile(profile) {
-    return function (dispatch) {
-        dispatch({type: 'UPDATE_PROFILE', payload: profile});
-    }
-}
-
-export function save(profile, update) {
-    return async function (dispatch) {
-        await saveProfile(profile, update);
-        dispatch({type: 'GET_USER', payload: profile});
-    }
-}
-
-export function findByUuid(uuid) {//return primary user if no argument is passed
-    return async function (dispatch) {
-        let profile = null;
-        if (uuid) {
-            profile = await new ProfileQueries().findByUuid(uuid);
-        } else {
-            const profiles = await new ProfileQueries().list();
-            profile = profiles.filter(profile => profile.primary === true)[0];
-        }
+        new DeviceStorage().removeItem('user_type');
+        new DeviceStorage().removeItem('id_token');
         dispatch({
-            type: 'GET_USER',
-            payload: profile
+            type: 'USER_RESET'
         });
-    }
-}
-
-export function updatePassCode(passCode, save) {
-    if (passCode !== null) {
-        if (Number.isNaN(passCode) || passCode.toString().length !== 4) {
-            return
-        }
-    }
-
-    if (save) {
-        if (passCode) {
-            SInfo.setItem('passCode', passCode, options);
-            return function (dispatch) {
-                dispatch({type: 'UPDATE_PASSCODE', payload: null});
-                dispatch({type: 'UPDATE_PASSCODE_MATCH', payload: true});
-            }
-        } else {
-            SInfo.deleteItem('passCode', options);
-            return function (dispatch) {
-                dispatch({type: 'UPDATE_PASSCODE', payload: null});
-                dispatch({type: 'UPDATE_PASSCODE_MATCH', payload: false});
-            }
-        }
-    }
-    return function (dispatch) {
-        dispatch({type: 'UPDATE_PASSCODE', payload: passCode});
-    }
-}
-
-export function grantAccess(passCode) {
-    return async function (dispatch) {
-        return await SInfo.getItem('passCode', options)
-            .then((value) => {
-                if (value === passCode) {
-                    dispatch({type: 'UPDATE_ACCESS_GRANTED', payload: true});
-                } else {
-                    dispatch({type: 'UPDATE_ACCESS_GRANTED', payload: false});
-                }
-            });
+        dispatch({
+            type: 'COMPANY_RESET'
+        });
+        dispatch({
+            type: 'LEDGER_RESET'
+        });
     }
 }
 
 export function updatePhone(phone) {
+    if (!phone.uuid) {
+        phone.uuid = uuid();
+    }
     return function (dispatch) {
         dispatch({type: 'UPDATE_PHONE', payload: phone});
     }
@@ -117,52 +35,128 @@ export function setPassword(password) {
     }
 }
 
-export function setPasswordAgain(password) {
-    return function (dispatch) {
-        dispatch({type: 'SET_PASSWORD_AGAIN', payload: password});
-    }
-}
-
-export function validatePassword(password1, password2) {
+export function validatePassword(password) {
     return function (dispatch) {
 
-        if (passesPasswordTest(password1) || passesPasswordTest(password2)) {
-            dispatch({type: 'SET_PASSWORD', payload: password1});
-            if (password2.length > 0) {
-                confirmPassword(password1, password2, dispatch);
-            }
+        if (!password) {
+            dispatch({type: 'PASSWORD_VALID', payload: undefined});
+        } else if (passesPasswordTest(password)) {
+            dispatch({type: 'PASSWORD_VALID', payload: true});
         } else {
-            dispatch({type: 'PASSWORD_NOT_VALID', payload: password1});
+            dispatch({type: 'PASSWORD_NOT_VALID', payload: false});
         }
     }
 }
 
-export function completeRegistration(smsCode) {
-    return async function (smsCode) {
-        return true;
+export function updateUserWarning(warning) {
+    return function (dispatch) {
+        dispatch({type: 'USER_WARNING', payload: warning});
     }
 }
 
-export function listProfiles(dispatchType, isBusiness) {
+export function setSmsCode(smsCode) {
+    return function (dispatch) {
+        dispatch({type: 'SET_SMS_CODE', payload: smsCode});
+    }
+}
+
+export function createUnregisteredUser() {
     return async function (dispatch) {
-        const profiles = await new ProfileQueries().listByAccountType(isBusiness);
-        dispatch({type: dispatchType, payload: profiles});
+        await new DeviceStorage().saveItem('user_type', 'unregisteredUser');
+        dispatch({type: 'UPDATE_USER', payload: {uuid: uuid()}});
     }
 }
 
-function confirmPassword(password1, password2, dispatch) {
-    if (!passesPasswordTest(password2)) {
-        return;
-    }
-    if (!validator.equals(password1, password2)) {
-        dispatch({type: 'PASSWORD_NOT_MATCHED', payload: password2});
-    } else {
-        dispatch({type: 'PASSWORD_MATCHED', payload: password1});
+export function register(user) {
+    return async function (dispatch) {
+        if (!user.uuid) {
+            user.uuid = uuid();
+        }
+        user.userId = null;
+        user.phoneNumber = user.phones[0].number;
+        return axios.post('/register', user)
+            .then(response => {
+                let responseUser = response.data;
+                if (responseUser) {
+                    responseUser.authorities = [];
+                    dispatch({type: 'UPDATE_USER', payload: responseUser});
+                } else {
+                    dispatch({type: 'USER_WARNING', payload: "Failed to register user"});
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: 'USER_WARNING', payload: "Failed to register user"});
+            });
     }
 }
 
-function saveProfile(profile, update) {
-    new ProfileQueries().save(profile, update);
+export function confirmUser(user) {
+    return async function (dispatch) {
+        let userConfirmation = {
+            "code": user.smsCode,
+            "user": user
+        };
+
+        return axios.post('/confirm-user', userConfirmation)
+            .then(response => {
+                let responseUser = response.data.user;
+                if (response.data.confirmed) {
+                    responseUser.authorities = [];
+                    responseUser.isLoggedIn = true;
+                    new DeviceStorage().saveItem('id_token', response.headers.access_token);
+                    new DeviceStorage().saveItem('user_type', 'registeredUser');
+                    dispatch({type: 'UPDATE_USER', payload: responseUser});
+                } else {
+                    dispatch({type: 'USER_WARNING', payload: "Failed to confirm user"});
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: 'USER_WARNING', payload: "Failed to confirm user"});
+            });
+    }
+}
+
+export function login(user) {
+    return async function (dispatch) {
+        user.phoneNumber = user.phones[0].number;
+        return axios.post('/log-in', user)
+            .then(response => {
+                let responseUser = response.data;
+                if (responseUser) {
+                    responseUser.authorities = [];
+                    responseUser.isLoggedIn = true;
+                    const jwt = JSON.parse(response.headers.access_token);
+                    new DeviceStorage().saveItem('id_token', response.headers.access_token);
+                    new DeviceStorage().saveItem('user_type', 'registeredUser');
+                    dispatch({type: 'UPDATE_USER', payload: responseUser});
+                } else {
+                    dispatch({type: 'USER_WARNING', payload: "Failed to log in user"});
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: 'USER_WARNING', payload: "Failed to log in user"});
+            });
+    }
+}
+
+export function isLoggedIn() {
+    return function (dispatch) {
+        new DeviceStorage().getItem('id_token')
+            .then(user => {
+                dispatch({type: 'UPDATE_USER_LOGIN_STATE', payload: !!(user)});
+            });
+    };
+}
+
+export function logout() {
+    return async function (dispatch) {
+        new DeviceStorage().saveItem('user_type', 'registeredUser');
+        new DeviceStorage().removeItem('id_token');
+        dispatch({type: 'LOGOUT_USER', payload: {isLoggedIn: false}});
+    }
 }
 
 function passesPasswordTest(password) {

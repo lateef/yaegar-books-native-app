@@ -1,33 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {Navigation} from "react-native-navigation";
+import {Text, StyleSheet, Alert} from 'react-native';
 import {connect} from 'react-redux';
-import {Dimensions, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
+import {
+    Container, Header, Content, Button, Item, Label, Input, Card, CardItem, Body, Grid, Row, Col, Left, Right
+} from 'native-base';
 import PhoneInput from 'react-native-phone-input';
 
-import {
-    Container,
-    Content,
-    Text,
-    Grid,
-    Input,
-    Item,
-    Row,
-    Col,
-    Body,
-    Form,
-    Title,
-    Label,
-    Button
-} from 'native-base';
+import * as userAction from "../actions/userActions";
+import {goToHome} from "../App";
 
-import * as userAction from '../actions/userActions';
-
-export class SignUp extends Component {
-    static navigatorStyle = {
-        topBarElevationShadowEnabled: false,
-        navBarTransparent: true,
-        screenBackgroundColor: 'white'
-    };
+export class SignUp extends React.Component {
+    constructor(props) {
+        super(props);
+        Navigation.events().bindComponent(this);
+    }
 
     onChangePhoneNumber() {
         if (this.phone.isValidNumber()) {
@@ -35,129 +23,161 @@ export class SignUp extends Component {
                 code: this.phone.getCountryCode(),
                 number: this.phone.getValue(),
                 countryCode: this.phone.getCountryCode(),
-                isoCode: this.phone.getISOCode()
+                isoCode: this.phone.getISOCode(),
+                notValid: false
             })
+        } else {
+            this.props.userActions.updatePhone({notValid: true})
         }
     }
 
     onChangePassword = (password) => {
         this.props.userActions.setPassword(password);
-        this.props.userActions.validatePassword(password, this.props.user.passwordAgain);
+        this.props.userActions.validatePassword(password);
     };
 
-    onChangePasswordAgain = (passwordAgain) => {
-        this.props.userActions.setPasswordAgain(passwordAgain);
-        this.props.userActions.validatePassword(this.props.user.password, passwordAgain);
-    };
+    async signUp() {
+        await this.props.userActions.register(this.props.user);
+        if (!this.props.user.error) {
+            Navigation.push(this.props.componentId, {
+                component: {
+                    name: 'SignUpComplete'
+                }
+            });
+        }
+    }
 
-    register = () => {
-        this.props.navigator.push({
-            screen: 'SignUpComplete'
-        });
-    };
+    createUnregisteredUser() {
+        this.props.userActions.createUnregisteredUser();
+        goToHome();
+    }
+
+    goToSmsCode() {
+        if (this.props.user.phones[0].number) {
+            Navigation.push(this.props.componentId, {
+                component: {
+                    name: 'SignUpComplete'
+                }
+            });
+        } else {
+            Alert.alert('Phone number needed', 'Enter the phone number of the sms code you want to enter',
+                [{
+                    text: 'OK', onPress: () => {
+                    }
+                }]
+            );
+        }
+    }
 
     render() {
         return (
             <Container>
-                <Content padder>
-                    <Grid>
-                        <Row>
-                            <Form style={styles.container}>
-                                <Row size={1}>
-                                    <Body>
-                                    <Title style={{fontSize: 30, color: 'black'}}>Sign Up</Title>
-                                    </Body>
-                                </Row>
-                                <Row size={1}>
-                                    <Body>
-                                    <Text style={{color: 'grey', fontSize: 14}}>
-                                        Enter your phone number with country code
-                                    </Text>
-                                    </Body>
-                                </Row>
-                                <Row size={2}>
-                                    <Col>
-                                        <Label>Phone Number</Label>
+                <Header androidStatusBarColor="#161616" iosBarStyle="light-content" style={{backgroundColor: '#161616', justifyContent: 'center', padding: 10}}>
+                    <Text style={styles.h1}>SIGN UP</Text>
+                </Header>
+                <Grid style={{justifyContent: 'center', padding: 10}}>
+                    <Content>
+                        <Row size={1}>
+                            <Text/>
+                        </Row>
+                        <Row size={2}>
+                            <Col>
+                                <Card>
+                                    <CardItem header bordered>
+                                        <Text style={styles.textCentered}>Enter your phone number with the country code</Text>
+                                    </CardItem>
+                                    <CardItem/>
+                                    <CardItem>
+                                        <Body>
+                                        <Label style={styles.text}>PHONE NUMBER</Label>
+                                        <Text/>
+                                        <Text/>
                                         <PhoneInput ref={ref => {this.phone = ref;}}
+                                                    textStyle={{fontSize: 18,}}
                                                     initialCountry={'none'}
                                                     allowZeroAfterCountryCode={false}
                                                     textProps={{placeholder: '+123 Enter your phone number'}}
                                                     onChangePhoneNumber={() => this.onChangePhoneNumber()}/>
-                                    </Col>
-                                </Row>
-                                <Row size={1}>
-                                    <Body style={{flexDirection: 'row'}}>
-                                    <Text style={{color: 'grey', fontSize: 14, flexWrap: 'wrap', textAlign: 'center'}}>
-                                        Minimum 6 characters, and must contain at least 1 lowercase, 1 uppercase and
-                                        1 number
-                                    </Text>
-                                    </Body>
-                                </Row>
-                                <Row size={2}>
-                                    <Col>
+                                        </Body>
+                                    </CardItem>
+                                    <CardItem>
+                                        {this.props.user.phones.length > 0 && this.props.user.phones[0].notValid ?
+                                            <Text style={{flex: 1, fontSize: 16, textAlign: 'center', color: 'red'}}>
+                                                Invalid phone number
+                                            </Text> : <Text/>}
+                                        {this.props.user.error ?
+                                            <Text style={{flex: 1, fontSize: 16, textAlign: 'center', color: 'red'}}>
+                                                Registration failed, perhaps number exists
+                                            </Text> : <Text/>}
+                                    </CardItem>
+                                    <CardItem>
+                                        <Body>
+                                        <Label style={styles.text}>PASSWORD</Label>
                                         <Item floatingLabel>
-                                            <Label>Password</Label>
+                                            <Label style={{color: '#9fced0', fontSize: 18}}>Create a new
+                                                password</Label>
+                                            <Text/>
+                                            <Text/>
                                             <Input id="passwordInput"
+                                                   testID="passwordInput"
                                                    secureTextEntry={true}
-                                                   value={this.props.user.password}
                                                    onChangeText={(password) => this.onChangePassword(password)}/>
                                         </Item>
-                                    </Col>
-                                </Row>
-                                <Row size={2}>
-                                    <Col>
-                                        <Item floatingLabel>
-                                            <Label>Password Again</Label>
-                                            <Input id="passwordAgainInput"
-                                                   secureTextEntry={true}
-                                                   value={this.props.user.passwordAgain}
-                                                   onChangeText={(password) => this.onChangePasswordAgain(password)}/>
-                                        </Item>
-                                    </Col>
-                                </Row>
-                                <Row size={2}>
-                                    <Col>
-                                        <Body size={1}>
-                                        {1 > 0 ?
-                                            <Button id="signUpButton"
-                                                    disabled={
-                                                        this.props.error !== null ||
-                                                        !this.props.user.passwordMatched ||
-                                                        !this.props.user.phones[0].number}
-                                                    rounded
-                                                    onPress={() => this.register()}>
-                                                <Text>Register</Text>
-                                            </Button> : <Text/>}
                                         </Body>
-                                    </Col>
-                                </Row>
-                                <Row size={1}>
-                                    <Col style={styles.container}>
-                                        <Row size={1}>
-                                            {this.props.error ?
-                                                <Label style={{color: 'red'}}>{this.props.error}</Label> : <Text/>}
-                                        </Row>
-                                    </Col>
-                                </Row>
-                                <Row size={4}>
-                                </Row>
-                            </Form>
+                                    </CardItem>
+                                    <CardItem>
+                                        {this.props.user.passwordValid === undefined || this.props.user.passwordValid ?
+                                            <Text/> :
+                                            <Text style={{fontSize: 16, textAlign: 'center', color: 'red'}}>
+                                                Minimum 6 characters, and must contain at least 1 lowercase, 1 uppercase
+                                                and
+                                                1 number
+                                            </Text>}
+                                    </CardItem>
+                                    <CardItem footer style={{justifyContent: 'center'}}>
+                                        <Body>
+                                            <Button id="signUpButton" full dark
+                                                    disabled={
+                                                        this.props.user.phones.length === 0 ||
+                                                        !this.props.user.phones[0].number ||
+                                                        !this.props.user.passwordValid
+                                                    }
+                                                    onPress={() => this.signUp()}>
+                                                <Text style={{fontSize: 18, color: '#9fced0'}}>SIGN UP</Text>
+                                            </Button>
+                                        </Body>
+                                    </CardItem>
+                                    <CardItem>
+                                        <Left>
+                                            <Text style={{fontSize: 16, textAlign: 'center', color: 'blue'}}
+                                                  onPress={() => {this.createUnregisteredUser()}}>
+                                                Register later
+                                            </Text>
+                                        </Left>
+                                        <Right>
+                                            <Text style={{fontSize: 16, textAlign: 'center', color: 'blue'}}
+                                                  onPress={() => {this.goToSmsCode()}}>
+                                                Enter sms code
+                                            </Text>
+                                        </Right>
+                                    </CardItem>
+                                </Card>
+                            </Col>
                         </Row>
-                    </Grid>
-                </Content>
+                    </Content>
+                </Grid>
             </Container>
-        )
+        );
     }
 
-    componentWillMount() {
-        this.props.userActions.updatePhone({});
-        this.props.userActions.setPassword("");
-        this.props.userActions.setPasswordAgain("");
+    componentDidAppear() {
+        this.props.userActions.updatePhone({notValid: false});
+        this.props.userActions.setPassword(undefined);
+        this.props.userActions.validatePassword(undefined);
     }
 
-    componentWillUnmount() {
-        this.props.userActions.setPassword("");
-        this.props.userActions.setPasswordAgain("");
+    componentDidDisappear() {
+        this.props.userActions.updateUserWarning('');
     }
 }
 
@@ -166,7 +186,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
 function mapStateToProps(state, ownProps) {
     return {
         user: state.userReducer.user,
-        error: state.userReducer.error
     };
 }
 
@@ -179,8 +198,25 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: Dimensions.get('window').height,
-        backgroundColor: '#fff',
-        justifyContent: 'center'
+        backgroundColor: '#161616',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10
     },
+    h1: {
+        flex: 1,
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 30
+    },
+    text: {
+        textAlign: 'left',
+        color: '#161616',
+        fontSize: 18
+    },
+    textCentered: {
+        textAlign: 'center',
+        color: '#161616',
+        fontSize: 18
+    }
 });
