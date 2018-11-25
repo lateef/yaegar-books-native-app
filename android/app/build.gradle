@@ -101,6 +101,10 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
     defaultConfig {
         applicationId "com.yaegarbooksnativeapp"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -128,6 +132,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            crunchPngs false
         }
     }
     // applicationVariants are e.g. debug, release
@@ -143,9 +148,6 @@ android {
             }
         }
     }
-
-    aaptOptions.cruncherEnabled = false
-    aaptOptions.useNewCruncher = false
 }
 
 configurations.all {
