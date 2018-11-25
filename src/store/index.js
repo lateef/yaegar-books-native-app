@@ -1,17 +1,19 @@
 import {applyMiddleware, createStore, compose} from 'redux';
 import {persistCombineReducers} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
+import { offline } from '@redux-offline/redux-offline';
+import config from '@redux-offline/redux-offline/lib/defaults';
+import FSStorage from 'redux-persist-fs-storage';
 
 import reducers from '../reducers';
 
 const persistConfig = {
     key: 'root',
-    storage,
-    whitelist: ['userReducer'],
+    storage: FSStorage(),
+    whitelist: ['userReducer', 'companyReducer', 'supplierReducer'],
     stateReconciler: autoMergeLevel2
 };
 
@@ -24,3 +26,4 @@ if (__DEV__) {
 }
 
 export default createStore(combinedReducer, compose(applyMiddleware(...middleware)));
+// export default createStore(combinedReducer, compose(applyMiddleware(...middleware), offline(config)));

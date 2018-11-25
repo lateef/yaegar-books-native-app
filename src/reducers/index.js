@@ -1,8 +1,11 @@
-import appReducer from './appReducer';
-import generalLedgerReducer from './generalLedgerReducer';
-import journalEntryReducer from './journalEntryReducer';
+import companyReducer from './companyReducer';
+import ledgerReducer from './ledgerReducer';
+import productReducer from './productReducer';
+import purchaseOrderReducer from './purchaseOrderReducer';
+import supplierReducer from './supplierReducer';
+import transactionReducer from './transactionReducer';
 import userReducer from './userReducer';
 
 export default ({
-    appReducer, generalLedgerReducer, journalEntryReducer, userReducer
+    companyReducer, ledgerReducer, productReducer, purchaseOrderReducer, supplierReducer, transactionReducer, userReducer
 })

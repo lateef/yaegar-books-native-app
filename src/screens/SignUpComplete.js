@@ -1,96 +1,93 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Alert, Dimensions, StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 
 import {
-    Container,
-    Content,
-    Text,
-    Grid,
-    Row,
-    Col,
-    Button,
-    Item,
-    Label,
-    Input
+    Container, Header, Content, Card, CardItem, Text, Grid, Row, Col, Button, Item, Label, Input, Body
 } from 'native-base';
 import {bindActionCreators} from "redux";
 import * as userAction from "../actions/userActions";
+import {goToHome} from "../App";
 
 export class SignUpComplete extends Component {
-    static navigatorStyle = {
-        topBarElevationShadowEnabled: false,
-        navBarTransparent: true,
-        screenBackgroundColor: 'white'
+    onChangeSmsCode = (code) => {
+        this.props.userActions.setSmsCode(code)
     };
 
-    smsCode = "";
-
-    onChangeSmsCode = () => {
-        console.log(this.smsCode)
-    };
-
-    handlePress = (smsCode) => {
-        this.props.userActions.completeRegistration(smsCode).then(successful => {
-            if (successful) {
-                this.props.userActions.save({uuid: this.props.user.uuid, registered: true}, true);
-                Alert.alert('SMS Code', 'Registration complete',
-                    [{
-                        text: 'OK', onPress: () => {
-                            this.props.navigator.resetTo({
-                                screen: 'Dashboard'
-                            });
-                        }
-                    }]
-                );
-            } else {
-                Alert.alert('SMS Code', 'Invalid SMS code',
-                    [{
-                        text: 'OK', onPress: () => {}
-                    }]
-                );
-            }
-        });
-    };
+    async confirmUser() {
+        await this.props.userActions.confirmUser(this.props.user);
+        if (!this.props.error) {
+            Alert.alert('SMS Code', 'Registration complete',
+                [{
+                    text: 'OK', onPress: () => {
+                        goToHome();
+                    }
+                }]
+            );
+        } else {
+            Alert.alert('SMS Code', 'Invalid SMS code',
+                [{
+                    text: 'OK', onPress: () => {}
+                }]
+            );
+        }
+    }
 
     render() {
         return (
             <Container>
-                <Content>
-                    <Grid>
-                        <Row style={{padding: 10}}>
-                            <Col style={styles.container}>
-                                <Row size={1}>
-                                    <Text style={{fontSize: 30}}>Enter SMS code</Text>
-                                </Row>
-                                <Row size={1}>
-                                    <Text>
-                                        A sign up confirmation SMS has been sent to your phone.
-                                        Please enter the 4 digit code from the SMS to complete your registration.
-                                    </Text>
-                                </Row>
-                                <Row size={1}>
-                                    <Col>
+                <Header androidStatusBarColor="#161616" iosBarStyle="light-content" style={{backgroundColor: '#161616', justifyContent: 'center', padding: 10}}>
+                    <Text style={styles.h1}>ENTER SMS CODE</Text>
+                </Header>
+                <Grid style={{justifyContent: 'center', padding: 10}}>
+                    <Content>
+                        <Row size={5}/>
+                        <Row size={2}>
+                            <Col>
+                                <Card>
+                                    <CardItem header bordered>
+                                        <Text style={styles.textCentered}> An SMS has been sent to your phone.
+                                            Please enter the 5 digit code from the SMS to complete your registration.
+                                        </Text>
+                                    </CardItem>
+                                    <CardItem>
+                                        {this.props.user.passwordValid === undefined || this.props.user.passwordValid ?
+                                            <Text/> :
+                                            <Text style={{fontSize: 16, textAlign: 'center', color: 'red'}}>
+                                                Minimum 6 characters, and must contain at least 1 lowercase, 1
+                                                uppercase and 1 number
+                                            </Text>}
+                                    </CardItem>
+                                    <CardItem>
                                         <Item floatingLabel>
-                                            <Label>SMS code</Label>
+                                            <Label>SMS CODE</Label>
                                             <Input id="smsCodeInput"
+                                                   keyboardType="number-pad"
                                                    value={this.smsCode}
                                                    onChangeText={(code) => this.onChangeSmsCode(code)}/>
                                         </Item>
-                                    </Col>
-                                </Row>
-                                <Row size={1}>
-                                    <Button id="submitButton"
-                                        // disabled={!this.smsCode && this.smsCode.length < 4}
-                                            rounded onPress={() => this.handlePress()}>
-                                        <Text>Submit</Text>
-                                    </Button>
-                                </Row>
-                                <Row size={5}/>
+                                    </CardItem>
+                                    <CardItem>
+                                        {this.props.error ?
+                                            <Text style={{flex: 1, fontSize: 16, textAlign: 'center', color: 'red'}}>
+                                                Incorrect code, please use code sent in text
+                                            </Text> : <Text/>}
+                                    </CardItem>
+                                    <CardItem/>
+                                    <CardItem footer bordered style={{justifyContent: 'center'}}>
+                                        <Body>
+                                            <Button id="submitButton" full dark
+                                                    disabled={!this.props.user || !this.props.user.smsCode}
+                                                    onPress={() => this.confirmUser()}>
+                                                <Text style={{fontSize: 18, color: '#9fced0'}}> SUBMIT </Text>
+                                            </Button>
+                                        </Body>
+                                    </CardItem>
+                                </Card>
                             </Col>
                         </Row>
-                    </Grid>
-                </Content>
+                    </Content>
+                </Grid>
             </Container>
         )
     }
@@ -101,7 +98,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(SignUpComplete)
 function mapStateToProps(state, ownProps) {
     return {
         user: state.userReducer.user,
-        error: state.userReducer.error
+        error: state.userReducer.user.error
     };
 }
 
@@ -114,9 +111,20 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: Dimensions.get('window').height,
-        backgroundColor: '#fff',
+        backgroundColor: '#5264d8',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10
     },
+    h1: {
+        flex: 1,
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 30
+    },
+    textCentered: {
+        textAlign: 'center',
+        color: '#161616',
+        fontSize: 18
+    }
 });

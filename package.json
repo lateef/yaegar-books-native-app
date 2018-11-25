@@ -3,17 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "babel-preset-react-native-stage-0": "^1.0.1",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.3",
-    "fetch-mock": "^6.4.2",
-    "jest": "^22.4.3",
+    "babel-preset-react-native": "5",
+    "jest": "^23.5.0",
     "jest-react-native": "^18.0.0",
-    "jsdom": "^11.11.0",
-    "jsdom-global": "^3.0.2",
-    "react-test-renderer": "16.3.1",
-    "redux-mock-store": "^1.5.1"
+    "react-test-renderer": "16.3.1"
   },
   "scripts": {
     "start": "react-native start",
@@ -24,44 +17,28 @@
     "test:watch": "jest --watch"
   },
   "jest": {
-    "preset": "react-native",
-    "setupFiles": [
-      "./jestsetup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/build/",
-      "/e2e/"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|expo|react-navigation|native-base-shoutem-theme|@shoutem/theme|@shoutem/animation|@shoutem/ui|tcomb-form-native|native-base)"
-    ]
+    "preset": "react-native"
   },
   "dependencies": {
-    "moment": "^2.22.1",
-    "native-base": "^2.5.0",
+    "@redux-offline/redux-offline": "^2.4.0",
+    "axios": "^0.18.0",
+    "native-base": "^2.8.0",
     "react": "16.3.1",
-    "react-dom": "^16.3.2",
-    "react-native": "~0.55.4",
-    "react-native-action-button": "^2.8.4",
-    "react-native-confirmation-code-input": "^1.0.4",
-    "react-native-datepicker": "^1.7.2",
-    "react-native-navigation": "^1.1.462",
+    "react-native": "~0.56.0",
+    "react-native-config": "^0.11.6",
+    "react-native-fs": "^2.11.15",
+    "react-native-navigation": "^2.1.3",
     "react-native-phone-input": "^0.2.1",
-    "react-native-sensitive-info": "^5.1.0",
-    "react-native-touch-id": "^4.0.2",
-    "react-native-vector-icons": "^4.6.0",
+    "react-native-vector-icons": "^5.0.0",
+    "react-phone-input-2": "^2.6.0",
     "react-redux": "^5.0.7",
-    "realm": "^2.6.0",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^5.9.1",
+    "redux-persist": "^5.10.0",
+    "redux-persist-fs-storage": "^1.2.2",
     "redux-promise-middleware": "^5.1.1",
-    "redux-thunk": "^2.2.0",
-    "uuid": "^3.2.1",
-    "validator": "^10.4.0"
+    "redux-thunk": "^2.3.0",
+    "uuid": "^3.3.2",
+    "validator": "^10.7.1"
   }
 }
