@@ -101,10 +101,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    aaptOptions {
-        cruncherEnabled = false
-    }
-
     defaultConfig {
         applicationId "com.yaegarbooksnativeapp"
         minSdkVersion rootProject.ext.minSdkVersion
