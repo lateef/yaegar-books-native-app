@@ -25,7 +25,8 @@ export class SignUp extends React.Component {
                 countryCode: this.phone.getCountryCode(),
                 isoCode: this.phone.getISOCode(),
                 notValid: false
-            })
+            });
+            this.props.userActions.setUuid();
         } else {
             this.props.userActions.updatePhone({notValid: true})
         }

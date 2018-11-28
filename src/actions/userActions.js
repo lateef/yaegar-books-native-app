@@ -20,6 +20,12 @@ export function reset() {
     }
 }
 
+export function setUuid() {
+    return function (dispatch) {
+        dispatch({type: 'SET_USER_UUID', payload: uuid()});
+    }
+}
+
 export function updatePhone(phone) {
     if (!phone.uuid) {
         phone.uuid = uuid();
@@ -69,9 +75,6 @@ export function createUnregisteredUser() {
 
 export function register(user) {
     return async function (dispatch) {
-        if (!user.uuid) {
-            user.uuid = uuid();
-        }
         user.userId = null;
         user.phoneNumber = user.phones[0].number;
         return axios.post('/register', user)

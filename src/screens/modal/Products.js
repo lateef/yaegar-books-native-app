@@ -33,6 +33,8 @@ export class Products extends ModalComponent {
     processProduct(props) {
         if (this.props.action === 'prepAddPurchaseOrder' && props.currentProduct) {
             showModal('AddPurchaseOrderLineItem', props, props.text, '#161616');
+        } else if (this.props.action === 'prepAddSalesOrder') {
+            showModal('AddSalesOrderLineItem', props, props.text, '#161616');
         } else if (this.props.action === 'prepProduct' || !props.currentProduct) {
             showModal('AddUpdateProduct', props, props.text, '#161616');
         }
@@ -58,9 +60,10 @@ export class Products extends ModalComponent {
                                             <Body>
                                             <Text>Add products/services</Text>
                                             </Body>
-                                            <Right>
+                                            {this.props.action !== 'prepAddSalesOrder' ?
+                                                <Right>
                                                 <Icon name="ios-add" style={{fontSize: 30, color: '#4cb528'}}/>
-                                            </Right>
+                                            </Right> : <View/>}
                                         </ListItem>
                                         {this.props.products && this.props.products.map((product, i) =>
                                             <ListItem key={i} style={{alignItems: 'center'}} onPress={() => this.processProduct({name: 'Sales Income', text: 'Product/Service', currentProduct: product})}>

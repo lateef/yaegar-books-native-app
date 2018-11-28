@@ -29,7 +29,7 @@ export default function reducer(state = defaultState, action) {
             });
             let index;
             if (supplier) {
-                index = state.supplier.suppliers.find((supplier) => {
+                index = state.supplier.suppliers.findIndex((supplier) => {
                     return supplier.uuid === action.payload.uuid;
                 });
             } else {

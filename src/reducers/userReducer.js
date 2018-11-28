@@ -13,6 +13,9 @@ export default function reducer(state = defaultState, action) {
         case 'USER_RESET': {
             return {...state, user: {...user}}
         }
+        case 'SET_USER_UUID': {
+            return {...state, user: {...state.user, uuid: action.payload}}
+        }
         case 'UPDATE_PHONE': {
             if (state.user.phones) {
                 state.user.phones.splice(0, 1, action.payload);

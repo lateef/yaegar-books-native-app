@@ -6,26 +6,26 @@ import {
     Grid, Button, Container, Content, Text, Row, Col, Card, CardItem, Body, ListItem, List, Item, Label, Input
 } from 'native-base';
 
-import * as supplierAction from '../../actions/supplierActions';
+import * as customerAction from '../../actions/customerActions';
 import {ModalComponent} from "./ModalComponent";
 
-export class AddSupplier extends ModalComponent {
-    supplier = {};
+export class AddCustomer extends ModalComponent {
+    customer = {};
 
     constructor(props) {
         super(props);
         if (!this.props.currentCompany) return;//should actually get from rest end
-        this.supplier.company = {uuid: this.props.currentCompany.uuid};
-        this.props.supplierActions.updateSupplier(this.supplier);
+        this.customer.company = {uuid: this.props.currentCompany.uuid};
+        this.props.customerActions.updateCustomer(this.customer);
     }
 
     onChangeName(name) {
-        this.supplier.name = name;
-        this.props.supplierActions.updateSupplier(this.supplier);
+        this.customer.name = name;
+        this.props.customerActions.updateCustomer(this.customer);
     }
 
     async save() {
-        await this.props.supplierActions.addSupplier(this.supplier);
+        await this.props.customerActions.addCustomer(this.customer);
         this.dismissModal();
     }
 
@@ -55,7 +55,7 @@ export class AddSupplier extends ModalComponent {
                                                 <ListItem>
                                                     <Body>
                                                     <Button full dark
-                                                            disabled={!this.supplier || !this.supplier.name}
+                                                            disabled={!this.customer || !this.customer.name}
                                                             onPress={() => this.save()}>
                                                         <Text style={{fontSize: 18, color: '#ffffff'}}>Save</Text>
                                                     </Button>
@@ -76,24 +76,24 @@ export class AddSupplier extends ModalComponent {
     }
 
     componentDidDisappear() {
-        this.props.supplierActions.houseKeeping();
+        this.props.customerActions.houseKeeping();
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSupplier)
+export default connect(mapStateToProps, mapDispatchToProps)(AddCustomer)
 
 function mapStateToProps(state, ownProps) {
     const index = ownProps.index ? ownProps.index : 0;
     return {
-        supplier: state.supplierReducer.supplier,
+        customer: state.customerReducer.customer,
         currentCompany: state.companyReducer.company.companies[index],
-        error: state.supplierReducer.supplier.error
+        error: state.customerReducer.customer.error
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        supplierActions: bindActionCreators(supplierAction, dispatch)
+        customerActions: bindActionCreators(customerAction, dispatch)
     };
 }
 

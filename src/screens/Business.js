@@ -7,6 +7,7 @@ import {Navigation} from "react-native-navigation";
 
 import * as ledgerAction from '../actions/ledgerActions';
 import * as purchaseOrderAction from "../actions/purchaseOrderActions";
+import * as salesOrderAction from "../actions/salesOrderActions";
 import {AssetsTab} from "./businessTabs/AssetsTab";
 import {BuyTab} from "./businessTabs/BuyTab";
 import {SellTab} from "./businessTabs/SellTab";
@@ -91,20 +92,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(Business)
 function mapStateToProps(state, ownProps) {
     const index = (ownProps.index) ? ownProps.index : 0;
     return {
-        // user: state.userReducer.user,
         currentCompany: state.companyReducer.company.companies[index],
         product: state.productReducer.product.currentProduct,
         currentPurchaseOrder: state.purchaseOrderReducer.purchaseOrder.currentPurchaseOrder,
+        currentSalesOrder: state.salesOrderReducer.salesOrder.currentSalesOrder,
         banks: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Bank'),
         cash: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Cash'),
-        revenue: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Sales Income'),
-        // ledger: state.ledgerReducer.ledger
+        revenue: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Sales Income')
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         ledgerActions: bindActionCreators(ledgerAction, dispatch),
-        purchaseOrderActions: bindActionCreators(purchaseOrderAction, dispatch)
+        purchaseOrderActions: bindActionCreators(purchaseOrderAction, dispatch),
+        salesOrderActions: bindActionCreators(salesOrderAction, dispatch)
     };
 }

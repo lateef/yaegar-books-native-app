@@ -1,25 +1,38 @@
 import React from "react";
 import {StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {Container, Text, Grid, Content, Row, Col, Card, CardItem, Body, View, List, ListItem, Right, Icon
+import {
+    Body, Card, CardItem, Col, Container, Content, Grid, Icon, List, ListItem, Right, Left, Row, Text, View, Button
 } from 'native-base';
-
-import * as ledgerAction from "../../actions/ledgerActions";
-import * as userAction from "../../actions/userActions";
-import {navigateTo, showModal} from "../../App";
+import {showModal} from "../../App";
 
 export class SellTab extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    showLedgerSelection(props) {
-        showModal('ProductType', props, 'Add a product', '#161616');
+    initSalesOrder() {
+        this.props.props.salesOrderActions.initSalesOrder();
     }
 
-    goToBusiness() {
-        navigateTo(this.props.props.componentId, 'AddCompany', {}, 'Add business/company', '#161616');
+    resetSalesOrder() {
+        this.props.props.salesOrderActions.resetSalesOrder();
+    }
+
+    showCustomers(props) {
+        showModal('Customers', props, 'Customers', '#161616');
+    }
+
+    showAddProductModal(props) {
+        showModal('Products', props, 'Products/Services', '#161616');
+    }
+
+    goToBusiness(props) {
+        showModal('AddCompany', props, 'Company', '#161616');
+    }
+
+    addSalesOrder() {
+        this.props.props.salesOrderActions.addSalesOrder(this.props.props.currentSalesOrder);
+        this.resetSalesOrder();
     }
 
     render() {
@@ -36,24 +49,113 @@ export class SellTab extends React.Component {
                                     <Card>
                                         {(!this.props.props.currentCompany || !this.props.props.currentCompany.companyId) ?
                                             <View>
+                                                <CardItem header bordered>
+                                                    <Text style={styles.textCentered}>Business setup</Text>
+                                                </CardItem>
+                                                <CardItem style={{justifyContent: 'center'}}>
+                                                    <Body>
+                                                    <Button id='addBusinessButton' full dark
+                                                            onPress={() => this.goToBusiness()}>
+                                                        <Text style={{fontSize: 18, color: '#FFFFFF'}}>Add business/company</Text>
+                                                    </Button>
+                                                    </Body>
+                                                </CardItem>
                                             </View>
                                             :
                                             <View>
                                                 <CardItem header bordered>
-                                                    <Text style={styles.textCentered}>Raise a sales order</Text>
-                                                </CardItem>
-                                                <List style={{flex: 1}}>
-                                                    <ListItem style={{alignItems: 'center'}} itemDivider>
-                                                        <Body>
-                                                        <Text>Create Sales Order</Text>
-                                                        </Body>
+                                                    <Body style={styles.textCentered}>
+                                                    {(typeof this.props.props.currentSalesOrder === 'undefined') ?
+                                                        <Text style={{fontSize: 17}}>Raise a sales order</Text>
+                                                        :
+                                                        <Text
+                                                            style={{fontSize: 17}}>Total: {this.props.props.currentSalesOrder.totalPrice}</Text>}
+
+                                                    </Body>
+                                                    {(typeof this.props.props.currentSalesOrder !== 'undefined') ?
                                                         <Right>
-                                                            <Icon name="ios-add" style={{fontSize: 30, color: '#4cb528'}} onPress={() => this.showLedgerSelection()}/>
-                                                        </Right>
+                                                            <Icon name="ios-close"
+                                                                  style={{fontSize: 30, color: '#4cb528'}}
+                                                                  onPress={() => this.resetSalesOrder()}/>
+                                                        </Right> : <View/>}
+                                                </CardItem>
+                                                {(typeof this.props.props.currentSalesOrder === 'undefined') ?
+                                                    <List style={{flex: 1}}>
+                                                        <ListItem style={{alignItems: 'center'}} itemDivider
+                                                                  onPress={() => this.initSalesOrder()}>
+                                                            <Body>
+                                                            <Text>Create Sales Order</Text>
+                                                            </Body>
+                                                            <Right>
+                                                                <Icon name="ios-add"
+                                                                      style={{fontSize: 30, color: '#4cb528'}}/>
+                                                            </Right>
+                                                        </ListItem>
+                                                    </List> : <View/>}
+                                                {(typeof this.props.props.currentSalesOrder !== 'undefined' && typeof this.props.props.currentSalesOrder.customer === 'undefined') ?
+                                                    <List style={{flex: 1}}>
+                                                        <ListItem style={{alignItems: 'center'}} itemDivider
+                                                                  onPress={() => this.showCustomers({action: 'prepAddSalesOrder'})}>
+                                                            <Body>
+                                                            <Text>Select customer</Text>
+                                                            </Body>
+                                                            <Right>
+                                                                <Icon name="ios-add"
+                                                                      style={{fontSize: 30, color: '#4cb528'}}/>
+                                                            </Right>
+                                                        </ListItem>
+                                                    </List> : <View/>}
+                                                {(typeof this.props.props.currentSalesOrder !== 'undefined' && typeof this.props.props.currentSalesOrder.customer !== 'undefined') ?
+                                                    <List style={{flex: 1}}>
+                                                        <ListItem style={{alignItems: 'center'}} itemDivider>
+                                                            <Body>
+                                                            <Text>{this.props.props.currentSalesOrder.customer.name}</Text>
+                                                            </Body>
+                                                        </ListItem>
+                                                        <ListItem style={{alignItems: 'center'}}
+                                                                  onPress={() => this.showAddProductModal({action: 'prepAddSalesOrder'})}>
+                                                            <Body>
+                                                            <Text>Add products or services</Text>
+                                                            </Body>
+                                                            <Right>
+                                                                <Icon name="ios-add"
+                                                                      style={{fontSize: 30, color: '#4cb528'}}/>
+                                                            </Right>
+                                                        </ListItem>
+                                                    </List> : <View/>}
+                                                <List>
+                                                    {typeof this.props.props.currentSalesOrder !== 'undefined' && this.props.props.currentSalesOrder.lineItems && this.props.props.currentSalesOrder.lineItems.map((lineItem, i) =>
+                                                        <ListItem key={i} style={{alignItems: 'center'}}
+                                                                  onPress={() => {
+                                                                  }}>
+                                                            <Left>
+                                                                <Text
+                                                                    style={{fontSize: 16}}>{lineItem.product.name}</Text>
+                                                            </Left>
+                                                            <Body>
+                                                            <Text style={{fontSize: 16}}>
+                                                                Q: {lineItem.quantity}
+                                                            </Text>
+                                                            <Text style={{fontSize: 16}}>Sub total: {lineItem.subTotal}
+                                                            </Text>
+                                                            </Body>
+                                                            <Right>
+                                                                <Icon name="ios-close"
+                                                                      style={{fontSize: 30, color: '#4cb528'}}/>
+                                                            </Right>
+                                                        </ListItem>)}
+                                                    <ListItem>
+                                                        <Body>
+                                                        <Button full dark
+                                                                disabled={!this.props.props.currentSalesOrder ||
+                                                                !this.props.props.currentSalesOrder.lineItems || !this.props.props.currentSalesOrder.lineItems.length > 0}
+                                                                onPress={() => this.addSalesOrder()}>
+                                                            <Text style={{fontSize: 18, color: '#ffffff'}}>Add Sales Order</Text>
+                                                        </Button>
+                                                        </Body>
                                                     </ListItem>
                                                 </List>
-                                            </View>
-                                        }
+                                            </View>}
                                     </Card>
                                 </Col>
                             </Row>
@@ -63,26 +165,6 @@ export class SellTab extends React.Component {
             </Container>
         );
     }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SellTab)
-
-function mapStateToProps(state, ownProps) {
-    const index = (ownProps.index) ? ownProps.index : 0;
-    return {
-        user: state.userReducer.user,
-        currentCompany: state.companyReducer.company.companies[index],
-        banks: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Bank'),
-        cash: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Cash'),
-        revenue: ledgerAction.listCompanyLedgersByParentName(state.companyReducer.company.companies[index], 'Sales Income'),
-        ledger: state.ledgerReducer.ledger
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        userActions: bindActionCreators(userAction, dispatch)
-    };
 }
 
 const styles = StyleSheet.create({

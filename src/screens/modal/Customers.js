@@ -10,12 +10,12 @@ import {
 import * as companyAction from '../../actions/companyActions';
 import * as ledgerAction from '../../actions/ledgerActions';
 import * as productAction from "../../actions/productActions";
-import * as purchaseOrderAction from "../../actions/purchaseOrderActions";
-import * as supplierAction from '../../actions/supplierActions';
+import * as salesOrderAction from "../../actions/salesOrderActions";
+import * as customerAction from '../../actions/customerActions';
 import {dismissModal, showModal} from "../../App";
 import {ModalComponent} from "./ModalComponent";
 
-export class Suppliers extends ModalComponent {
+export class Customers extends ModalComponent {
     constructor(props) {
         super(props);
     }
@@ -26,18 +26,18 @@ export class Suppliers extends ModalComponent {
         }
     }
 
-    showAddSupplier(props) {
-        showModal('AddSupplier', props, props.text, '#161616');
+    showAddCustomer(props) {
+        showModal('AddCustomer', props, props.text, '#161616');
     }
 
-    addSupplier(supplier) {
-        if (supplier === 'NONE') {
-            supplier = {uuid: uuid(), name: supplier, company: this.props.currentCompany};
+    addCustomer(customer) {
+        if (customer === 'NONE') {
+            customer = {uuid: uuid(), name: customer, company: this.props.currentCompany};
         }
-        if (this.props.action === 'prepAddPurchaseOrder') {
-            this.props.purchaseOrderActions.addSupplierToPurchaseOrder(this.props.purchaseOrder.currentPurchaseOrder, supplier);
+        if (this.props.action === 'prepAddSalesOrder') {
+            this.props.salesOrderActions.addCustomerToSalesOrder(this.props.salesOrder.currentSalesOrder, customer);
         } else if (this.props.action === 'prepAddProduct') {
-            this.props.productActions.addProductSupplier(this.props.currentProduct, supplier)
+            this.props.productActions.addProductCustomer(this.props.currentProduct, customer)
         }
         this.dismissModal();
     }
@@ -56,9 +56,9 @@ export class Suppliers extends ModalComponent {
                                 <Card>
                                     <CardItem style={{justifyContent: 'center'}}>
                                         <List style={{flex: 1}}>
-                                            <ListItem style={{alignItems: 'center'}} itemDivider onPress={() => this.showAddSupplier({text: 'Supplier'})}>
+                                            <ListItem style={{alignItems: 'center'}} itemDivider onPress={() => this.showAddCustomer({text: 'Customer'})}>
                                                 <Body>
-                                                    <Text>Add a new supplier</Text>
+                                                    <Text>Add a new customer</Text>
                                                 </Body>
                                                 <Right>
                                                     <Icon name="ios-add" style={{fontSize: 30, color: '#4cb528'}}/>
@@ -67,22 +67,22 @@ export class Suppliers extends ModalComponent {
                                         </List>
                                     </CardItem>
                                     <CardItem header bordered>
-                                        <Text style={styles.textCentered}>Suppliers</Text>
+                                        <Text style={styles.textCentered}>Customers</Text>
                                     </CardItem>
                                     <CardItem style={{justifyContent: 'center'}}>
                                         <List style={{flex: 1}}>
-                                                <ListItem style={{alignItems: 'center'}} onPress={() => {this.addSupplier('NONE')}}>
+                                                <ListItem style={{alignItems: 'center'}} onPress={() => {this.addCustomer('NONE')}}>
                                                 <Body>
-                                                <Text>No supplier</Text>
+                                                <Text>No customer</Text>
                                                 </Body>
                                                 <Right>
                                                     <Icon name="ios-arrow-round-forward" style={{fontSize: 30, color: '#4cb528'}}/>
                                                 </Right>
                                             </ListItem>
-                                            {this.props.suppliers.map((supplier, i) =>
-                                                <ListItem key={i} style={{alignItems: 'center'}} onPress={() => {this.addSupplier(supplier)}}>
+                                            {this.props.customers.map((customer, i) =>
+                                                <ListItem key={i} style={{alignItems: 'center'}} onPress={() => {this.addCustomer(customer)}}>
                                                     <Body>
-                                                    <Text>{supplier.name}</Text>
+                                                    <Text>{customer.name}</Text>
                                                     </Body>
                                                     <Right>
                                                         <Icon name="ios-arrow-round-forward" style={{fontSize: 30, color: '#4cb528'}}/>
@@ -102,20 +102,20 @@ export class Suppliers extends ModalComponent {
     }
 
     componentDidAppear() {
-        this.props.supplierActions.getSuppliers(this.props.currentCompany.uuid);
+        this.props.customerActions.getCustomers(this.props.currentCompany.uuid);
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Suppliers)
+export default connect(mapStateToProps, mapDispatchToProps)(Customers)
 
 function mapStateToProps(state, ownProps) {
     const index = ownProps.index ? ownProps.index : 0;
     return {
         currentCompany: state.companyReducer.company.companies[index],
         currentProduct: state.productReducer.product.currentProduct,
-        purchaseOrder: state.purchaseOrderReducer.purchaseOrder,
-        suppliers: state.supplierReducer.supplier.suppliers,
-        error: state.supplierReducer.supplier.error
+        salesOrder: state.salesOrderReducer.salesOrder,
+        customers: state.customerReducer.customer.customers,
+        error: state.customerReducer.customer.error
     };
 }
 
@@ -124,8 +124,8 @@ function mapDispatchToProps(dispatch) {
         companyActions: bindActionCreators(companyAction, dispatch),
         ledgerActions: bindActionCreators(ledgerAction, dispatch),
         productActions: bindActionCreators(productAction, dispatch),
-        purchaseOrderActions: bindActionCreators(purchaseOrderAction, dispatch),
-        supplierActions: bindActionCreators(supplierAction, dispatch)
+        salesOrderActions: bindActionCreators(salesOrderAction, dispatch),
+        customerActions: bindActionCreators(customerAction, dispatch)
     };
 }
 

@@ -20,8 +20,11 @@ import UpdateLedger from "./modal/UpdateLedger";
 import AddAsset from "./AddAsset";
 import UpdateText from "./modal/UpdateText";
 import Suppliers from "./modal/Suppliers";
+import Customers from "./modal/Customers";
 import AddSupplier from "./modal/AddSupplier";
+import AddCustomer from "./modal/AddCustomer";
 import AddPurchaseOrderLineItem from "./modal/AddPurchaseOrderLineItem";
+import AddSalesOrderLineItem from "./modal/AddSalesOrderLineItem";
 
 const persistor = persistStore(store);
 
@@ -59,6 +62,9 @@ export function registerScreens() {
     Navigation.registerComponent('AddAsset', () => createApp(AddAsset));
     Navigation.registerComponent('UpdateText', () => createApp(UpdateText));
     Navigation.registerComponent('Suppliers', () => createApp(Suppliers));
+    Navigation.registerComponent('Customers', () => createApp(Customers));
     Navigation.registerComponent('AddSupplier', () => createApp(AddSupplier));
+    Navigation.registerComponent('AddCustomer', () => createApp(AddCustomer));
     Navigation.registerComponent('AddPurchaseOrderLineItem', () => createApp(AddPurchaseOrderLineItem));
+    Navigation.registerComponent('AddSalesOrderLineItem', () => createApp(AddSalesOrderLineItem));
 }
